@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from . import cwb_exec
 
 
 class TestView(TemplateView):
