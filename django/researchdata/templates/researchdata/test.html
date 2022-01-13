@@ -4,7 +4,15 @@
 {% block main %}
 
 <section class="container">
-    CWB
+    {{ query_input }}
+    <form method="get" action="">
+        <input type="text" id="query" name="query">
+        <button type="submit">Submit</button>
+    </form>
+</section>
+
+<section>
+    {{ query_output }}
 </section>
 
 {% endblock %}

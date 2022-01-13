@@ -7,7 +7,7 @@ REGISTRY = "/rds/projects/m/mcaulifk-euclcorp-website/data/Corpus/Registry"
 
 
 def query(context_left_or_right='',
-          context='3 words',
+          context='6 words',
           primary_lang='BIRM_ENG',
           show='+lemma +tag +birm_deu +birm_fra',
           print_structures='meta_case_name, meta_case_number, meta_date, meta_doc_cellar',
@@ -23,12 +23,12 @@ def query(context_left_or_right='',
 
     cmd = [CQPCL, "-r", REGISTRY, f'set {context_left_or_right}Context {context}; {primary_lang}; show {show}; set PrintStructures "{print_structures}"; A={A}; cat A {start} {length};']
 
-    out = check_output(cmd, universal_newlines=True)
-    out_list = out.split('\n')
-    for o in out_list:
-        print(o, '\n\n\n')
+    # out = check_output(cmd, universal_newlines=True)
+    # out_list = out.split('\n')
+    # for o in out_list:
+    #     print(o, '\n\n\n')
 
-    # return check_output(cmd, universal_newlines=True)
+    return check_output(cmd, universal_newlines=True)
 
 
 if __name__ == "__main__":
