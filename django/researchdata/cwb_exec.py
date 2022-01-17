@@ -14,7 +14,7 @@ def query(context_left_or_right='',
           start=1,
           length=5):
     """
-    Performs a query on CQP. 
+    Performs a query on CQP
 
     context_left_or_right = 'Left' or 'Right' or '' (empty) for both
     context = e.g. 5 words (see: https://cwb.sourceforge.io/files/CQP_Manual/2_3.html)
