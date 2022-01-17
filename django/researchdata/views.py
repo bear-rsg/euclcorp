@@ -14,4 +14,3 @@ class TestView(TemplateView):
         context['query_input'] = query_input
         context['query_output'] = cwb_exec.query(context=query_input).split('\n')[0]
         return context
-
