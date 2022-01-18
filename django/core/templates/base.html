@@ -56,9 +56,25 @@
             <ul class="nav-links">
                 <!-- Welcome -->
                 <li><a class="{% if request.path == "/" %}active{% endif %}" href="{% url 'general:welcome' %}"><i class="fas fa-home"></i> Welcome</a></li>
-                <!-- Data -->
-                <li><a class="{% if "/data/" in request.path %}active{% endif %}" href="{% url 'researchdata:test' %}"><i class="fas fa-eye"></i> Data</a></li>
+                <!-- Corpus: Monolingual -->
+                <li><a class="{% if "/corpus/monolingual/" in request.path %}active{% endif %}" href="{% url 'researchdata:monolingual' %}"><i class="fas fa-cube"></i> Monolingual Corpora</a></li>
+                <!-- Corpus: Parallel -->
+                <li><a class="{% if "/corpus/parallel/" in request.path %}active{% endif %}" href="{% url 'researchdata:parallel' %}"><i class="fas fa-cubes"></i> Parallel Corpus</a></li>
+                <!-- About -->
+                <li><a class="{% if request.path == "/about/" %}active{% endif %}" href="{% url 'general:about' %}"><i class="fas fa-info"></i> About</a></li>
+                <!-- Contact -->
+                <li><a class="{% if request.path == "/contact/" %}active{% endif %}" href="{% url 'general:contact' %}"><i class="fas fa-at"></i> Contact</a></li>
             </ul>
+
+            <div id="nav-base">
+                <a href="https://www.birmingham.ac.uk/" target="_blank">© University of Birmingham {% now "Y" %}</a>
+                <a href="https://www.birmingham.ac.uk/privacy/index.aspx" target="_blank">Privacy</a>
+                <a href="https://www.birmingham.ac.uk/legal/index.aspx" target="_blank">Legal</a>
+                <a href="https://www.birmingham.ac.uk/university/governance/policies-regs/information/index.aspx" target="_blank">Freedom of Information</a>
+                <br>
+                <a href="{% url 'general:cookies' %}">Cookies</a>
+                <a href="https://accessibility.bear.bham.ac.uk/statements-cal.html" target="_blank">Accessibility</a>
+            </div>
 
         </nav>
 

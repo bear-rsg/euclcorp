@@ -4,5 +4,6 @@ from . import views
 app_name = 'researchdata'
 
 urlpatterns = [
-    path('test/', views.TestView.as_view(), name='test'),
+    path('monolingual/', views.MonolingualCorporaView.as_view(), name='monolingual'),
+    path('parallel/', views.ParallelCorpusView.as_view(), name='parallel'),
 ]
