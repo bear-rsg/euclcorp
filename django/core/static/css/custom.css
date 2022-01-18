@@ -9,12 +9,12 @@ body {
 }
 
 a {
-    color: orange;
+    color: #0F8138;
     text-decoration: none;
 }
 
 a:hover {
-    color: orange;
+    color: #04a33f;
     text-decoration: none;
 }
 
@@ -29,7 +29,7 @@ h1 {
 
 h1 span {
     font-weight: normal;
-    color: orange;
+    color: #19BE54;
 }
 
 h2 {
@@ -43,7 +43,7 @@ h2:not(:first-of-type) {
 
 h3 {
     padding: 2em 0 0.5em 0;
-    color: orange;
+    color: #0F8138;
     text-align: left;
     font-size: 1.7em;
 }
@@ -108,11 +108,11 @@ select {
     font-size: 1.3em;
     text-align: center;
     margin-bottom: 1.5em;
-    color: orange;
+    color: #0F8138;
 }
 
 .popup-submit {
-    background-color: orange;
+    background-color: #0F8138;
     color: white;
     appearance: none;
     border: none;
@@ -140,7 +140,7 @@ select {
 }
 
 .popup-hide:hover {
-    color: orange;
+    color: #0F8138;
 }
 
 /* ---------- Forms ---------- */
@@ -196,7 +196,7 @@ form.full-form button[type=submit] {
     border: none;
     padding: 0.7em;
     margin: 1em auto;
-    background: orange;
+    background: #0F8138;
     color: white;
     width: 100%;
 }
@@ -215,7 +215,7 @@ form.full-form button[type=submit]:hover {
 }
 
 .full-form-footer-links a:hover {
-    color: orange;
+    color: #0F8138;
     opacity: 0.8;
 }
 
@@ -255,7 +255,7 @@ nav ul {
 nav ul li a {
     display: block;
     padding: 1rem;
-    opacity: 0.5;
+    opacity: 0.6;
     border-left: 0.4rem solid transparent;
 }
 
@@ -267,7 +267,7 @@ nav ul li a:hover {
 
 nav ul li a.active {
     opacity: 1;
-    border-left: 0.4rem solid orange;
+    border-left: 0.4rem solid #19BE54;
     background: rgba(0, 0, 0, 0.2);
 }
 
@@ -289,7 +289,7 @@ nav ul li a i {
 }
 
 #nav-base * {
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 #nav-base a {
@@ -311,7 +311,7 @@ main {
     overflow-x: hidden;
     min-height: 100vh;
     padding: 2.7rem 3.3rem;
-    background: #F2F2F2;
+    background: #F5F5F5;
 }
 
 /* ---------- Error Pages ---------- */
