@@ -1,0 +1,17 @@
+@media (min-width: 992px) {
+    /* ---------- Navigation ---------- */
+
+
+
+    /* ---------- Main ---------- */
+
+
+
+    /* ---------- Popup ---------- */
+
+    .popup-content {
+        width: 50em;
+        max-height: 75vh;
+        left: calc(50% - 25em);
+    }
+}

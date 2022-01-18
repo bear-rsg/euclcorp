@@ -1,0 +1,302 @@
+
+/* ---------- General ---------- */
+
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: #353b48;
+    margin: 0;
+    font-weight: 400;
+    background: #F2F2F2;
+}
+
+a {
+    color: orange;
+    text-decoration: none;
+}
+
+a:hover {
+    color: orange;
+    text-decoration: none;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin: 0;
+    padding: 0;
+    line-height: 1em;
+    font-weight: bold;
+    color: white;
+}
+
+h1 span {
+    font-weight: normal;
+    color: orange;
+}
+
+h2 {
+    font-size: 2.7em;
+    font-weight: bold;
+}
+
+h2:not(:first-of-type) {
+    padding-top: 2em;
+}
+
+h3 {
+    padding: 2em 0 0.5em 0;
+    color: orange;
+    text-align: left;
+    font-size: 1.7em;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    padding: 0.3em 1.3em 0.3em 0.3em;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    display: block;
+    border: 1px solid #BBB;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position-x: 100%;
+    background-position-y: 5px;
+    background-color: white;
+}
+
+.image-circle {
+    border: 0.3rem solid rgba(255,255,255,0.6);
+    border-radius: 100%;
+    width: 13em;
+    max-width: 90%;
+    display: block;
+    margin: 1em auto;
+}
+
+.hidden {
+    display: none;
+}
+
+/* ---------- Popup ---------- */
+
+.popup {
+    display: none;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 100000000;
+}
+
+.popup-content {
+    background: #F7F7F7;
+    position: fixed;
+    top: 15vh;
+    overflow-y: auto;
+    padding: 3em;
+    text-align: center;
+}
+
+.popup-content-title {
+    font-size: 1.3em;
+    text-align: center;
+    margin-bottom: 1.5em;
+    color: orange;
+}
+
+.popup-submit {
+    background-color: orange;
+    color: white;
+    appearance: none;
+    border: none;
+    display: block;
+    width: fit-content;
+    margin: 3em auto 0.5em auto;
+    padding: 0.8em 1.6em;
+    padding-bottom: 0.7em;
+    border-radius: 0.2em;
+}
+
+.popup-submit:hover {
+    color: white;
+    opacity: 0.89;
+}
+
+.popup-hide {
+    cursor: pointer;
+    position: absolute;
+    right: 0.8em;
+    top: 0.4em;
+    font-size: 1.8em;
+    padding: 0.2em;
+    color: #909090;
+}
+
+.popup-hide:hover {
+    color: orange;
+}
+
+/* ---------- Forms ---------- */
+
+form.full-form p {
+    margin: 1em 0 2em 0;
+}
+
+form.full-form label,
+form.full-form textarea,
+form.full-form input[type=text],
+form.full-form input[type=url],
+form.full-form input[type=email],
+form.full-form input[type=password],
+form.full-form input[type=number] {
+    display: block;
+    width: 100%;
+}
+
+form.full-form textarea {
+    height: 4em;
+}
+
+form.full-form label {
+    margin-bottom: 0;
+}
+
+form.full-form ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+form.full-form .helptext {
+    color: #505050;
+    font-size: 0.85em;
+    font-style: italic;
+    margin: 0.2em;
+    display: block;
+}
+
+form.full-form .errorlist {
+    color: #c0392b;
+}
+
+button {
+    border-radius: 0.4em;
+}
+
+form.full-form button[type=submit] {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    padding: 0.7em;
+    margin: 1em auto;
+    background: orange;
+    color: white;
+    width: 100%;
+}
+
+form.full-form button[type=submit]:hover {
+    opacity: 0.9;
+}
+
+.full-form-footer-links a {
+    display: block;
+    padding: 0.5em;
+    margin: 2em auto;
+    text-align: center;
+    background: #DDD;
+    border-radius: 0.4em;
+}
+
+.full-form-footer-links a:hover {
+    color: orange;
+    opacity: 0.8;
+}
+
+form.full-form button[type=submit].button-danger {
+    background: #c23616;
+}
+
+/* ---------- Navigation ---------- */
+
+nav {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 17rem;
+    height: 100vh;
+    color: white;
+    background: #353b48;
+}
+
+#nav-head a {
+    padding: 1.5rem;
+    display: block;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+}
+
+nav ul {
+    padding: 2em 0 0 0;
+    margin-left: 0;
+    list-style: none;
+}
+
+nav ul li a {
+    display: block;
+    padding: 1rem;
+    opacity: 0.5;
+    border-left: 0.4rem solid transparent;
+}
+
+nav ul li a:hover {
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    opacity: 0.8;
+}
+
+nav ul li a.active {
+    opacity: 1;
+    border-left: 0.4rem solid orange;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+nav ul li a i {
+    display: inline-block;
+    width: 1.5rem;
+    margin-right: 0.5em;
+    text-align: center;
+}
+
+
+/* ---------- Main ---------- */
+
+main {
+    margin: 0 0 0 17rem;
+    width: calc(100% - 17rem);
+    overflow-x: hidden;
+    min-height: 100vh;
+    padding: 2.7rem 3.3rem;
+}
+
+/* ---------- Error Pages ---------- */
+
+.errorpage-path {
+    font-weight: bold;
+}
+
+.errorpage-code {
+    margin-top: 3em;
+    font-size: 0.8em;
+}
