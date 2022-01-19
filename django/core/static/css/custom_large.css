@@ -1,0 +1,11 @@
+@media (min-width: 992px) {
+
+    /* ---------- Popup ---------- */
+
+    .popup-content {
+        width: 50em;
+        max-height: 75vh;
+        left: calc(50% - 25em);
+    }
+
+}
