@@ -19,6 +19,9 @@ DEBUG = True/False
 # Set to ['*'] if in development, or specific IP addresses and domains if in production
 ALLOWED_HOSTS = ['*']/['euclcorp.bham.ac.uk']
 
+# Provide the email address for the site admin (e.g. the researcher/research team)
+ADMIN_EMAIL = '...@bham.ac.uk'
+
 # Set the database name below
 DATABASES = {
     'default': {
