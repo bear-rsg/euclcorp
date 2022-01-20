@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
+{% load settings_value %}
 
 {% block main %}
 
 <section>
     <h2>Contact</h2>
+    For help with using the website or if you'd like to discuss the EUCLCORP project, please email us at <a href="mailto:{% settings_value 'ADMIN_EMAIL' %}">{% settings_value 'ADMIN_EMAIL' %}</a>
 </section>
 
 {% endblock %}
