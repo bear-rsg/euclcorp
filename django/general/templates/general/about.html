@@ -7,4 +7,72 @@
     <h2>About</h2>
 </section>
 
+<section>
+    <h3>What is EUCLCORP?</h3>
+    <p>
+        EUCLCORP is a standardised, multidimensional and multilingual corpus containing all judgments of the Court of Justice of the European Union (ECJ) and judgments delivered by constitutional and/or supreme courts of (currently) seven EU member states.
+    </p>
+    <p>
+        Unlike databases, in which users can carry out only relatively straightforward searches, for the occurrence of specific terms or keywords, corpora allow users to search and track how particular linguistic expressions and features are used in context.  This means that EUCLCORP allows users to extract words and phrases in context, discover how those words and phrases are used by the ECJ and national courts and get a sense of what they really mean.  at the heard of the corpus approach, which underlies any search within EUCLCORP, is the idea of collocation.  Collocations are frequently co-occurring multiword expressions that build units of meaning.  All languages consist of units of meaning and EUCLCORP allows users to identify units of meaning in the context of European Union case law.  Because the focus of EUCLCORP is on meaning, it can arguably provide more valuable terminological information than a dictionary or terminology database.  EUCLCORP can, in particular, be used to create bespoke terminology databases based on words and phrases that are relevant for the individual user.
+    </p>
+</section>
+
+<section>
+    <h3>Background</h3>
+    <p>
+        During the course of research on the ERC-funded <a href="https://llecj.karenmcauliffe.com/">'Law and Language at the European Court of Justice (LLECJ)' project</a>, a gap in the resources currently available to analyse the case law of that court became apparent. First, while many excellent multilingual databases relating to EU law exist, there was no resource that allowed users of EU law easily and comprehensively to compare the meanings of legal terms across EU languages and member state legal systems. Secondly, while the influence of the ECJ on national member state law is well-documented, influence also flows in the other direction: from member state to EU law level. The special connection between ECJ and national courts allows legal terms and concepts to migrate in both directions but currently there is no resource which allows users of EU law to track the migration of such terms and concepts.  The EUCLCORP was thus designed to develop and test an innovative corpus, which would address that gap.
+    </p>
+</section>
+
+
+<section>
+    <h3>Project Aims</h3>
+    <p>
+        The EUCLCORP project aimed to address the gap in resources available for analysing EU case law by providing a resource that allows users of law to investigate in a systematic way:
+    </p>
+    <ul>
+        <li>The history of the meaning(s) of a particular legal term</li>
+        <li>In the case of an ambiguous term - the sense in which it is most frequently used</li>
+        <li>The influence of national legal languages on EU case law (and vice versa)</li>
+        <li>The impact of translation on the development of EU case law</li>
+    </ul>
+    <p>
+        The corpus was coded linguistically and with metadata to enable stakeholders such as lawyers, legal translators, lexicographers and linguists, as well as academics to compare meanings of terms across languages and legal systems, to compare translation options and monitor the consistency of translation in EU case law. Furthermore EUCLCORP allows users to track the migration of terms between legal systems and to create data-driven legal dictionaries and terminological databases.
+    </p>
+    <p>
+        By adding to the big data currently available in legal databases, EUCLCORP aimed to contribute to a better understanding of EU law and of the Europeanisation of law as well as improved administration of justice.
+    </p>
+</section>
+
+<section>
+    <h3>How does EUCLCORP work?</h3>
+    <p>
+        EUCLCORP allows users to perform complex terminological and phraseological searches in judgments, based on Corpus Query Language (CQL). This allows users to search for very precisely defined expressions, which can include individual words, multiword expressions and complex grammatical patterns. Results can be shown either at the sentence level or in combination with other co-occurring words, this is in contrast to current database resources, which produce results at the whole document level. Specific functions include:
+    </p>
+    <ol>
+        <li>
+            Lemma searching: users can search for all forms of a particular term using the lemma function. For example, a search for the term 'see' using this function [lemma='see'] will produce results including all occurrences of the verb 'see' in all of its forms: 'see', 'sees', 'seeing', 'saw', 'seen' etc. This is a much more precise method of searching than trunctation/stemming search functions used in databases.
+        </li>
+        <li>
+            Complex queries: the use of CQL makes it possible to identify multiword expressions associated with particular terms. For example, a user may wish to find out how the verb 'exclude' is used in a construction containing 'from' + a noun (i.e. how the expression 'exclude…from X' is used). The relevant query ([lemma=”exclude”] []{1,3} “from”) produces the following expressions in ECJ case law: 'exclude any other person from enjoyment of such a right', 'excluding goods from the system of deducting VAT', 'excluded from benefitting from old-age insurance', exclude an economic operator from a procedure'. Again, this is a more precise and targeted method of searching than can be done in a database.
+        </li>
+        <li>
+            Collocation analysis: this function allows the user to identify the context in which expressions most frequently and most typically occur. For example a search for collocations of 'create' within ECJ judgments produces: 'obstacles', 'impression', 'confusion', 'uncertainty', 'risk' and 'inequality'. This function can be valuable to very quickly identify how terms are typically used across all judgments. This functionality is not available in existing database resources.
+        </li>
+        <li>
+            Parallel concordance lines: this function allows users to specify a search term in a source language and then to identify all sentences that contain translation equivalents of the term in a target language. This allows users to not only identify translation equivalents across judgments, but also to see the context in which those terms are used.
+        </li>
+        <li>
+            Search within sections: users can restrict searches to specific sections, (e.g. 'Grounds'), a function that is not available in current database resources, and to specific year ranges (e.g. 1977-1995).
+        </li>
+    </ol>
+</section>
+
+<section>
+    <h3>Publications</h3>
+    <p>
+        Trklja, A and McAuliffe, K (2018) The European Union case law corpus (EUCLCORP): a multilingual parallel and comparative corpus of EU court judgments. in AU Frank, C Ivanovic, F Mambrini, M Passarotti & C Sporleder (eds), Proceedings of the Second Workshop on Corpus-Based Research in the Humanities: CRH-2. vol. 1, Gerastree Proceedings, pp. 217-226, Second Workshop on Corpus-Based Research in the Humanities, Vienna, Austria, 25/01/18.
+    </p>
+</section>
+
 {% endblock %}
