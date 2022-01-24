@@ -12,6 +12,7 @@
 
 <section>
 
+    <!-- Settings -->
     <div id="settings">
 
     </div>
@@ -46,7 +47,7 @@
         <div class="querylang-cqpsearch">
             <h3>CQP Search</h3>
             <form method="get" action="">
-                <input type="text" class="querylang-cqpsearch-query" name="cqpsearch" title="CQP Search">
+                <input type="text" class="querylang-cqpsearch-query" name="cqpsearch" title="CQP Search" disabled>
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -65,17 +66,79 @@ $(document).ready(function(){
 <div class="querylang-basicsearch-instances-instance">
     <label>Token<input type="text" class="querylang-basicsearch-instances-instance-token"></label>
     <label>Lexeme<input type="text" class="querylang-basicsearch-instances-instance-lexeme"></label>
-    <label>Gram. Tag<input type="text" class="querylang-basicsearch-instances-instance-gramtag"></label>
+    <label>Gram. Tag<input type="text" class="querylang-basicsearch-instances-instance-tag"></label>
     <!-- Checkboxes -->
     <label><input type="checkbox" class="querylang-basicsearch-instances-instance-beginswith" name="beginswith">Begins with</label>
     <label><input type="checkbox" class="querylang-basicsearch-instances-instance-endswith" name="endswith">Ends with</label>
     <label><input type="checkbox" class="querylang-basicsearch-instances-instance-casesensitive" name="casesensitive">Case sensitive</label>
 </div>`);
-    }).trigger('click');
+    }).trigger('click').trigger('click');
 
     // Querylang Basic Search Instance Buttons: Remove
     $('.querylang-basicsearch-instancebuttons-remove').on('click', function(){
         if($('.querylang-basicsearch-instances').children().length > 1) $('.querylang-basicsearch-instances').children().last().remove();
+    });
+
+    // Build CQP Search
+    function buildCqpSearch(querylang){
+
+        let cqpSearchQuery = "";  // Will be appended to during function
+
+        // For each basic search instance
+        querylang.find('.querylang-basicsearch-instances-instance').each(function() {
+
+            let cqpSearchQueryInstance = "";  // Will be appended to during loop
+
+            // Get values from inputs
+            let word = $(this).find('.querylang-basicsearch-instances-instance-token').val();
+            let lemma = $(this).find('.querylang-basicsearch-instances-instance-lexeme').val();
+            let tag = $(this).find('.querylang-basicsearch-instances-instance-tag').val();
+            let wordBeginsWith = $(this).find('.querylang-basicsearch-instances-instance-beginswith').prop('checked');
+            let wordEndsWith = $(this).find('.querylang-basicsearch-instances-instance-endswith').prop('checked');
+            let wordCaseSensitive = $(this).find('.querylang-basicsearch-instances-instance-casesensitive').prop('checked');
+
+            // Build 'word'
+            if (word.length > 0){
+                // Begins with
+                if (wordBeginsWith) word += ".*";
+                // Ends with
+                else if (wordEndsWith) word = ".*" + word;
+                // Wrapper
+                word = 'word="' + word + '"';
+                // Case insensitive
+                if (!wordCaseSensitive) word += "%c";
+            }
+
+            // Build 'lemma'
+
+            // Build 'tag'
+
+            let include = []
+            for (const i of [word, lemma, tag]) if (i.length > 0) include.push(i);
+            if (include.length > 0) cqpSearchQueryInstance += "[" + include.join(" & ") + "]";
+
+            // Build 'tokens in between'
+
+            // Append to overall search query
+            cqpSearchQuery += cqpSearchQueryInstance;
+        });
+
+        // Set completed search in the CQP Search input
+        querylang.find('.querylang-cqpsearch-query').val(cqpSearchQuery);
+    }
+
+    // Execute Build CQP Search on 'keyup' (i.e. typing into a textbox)
+    $('.querylang').on('keyup', '.querylang-basicsearch-instances-instance-token,\
+    .querylang-basicsearch-instances-instance-lexeme,\
+    .querylang-basicsearch-instances-instance-tag', function(){
+        buildCqpSearch($(this).closest('.querylang'));
+    });
+
+    // Execute Build CQP Search on 'change' (i.e. selecting a checkbox)
+    $('.querylang').on('change', '.querylang-basicsearch-instances-instance-beginswith,\
+    .querylang-basicsearch-instances-instance-endswith,\
+    .querylang-basicsearch-instances-instance-casesensitive', function(){
+        buildCqpSearch($(this).closest('.querylang'));
     });
 
 });
