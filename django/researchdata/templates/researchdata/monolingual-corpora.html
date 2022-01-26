@@ -71,13 +71,29 @@ $(document).ready(function(){
     <label><input type="checkbox" class="querylang-basicsearch-instances-instance-beginswith" name="beginswith">Begins with</label>
     <label><input type="checkbox" class="querylang-basicsearch-instances-instance-endswith" name="endswith">Ends with</label>
     <label><input type="checkbox" class="querylang-basicsearch-instances-instance-casesensitive" name="casesensitive">Case sensitive</label>
+    <!-- Tokens In Between -->
+    <label class="querylang-basicsearch-instances-instance-tokensinbetween">
+        Tokens in between
+        <input type="number" class="querylang-basicsearch-instances-instance-tokensinbetween-from">
+        <input type="number" class="querylang-basicsearch-instances-instance-tokensinbetween-to">
+    </label>
 </div>`);
-    }).trigger('click').trigger('click');
+        hideLastTokenInBetween();
+    }).trigger('click');
 
     // Querylang Basic Search Instance Buttons: Remove
     $('.querylang-basicsearch-instancebuttons-remove').on('click', function(){
-        if($('.querylang-basicsearch-instances').children().length > 1) $('.querylang-basicsearch-instances').children().last().remove();
+        if($('.querylang-basicsearch-instances').children().length > 1){
+            $('.querylang-basicsearch-instances').children().last().remove();
+            hideLastTokenInBetween();
+        }
     });
+
+    // Hide the last 'Tokens in between'
+    function hideLastTokenInBetween(){
+        $('.querylang-basicsearch-instances-instance-tokensinbetween').show();
+        $('.querylang-basicsearch-instances-instance-tokensinbetween').last().hide();
+    }
 
     // Build CQP Search
     function buildCqpSearch(querylang){
@@ -115,11 +131,17 @@ $(document).ready(function(){
             // Build tag
             if (tag.length > 0) tag = 'ta="' + tag + '"';
 
+            // Combine word, lemma, tag
             let include = []
             for (const i of [word, lemma, tag]) if (i.length > 0) include.push(i);
             if (include.length > 0) cqpSearchQueryInstance += "[" + include.join(" & ") + "]";
 
             // Build 'tokens in between'
+            let tibFrom = parseInt($(this).find('.querylang-basicsearch-instances-instance-tokensinbetween-from').val());
+            let tibTo = parseInt($(this).find('.querylang-basicsearch-instances-instance-tokensinbetween-to').val());
+            if (cqpSearchQueryInstance.length > 0 && tibFrom > 0 && tibTo > 0 && tibFrom < tibTo){
+                cqpSearchQueryInstance += "[]{" + tibFrom + "," + tibTo + "}";
+            }
 
             // Append to overall search query
             cqpSearchQuery += cqpSearchQueryInstance;
@@ -139,7 +161,7 @@ $(document).ready(function(){
     }
 
     // Execute Build CQP Search on 'keyup' (i.e. typing into a textbox)
-    $('.querylang').on('keyup', 'input[type="text"]', function(){
+    $('.querylang').on('keyup', 'input[type="text"], input[type="number"]', function(){
         buildCqpSearch($(this).closest('.querylang'));
     });
 
