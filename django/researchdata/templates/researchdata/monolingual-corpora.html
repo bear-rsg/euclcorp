@@ -35,7 +35,7 @@
         <div class="querylang-metadata">
             <h3>Metadata</h3>
             <label>Year <input type="text" class="querylang-metadata-year"></label>
-            <label>Court Type <input type="text" class="querylang-metadata-courttype"></label>
+            <label>Court Type <input type="text" class="querylang-metadata-court_type"></label>
             <label>Date <input type="text" class="querylang-metadata-date"></label>
             <label>Title <input type="text" class="querylang-metadata-title"></label>
             <label>URL <input type="text" class="querylang-metadata-url"></label>
@@ -47,7 +47,7 @@
         <div class="querylang-cqpsearch">
             <h3>CQP Search</h3>
             <form method="get" action="">
-                <input type="text" class="querylang-cqpsearch-query" name="cqpsearch" title="CQP Search" disabled>
+                <textarea class="querylang-cqpsearch-query" name="cqpsearch" title="CQP Search" style="width: 100%;" disabled></textarea>
                 <button type="submit">Submit</button>
             </form>
         </div>
@@ -97,7 +97,7 @@ $(document).ready(function(){
             let wordEndsWith = $(this).find('.querylang-basicsearch-instances-instance-endswith').prop('checked');
             let wordCaseSensitive = $(this).find('.querylang-basicsearch-instances-instance-casesensitive').prop('checked');
 
-            // Build 'word'
+            // Build word
             if (word.length > 0){
                 // Begins with
                 if (wordBeginsWith) word += ".*";
@@ -109,9 +109,11 @@ $(document).ready(function(){
                 if (!wordCaseSensitive) word += "%c";
             }
 
-            // Build 'lemma'
+            // Build lemma
+            if (lemma.length > 0) lemma = 'lemma="' + lemma + '"';
 
-            // Build 'tag'
+            // Build tag
+            if (tag.length > 0) tag = 'ta="' + tag + '"';
 
             let include = []
             for (const i of [word, lemma, tag]) if (i.length > 0) include.push(i);
@@ -123,21 +125,26 @@ $(document).ready(function(){
             cqpSearchQuery += cqpSearchQueryInstance;
         });
 
+        // Metadata
+        let metaNames = ['year', 'court_type', 'date', 'title', 'url', 'judges', 'citation'];
+        let metaQueries = [];  // Filled in below loop
+        for (const metaName of metaNames) {
+            let metaItem = querylang.find('.querylang-metadata-' + metaName).val();
+            if (metaItem) metaQueries.push('match.meta_' + metaName + '="' + metaItem + '"');
+        }
+        if (metaQueries.length > 0 && cqpSearchQuery.length > 0) cqpSearchQuery += "::" + metaQueries.join(" & ")
+
         // Set completed search in the CQP Search input
         querylang.find('.querylang-cqpsearch-query').val(cqpSearchQuery);
     }
 
     // Execute Build CQP Search on 'keyup' (i.e. typing into a textbox)
-    $('.querylang').on('keyup', '.querylang-basicsearch-instances-instance-token,\
-    .querylang-basicsearch-instances-instance-lexeme,\
-    .querylang-basicsearch-instances-instance-tag', function(){
+    $('.querylang').on('keyup', 'input[type="text"]', function(){
         buildCqpSearch($(this).closest('.querylang'));
     });
 
     // Execute Build CQP Search on 'change' (i.e. selecting a checkbox)
-    $('.querylang').on('change', '.querylang-basicsearch-instances-instance-beginswith,\
-    .querylang-basicsearch-instances-instance-endswith,\
-    .querylang-basicsearch-instances-instance-casesensitive', function(){
+    $('.querylang').on('change', 'input[type="checkbox"]', function(){
         buildCqpSearch($(this).closest('.querylang'));
     });
 
