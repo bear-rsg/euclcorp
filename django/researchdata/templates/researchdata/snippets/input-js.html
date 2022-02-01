@@ -1,0 +1,131 @@
+<script>
+$(document).ready(function(){
+
+    // Querylang Basic Search Instance Buttons: Add
+    $('.querylang-basicsearch-instancebuttons-add').on('click', function(){
+        $('.querylang-basicsearch-instances').append(`
+<div class="querylang-basicsearch-instances-instance">
+    <label>Token<input type="text" class="querylang-basicsearch-instances-instance-token"></label>
+    <label>Lexeme<input type="text" class="querylang-basicsearch-instances-instance-lexeme"></label>
+    <label>Gram. Tag<input type="text" class="querylang-basicsearch-instances-instance-tag"></label>
+    <!-- Checkboxes -->
+    <label><input type="checkbox" class="querylang-basicsearch-instances-instance-beginswith" name="beginswith">Begins with</label>
+    <label><input type="checkbox" class="querylang-basicsearch-instances-instance-endswith" name="endswith">Ends with</label>
+    <label><input type="checkbox" class="querylang-basicsearch-instances-instance-casesensitive" name="casesensitive">Case sensitive</label>
+    <!-- Tokens In Between -->
+    <label class="querylang-basicsearch-instances-instance-tokensinbetween">
+        Tokens in between
+        <input type="number" class="querylang-basicsearch-instances-instance-tokensinbetween-from">
+        <input type="number" class="querylang-basicsearch-instances-instance-tokensinbetween-to">
+    </label>
+</div>`);
+        hideLastTokenInBetween();
+    }).trigger('click');
+
+    // Querylang Basic Search Instance Buttons: Remove
+    $('.querylang-basicsearch-instancebuttons-remove').on('click', function(){
+        if($('.querylang-basicsearch-instances').children().length > 1){
+            $('.querylang-basicsearch-instances').children().last().remove();
+            hideLastTokenInBetween();
+        }
+    });
+
+    // Hide the last 'Tokens in between'
+    function hideLastTokenInBetween(){
+        $('.querylang-basicsearch-instances-instance-tokensinbetween').show();
+        $('.querylang-basicsearch-instances-instance-tokensinbetween').last().hide();
+    }
+
+    // Build CQP Search
+    function buildCqpSearch(querylang){
+
+        let cqpSearchQuery = "";  // Will be appended to during function
+
+        // For each basic search instance
+        querylang.find('.querylang-basicsearch-instances-instance').each(function() {
+
+            let cqpSearchQueryInstance = "";  // Will be appended to during loop
+
+            // Get values from inputs
+            let word = $(this).find('.querylang-basicsearch-instances-instance-token').val();
+            let lemma = $(this).find('.querylang-basicsearch-instances-instance-lexeme').val();
+            let tag = $(this).find('.querylang-basicsearch-instances-instance-tag').val();
+            let wordBeginsWith = $(this).find('.querylang-basicsearch-instances-instance-beginswith').prop('checked');
+            let wordEndsWith = $(this).find('.querylang-basicsearch-instances-instance-endswith').prop('checked');
+            let wordCaseSensitive = $(this).find('.querylang-basicsearch-instances-instance-casesensitive').prop('checked');
+
+            // Build word
+            if (word.length > 0){
+                // Begins with
+                if (wordBeginsWith) word += ".*";
+                // Ends with
+                else if (wordEndsWith) word = ".*" + word;
+                // Wrapper
+                word = 'word="' + word + '"';
+                // Case insensitive
+                if (!wordCaseSensitive) word += "%c";
+            }
+
+            // Build lemma
+            if (lemma.length > 0) lemma = 'lemma="' + lemma + '"';
+
+            // Build tag
+            if (tag.length > 0) tag = 'ta="' + tag + '"';
+
+            // Combine word, lemma, tag
+            let include = []
+            for (const i of [word, lemma, tag]) if (i.length > 0) include.push(i);
+            if (include.length > 0) cqpSearchQueryInstance += "[" + include.join(" & ") + "]";
+
+            // Build 'tokens in between'
+            let tibFrom = parseInt($(this).find('.querylang-basicsearch-instances-instance-tokensinbetween-from').val());
+            let tibTo = parseInt($(this).find('.querylang-basicsearch-instances-instance-tokensinbetween-to').val());
+            if (cqpSearchQueryInstance.length > 0 && tibFrom > 0 && tibTo > 0 && tibFrom < tibTo){
+                cqpSearchQueryInstance += "[]{" + tibFrom + "," + tibTo + "}";
+            }
+
+            // Append to overall search query
+            cqpSearchQuery += cqpSearchQueryInstance;
+        });
+
+        // Metadata
+        let metaNames = ['year', 'court_type', 'date', 'title', 'url', 'judges', 'citation'];
+        let metaQueries = [];  // Filled in below loop
+        for (const metaName of metaNames) {
+            let metaItem = querylang.find('.querylang-metadata-' + metaName).val();
+            if (metaItem) metaQueries.push('match.meta_' + metaName + '="' + metaItem + '"');
+        }
+        if (metaQueries.length > 0 && cqpSearchQuery.length > 0) cqpSearchQuery += "::" + metaQueries.join(" & ")
+
+        // Set completed search in the CQP Search input
+        querylang.find('.querylang-cqpsearch-query').val(cqpSearchQuery);
+    }
+
+    // Execute Build CQP Search on 'keyup' (i.e. typing into a textbox)
+    $('.querylang').on('keyup', 'input[type="text"], input[type="number"]', function(){
+        buildCqpSearch($(this).closest('.querylang'));
+    });
+
+    // Execute Build CQP Search on 'change' (i.e. selecting a checkbox)
+    $('.querylang').on('change', 'input[type="checkbox"]', function(){
+        buildCqpSearch($(this).closest('.querylang'));
+    });
+
+    // Empty CQP Search on load
+    $('.querylang-cqpsearch-query').val('');
+
+    // Input submit forms (e.g. search, frequency, collocation, ngrams)
+    $('#input-submit-forms .submit').on('click', function(e){
+        e.preventDefault(); // Stop form submitting
+        const form = $(this).parent();
+
+        // Set hidden CQP Search Queries values (loop through all and concat values)
+        cqpsearchqueries = "";
+        $('.querylang-cqpsearch-query').each(function(){ cqpsearchqueries += $(this).val(); });
+        form.find('[name="cqpsearchquery"]').val(cqpsearchqueries);
+
+        form.submit();
+    });
+
+});
+</script>
