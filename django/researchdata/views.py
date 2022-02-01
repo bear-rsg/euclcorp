@@ -1,5 +1,4 @@
 from django.views.generic import TemplateView
-from django.urls import reverse_lazy
 from . import cwb_exec
 
 
@@ -12,14 +11,14 @@ class MonolingualCorporaInputView(TemplateView):
 
 class MonolingualCorporaOutputView(TemplateView):
     """
-    Class-based view to show the Monolingual Corpora output (Search) template
+    Class-based view to show the Monolingual Corpora output template
     """
     template_name = 'researchdata/monolingual-corpora-output.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        output_type = self.request.GET.get('outputtype', 'search')
+        output_type = self.request.GET.get('outputtype', '')
         query_input = self.request.GET.get('cqpsearchquery', '')
 
         context['output_type'] = output_type
@@ -29,23 +28,38 @@ class MonolingualCorporaOutputView(TemplateView):
         if query_input != '':
             # Search
             if output_type == 'search':
+                # Options
+                option_ = self.request.GET.get('search-', '')
+                # Query
                 context['query_output'] = cwb_exec.query(
                     A=query_input,
                     length=50
                 )
             # Frequency
             if output_type == 'frequency':
-                pass
+                # Options
+                option_countby = self.request.GET.get('frequency-countby', '')
+                context['query_output'] = option_countby
             # Collocations
             if output_type == 'collocations':
-                pass
+                # Options
+                option_countby = self.request.GET.get('collocations-countby', '')
+                option_spanleft = self.request.GET.get('collocations-spanleft', '')
+                option_spanright = self.request.GET.get('collocations-spanright', '')
+                option_frequencythreshold = self.request.GET.get('collocations-frequencythreshold', '')
+                option_llr = self.request.GET.get('collocations-llr', '')
+                option_mi = self.request.GET.get('collocations-mi', '')
+                option_tscore = self.request.GET.get('collocations-tscore', '')
+                option_zscore = self.request.GET.get('collocations-zscore', '')
+                option_dice = self.request.GET.get('collocations-dice', '')
+                option_mi3 = self.request.GET.get('collocations-mi3', '')
+                option_frequency = self.request.GET.get('collocations-frequency', '')
             # N-grams
             if output_type == 'ngrams':
-                pass
+                # Options
+                option_ = self.request.GET.get('ngrams-', '')
 
-            return context
-        else:
-            return reverse_lazy('researchdata:monolingual-input')
+        return context
 
 
 class ParallelCorpusView(TemplateView):

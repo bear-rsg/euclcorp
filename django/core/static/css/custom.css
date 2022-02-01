@@ -3,7 +3,7 @@
 
 body {
     font-family: 'Be Vietnam Pro', sans-serif;
-    background: #353b48;
+    background: #272727;
     margin: 0;
     font-weight: 400;
 }
@@ -35,6 +35,7 @@ h1 span {
 h2 {
     font-size: 2.7em;
     font-weight: bold;
+    
 }
 
 h2:not(:first-of-type) {
@@ -43,9 +44,9 @@ h2:not(:first-of-type) {
 
 h3 {
     padding: 2em 0 0.5em 0;
-    color: #0F8138;
     text-align: left;
     font-size: 1.7em;
+    font-weight: bold;
 }
 
 select {
@@ -233,7 +234,7 @@ nav {
     width: 17rem;
     height: 100vh;
     color: white;
-    background: #353b48;
+    background: #272727;
 }
 
 #nav-head a {
@@ -312,6 +313,60 @@ main {
     min-height: 100vh;
     padding: 2.7rem 3.3rem;
     background: #F5F5F5;
+}
+
+/* ---------- Input ---------- */
+
+.querylang,
+#input-submit-forms form {
+    background: rgba(0, 0, 0, 0.1);
+    padding: 1em;
+    vertical-align: top;
+    margin: 1em;
+}
+.querylang h4 {
+    margin-top: 1em;
+}
+
+#input-submit-forms form {
+    display: inline-block;
+    width: calc(25% - 2.2em);
+    min-width: 15em;
+    min-height: 27em;
+}
+
+h4 {
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+#input-submit-forms form label {
+    font-size: 0.9em;
+    margin-top: 1em;
+    font-weight: bold;
+}
+
+#input-submit-forms form input,
+#input-submit-forms form select {
+    width: 100%;
+    display: block;
+}
+
+#input-submit-forms form input[type=checkbox] {
+    width: initial;
+    display: inline-block;
+    margin-right: 0.5em;
+}
+
+#input-submit-forms form button {
+    border: none;
+    background: #0F8138;
+    color: white;
+    display: block;
+    width: 100%;
+    padding: 0.5em;
+    border-radius: 0.2em;
+    margin-top: 1em;
 }
 
 /* ---------- Error Pages ---------- */

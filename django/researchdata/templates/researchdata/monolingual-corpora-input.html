@@ -18,42 +18,46 @@
 </section>
 
 
-<section class="querylang" data-lang="">
-
-    <!-- Basic Search -->
-    <div class="querylang-basicsearch">
-        <h3>Basic Search</h3>
-        <div class="querylang-basicsearch-instances">
-            <!-- Content filled via JS -->
+<section>
+    <h3>Query</h3>
+    <div class="querylang">
+        <!-- Basic Search -->
+        <div class="querylang-basicsearch">
+            <h4>Basic Search</h4>
+            <div class="querylang-basicsearch-instances">
+                <!-- Content filled via JS -->
+            </div>
+            <div class="querylang-basicsearch-instancebuttons">
+                <button class="querylang-basicsearch-instancebuttons-add">+</button>
+                <button class="querylang-basicsearch-instancebuttons-remove">-</button>
+            </div>
         </div>
-        <div class="querylang-basicsearch-instancebuttons">
-            <button class="querylang-basicsearch-instancebuttons-add">+</button>
-            <button class="querylang-basicsearch-instancebuttons-remove">-</button>
+        <!-- Metadata -->
+        <div class="querylang-metadata">
+            <h4>Metadata</h4>
+            <label>Year <input type="text" class="querylang-metadata-year"></label>
+            <label>Court Type <input type="text" class="querylang-metadata-court_type"></label>
+            <label>Date <input type="text" class="querylang-metadata-date"></label>
+            <label>Title <input type="text" class="querylang-metadata-title"></label>
+            <label>URL <input type="text" class="querylang-metadata-url"></label>
+            <label>Judges <input type="text" class="querylang-metadata-judges"></label>
+            <label>Citation / File ID <input type="text" class="querylang-metadata-citation"></label>
         </div>
-    </div>
-
-    <!-- Metadata -->
-    <div class="querylang-metadata">
-        <h3>Metadata</h3>
-        <label>Year <input type="text" class="querylang-metadata-year"></label>
-        <label>Court Type <input type="text" class="querylang-metadata-court_type"></label>
-        <label>Date <input type="text" class="querylang-metadata-date"></label>
-        <label>Title <input type="text" class="querylang-metadata-title"></label>
-        <label>URL <input type="text" class="querylang-metadata-url"></label>
-        <label>Judges <input type="text" class="querylang-metadata-judges"></label>
-        <label>Citation / File ID <input type="text" class="querylang-metadata-citation"></label>
-    </div>
-
-    <!-- CQP Search -->
-    <div class="querylang-cqpsearch">
-        <h3>CQP Search</h3>
-        <textarea class="querylang-cqpsearch-query" name="cqpsearchquery" title="CQP Search" style="width: 100%;"></textarea>
+        <!-- CQP Search -->
+        <div class="querylang-cqpsearch">
+            <h4>CQP Search</h4>
+            <textarea class="querylang-cqpsearch-query" name="cqpsearchquery" title="CQP Search" style="width: 100%;"></textarea>
+        </div>
     </div>
 
 </section>
 
 
 <section id="input-submit-forms">
+    <h3>Submit query</h3>
+    <p>
+        You can use the above query to view a search, frequency, collocations, or n-grams by clicking the relevant submit button below. You can also use the available options to customise your results.
+    </p>
     {% include "researchdata/snippets/input-submit-form-search.html" %}
     {% include "researchdata/snippets/input-submit-form-frequency.html" %}
     {% include "researchdata/snippets/input-submit-form-collocations.html" %}

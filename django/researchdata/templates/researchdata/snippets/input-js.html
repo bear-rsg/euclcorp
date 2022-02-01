@@ -15,8 +15,8 @@ $(document).ready(function(){
     <!-- Tokens In Between -->
     <label class="querylang-basicsearch-instances-instance-tokensinbetween">
         Tokens in between
-        <input type="number" class="querylang-basicsearch-instances-instance-tokensinbetween-from">
-        <input type="number" class="querylang-basicsearch-instances-instance-tokensinbetween-to">
+        <input type="number" title="tokensinbetween-from" class="querylang-basicsearch-instances-instance-tokensinbetween-from">
+        <input type="number" title="tokensinbetween-to" class="querylang-basicsearch-instances-instance-tokensinbetween-to">
     </label>
 </div>`);
         hideLastTokenInBetween();
@@ -115,7 +115,7 @@ $(document).ready(function(){
     $('.querylang-cqpsearch-query').val('');
 
     // Input submit forms (e.g. search, frequency, collocation, ngrams)
-    $('#input-submit-forms .submit').on('click', function(e){
+    $('.input-submit-form-submit').on('click', function(e){
         e.preventDefault(); // Stop form submitting
         const form = $(this).parent();
 
