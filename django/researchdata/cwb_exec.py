@@ -19,7 +19,6 @@ def query(context_left_or_right='',
     context_left_or_right = 'Left' or 'Right' or '' (empty) for both
     context = e.g. 5 words (see: https://cwb.sourceforge.io/files/CQP_Manual/2_3.html)
     primary_lang = e.g. BIRM_ENG, BIRM_DEU, etc. See all languages in REGISTRY path at top of this doc
-    show = 
     """
 
     # [word="plea"%c & lemma="ok" & ta="tag"]
