@@ -35,10 +35,33 @@ class MonolingualCorporaOutputView(TemplateView):
                 )
             # Frequency
             if output_type == 'frequency':
-                pass  # will be filled out in next PR
+                # Options
+                option_countby = self.request.GET.get('frequency-countby', '')
+                # Query
+                context['query_output'] = cwb_exec.frequency(
+                    F=query_input,
+                    countby=option_countby
+                )
             # Collocations
             if output_type == 'collocations':
-                pass  # will be filled out in next PR
+                # Options
+                option_countby = self.request.GET.get('collocations-countby', '')
+                option_spanleft = self.request.GET.get('collocations-spanleft', '')
+                option_spanright = self.request.GET.get('collocations-spanright', '')
+                option_frequencythreshold = self.request.GET.get('collocations-frequencythreshold', '')
+                option_llr = self.request.GET.get('collocations-llr', '')
+                option_mi = self.request.GET.get('collocations-mi', '')
+                option_tscore = self.request.GET.get('collocations-tscore', '')
+                option_zscore = self.request.GET.get('collocations-zscore', '')
+                option_dice = self.request.GET.get('collocations-dice', '')
+                option_mi3 = self.request.GET.get('collocations-mi3', '')
+                option_frequency = self.request.GET.get('collocations-frequency', '')
+                # Query
+                context['query_output'] = cwb_exec.collocations(
+                    LeftContext=option_spanleft,
+                    RightContext=option_spanright,
+                    query=query_input
+                )
             # N-grams
             if output_type == 'ngrams':
                 pass  # will be filled out in next PR

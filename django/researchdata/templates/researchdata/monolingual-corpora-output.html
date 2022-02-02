@@ -22,13 +22,13 @@
     <!-- Frequency -->
     {% if output_type == 'frequency' %}
         <h4>Frequency</h4>
-        {{ query_output | length }}
+        {{ query_output }}
     {% endif %}
 
     <!-- Collocations -->
     {% if output_type == 'collocations' %}
         <h4>Collocations</h4>
-        {{ query_output | length }}
+        {{ query_output }}
     {% endif %}
 
     <!-- N-grams -->
