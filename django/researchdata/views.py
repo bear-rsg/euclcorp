@@ -29,10 +29,10 @@ class MonolingualCorporaOutputView(TemplateView):
             # Search
             if output_type == 'search':
                 # Options
-                option_entriesperpage = self.request.GET.get('search-entriesperpage', '')
-                option_displaymode = self.request.GET.get('search-displaymode', '')
-                option_bigsizelimit = self.request.GET.get('search-bigsizelimit', '')
-                option_showmetadata = self.request.GET.get('search-showmetadata', '')
+                # option_entriesperpage = self.request.GET.get('search-entriesperpage', '')
+                # option_displaymode = self.request.GET.get('search-displaymode', '')
+                # option_bigsizelimit = self.request.GET.get('search-bigsizelimit', '')
+                # option_showmetadata = self.request.GET.get('search-showmetadata', '')
                 # Query
                 context['query_output'] = cwb_exec.query(
                     A=query_input,
@@ -50,17 +50,17 @@ class MonolingualCorporaOutputView(TemplateView):
             # Collocations
             if output_type == 'collocations':
                 # Options
-                option_countby = self.request.GET.get('collocations-countby', '')
+                # option_countby = self.request.GET.get('collocations-countby', '')
                 option_spanleft = self.request.GET.get('collocations-spanleft', '')
                 option_spanright = self.request.GET.get('collocations-spanright', '')
-                option_frequencythreshold = self.request.GET.get('collocations-frequencythreshold', '')
-                option_llr = self.request.GET.get('collocations-llr', '')
-                option_mi = self.request.GET.get('collocations-mi', '')
-                option_tscore = self.request.GET.get('collocations-tscore', '')
-                option_zscore = self.request.GET.get('collocations-zscore', '')
-                option_dice = self.request.GET.get('collocations-dice', '')
-                option_mi3 = self.request.GET.get('collocations-mi3', '')
-                option_frequency = self.request.GET.get('collocations-frequency', '')
+                # option_frequencythreshold = self.request.GET.get('collocations-frequencythreshold', '')
+                # option_llr = self.request.GET.get('collocations-llr', '')
+                # option_mi = self.request.GET.get('collocations-mi', '')
+                # option_tscore = self.request.GET.get('collocations-tscore', '')
+                # option_zscore = self.request.GET.get('collocations-zscore', '')
+                # option_dice = self.request.GET.get('collocations-dice', '')
+                # option_mi3 = self.request.GET.get('collocations-mi3', '')
+                # option_frequency = self.request.GET.get('collocations-frequency', '')
                 # Query
                 context['query_output'] = cwb_exec.collocations(
                     LeftContext=option_spanleft,
@@ -70,8 +70,11 @@ class MonolingualCorporaOutputView(TemplateView):
             # N-grams
             if output_type == 'ngrams':
                 # Options
-                option_ = self.request.GET.get('ngrams-', '')
-                # 
+                # option_countby = self.request.GET.get('ngrams-countby', '')
+                # option_size = self.request.GET.get('ngrams-size', '')
+                # option_frequencythreshold = self.request.GET.get('ngrams-frequencythreshold', '')
+                # Query
+                pass
 
         return context
 

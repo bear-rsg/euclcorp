@@ -24,8 +24,6 @@ def query(context_left_or_right='',
     [word="plea"%c & lemma="ok" & ta="tag"]
     """
 
-    
-
     cmd = [
         CQPCL,
         "-r",
@@ -44,8 +42,6 @@ def frequency(primary_lang='BIRM_ENG', F='[word="plea"%c]', countby='word'):
     Example command:
     BIRM_ENG; F=[word="plea"%c]; count F by word;
     """
-
-    
 
     cmd = [
         CQPCL,
@@ -69,7 +65,8 @@ def collocations(primary_lang='BIRM_ENG', LeftContext=3, RightContext=3, query='
         CQPCL,
         "-r",
         REGISTRY,
-        f'{primary_lang}; set LeftContext {LeftContext} words; set RightContext {RightContext} words; show -cpos; show +lemma; {query};'
+        f'{primary_lang}; set LeftContext {LeftContext} words;\
+        set RightContext {RightContext} words; show -cpos; show +lemma; {query};'
     ]
 
     return check_output(cmd, universal_newlines=True)
