@@ -28,6 +28,11 @@ class MonolingualCorporaOutputView(TemplateView):
         if query_input != '':
             # Search
             if output_type == 'search':
+                # Options
+                option_entriesperpage = self.request.GET.get('search-entriesperpage', '')
+                option_displaymode = self.request.GET.get('search-displaymode', '')
+                option_bigsizelimit = self.request.GET.get('search-bigsizelimit', '')
+                option_showmetadata = self.request.GET.get('search-showmetadata', '')
                 # Query
                 context['query_output'] = cwb_exec.query(
                     A=query_input,
@@ -64,7 +69,9 @@ class MonolingualCorporaOutputView(TemplateView):
                 )
             # N-grams
             if output_type == 'ngrams':
-                pass  # will be filled out in next PR
+                # Options
+                option_ = self.request.GET.get('ngrams-', '')
+                # 
 
         return context
 
