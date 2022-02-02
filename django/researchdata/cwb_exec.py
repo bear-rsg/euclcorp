@@ -72,5 +72,23 @@ def collocations(primary_lang='BIRM_ENG', LeftContext=3, RightContext=3, query='
     return check_output(cmd, universal_newlines=True)
 
 
+def ngrams(primary_lang='BIRM_ENG', Context=4, query='[word="plea"%c]'):
+    """
+    Performs a collocations command on CQP
+
+    Example command:
+    # BIRM_ENG; set Context 4 words; show -cpos; show +lemma; [word="plea"%c];
+    """
+
+    cmd = [
+        CQPCL,
+        "-r",
+        REGISTRY,
+        f'{primary_lang}; set Context {Context} words; show -cpos; show +lemma; {query};'
+    ]
+
+    return check_output(cmd, universal_newlines=True)
+
+
 if __name__ == "__main__":
     query()

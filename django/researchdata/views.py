@@ -71,10 +71,13 @@ class MonolingualCorporaOutputView(TemplateView):
             if output_type == 'ngrams':
                 # Options
                 # option_countby = self.request.GET.get('ngrams-countby', '')
-                # option_size = self.request.GET.get('ngrams-size', '')
+                option_size = self.request.GET.get('ngrams-size', '')
                 # option_frequencythreshold = self.request.GET.get('ngrams-frequencythreshold', '')
                 # Query
-                pass
+                context['query_output'] = cwb_exec.ngrams(
+                    Context=option_size,
+                    query=query_input
+                )
 
         return context
 
