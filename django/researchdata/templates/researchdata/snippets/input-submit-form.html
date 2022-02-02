@@ -1,0 +1,15 @@
+<!-- Submit form -->
+<form method="get" action="{% url 'researchdata:monolingual-output' %}">
+    <h4>{% block label %}{% endblock %}</h4>
+    <!-- Hidden values -->
+    <input type="hidden" name="cqpsearchquery">
+    <input type="hidden" name="outputtype" value="{% block type %}{% endblock %}">
+    <!-- Options -->
+    <div class="input-submit-form-options">
+        {% block options %}{% endblock %}
+    </div>
+    <!-- Submit -->
+    <button class="input-submit-form-submit">
+        <i class="fas fa-search"></i> {% block buttontext %}{% endblock %}
+    </button>
+</form>

@@ -1,0 +1,27 @@
+{% extends "researchdata/snippets/input-submit-form.html" %}
+{% load static %}
+
+
+{% block type %}ngrams{% endblock %}
+
+{% block label %}N-grams{% endblock %}
+
+{% block buttontext %}N-grams{% endblock %}
+
+{% block options %}
+    <div>
+        <label>Count by</label>
+        <select name="ngrams-countby" title="countby">
+            <option value="word">word</option>
+            <option value="lemma">lemma</option>
+        </select>
+    </div>
+    <div>
+        <label>Size</label>
+        <input type="number" name="ngrams-size" title="size">
+    </div>
+    <div>
+        <label>Frequency threshold</label>
+        <input type="number" name="ngrams-frequencythreshold" title="frequencythreshold">
+    </div>
+{% endblock %}

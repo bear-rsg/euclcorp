@@ -1,0 +1,19 @@
+{% extends "researchdata/snippets/input-submit-form.html" %}
+{% load static %}
+
+
+{% block type %}frequency{% endblock %}
+
+{% block label %}Frequency{% endblock %}
+
+{% block buttontext %}Frequency{% endblock %}
+
+{% block options %}
+    <div>
+        <label>Count by</label>
+        <select name="frequency-countby" title="countby">
+            <option value="word">word</option>
+            <option value="lemma">lemma</option>
+        </select>
+    </div>
+{% endblock %}

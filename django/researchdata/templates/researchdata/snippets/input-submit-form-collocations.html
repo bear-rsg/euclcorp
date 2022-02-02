@@ -1,0 +1,54 @@
+{% extends "researchdata/snippets/input-submit-form.html" %}
+{% load static %}
+
+
+{% block type %}collocations{% endblock %}
+
+{% block label %}Collocations{% endblock %}
+
+{% block buttontext %}Collocations{% endblock %}
+
+{% block options %}
+    <div>
+        <label>Count by</label>
+        <select name="collocations-countby" title="countby">
+            <option value="word">word</option>
+            <option value="lemma">lemma</option>
+        </select>
+    </div>
+    <div>
+        <label>Span (left)</label>
+        <input type="number" name="collocations-spanleft" title="spanleft">
+    </div>
+    <div>
+        <label>Span (right)</label>
+        <input type="number" name="collocations-spanright" title="spanright">
+    </div>
+    <div>
+        <label>Frequency threshold</label>
+        <input type="number" name="collocations-frequencythreshold" title="frequencythreshold">
+    </div>
+
+    <!-- Checkboxes -->
+    <div>
+        <label><input type="checkbox" name="collocations-llr" value="llr">Log-likehood ratio</label>
+    </div>
+    <div>
+        <label><input type="checkbox" name="collocations-mi" value="mi">MI</label>
+    </div>
+    <div>
+        <label><input type="checkbox" name="collocations-tscore" value="tscore">T-score</label>
+    </div>
+    <div>
+        <label><input type="checkbox" name="collocations-zscore" value="zscore">Z-score</label>
+    </div>
+    <div>
+        <label><input type="checkbox" name="collocations-dice" value="dice">Dice</label>
+    </div>
+    <div>
+        <label><input type="checkbox" name="collocations-mi3" value="mi3">MI3</label>
+    </div>
+    <div>
+        <label><input type="checkbox" name="collocations-frequency" value="frequency">Frequency</label>
+    </div>
+{% endblock %}

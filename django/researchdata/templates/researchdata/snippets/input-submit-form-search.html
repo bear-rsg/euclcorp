@@ -1,0 +1,30 @@
+{% extends "researchdata/snippets/input-submit-form.html" %}
+{% load static %}
+
+
+{% block type %}search{% endblock %}
+
+{% block label %}Search{% endblock %}
+
+{% block buttontext %}Search{% endblock %}
+
+{% block options %}
+    <div>
+        <label>Entries per page</label>
+        <input type="number" name="search-entriesperpage" title="entriesperpage">
+    </div>
+    <div>
+        <label>Default display mode</label>
+        <select name="search-displaymode" title="displaymode">
+            <option value="kwic">KWIC</option>
+            <option value="parallel">parallel</option>
+        </select>
+    </div>
+    <div>
+        <label>Big size limit</label>
+        <input type="number" name="search-bigsizelimit" title="bigsizelimit">
+    </div>
+    <div>
+        <label><input type="checkbox" name="search-showmetadata" value="showmetadata">Show metadata</label>
+    </div>
+{% endblock %}
