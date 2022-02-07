@@ -53,10 +53,6 @@ class MonolingualCorporaOutputView(TemplateView):
                 # Process output and add to context
                 output = output.strip().split(']')[:-1]
                 output = [re.sub(" \[.*", "", i).strip().split('\t') for i in output]
-                # output = [i.split(" ", 1) for i in output]
-                # for i in output:
-                    # i = i.split("\t")
-                print(output)
                 context['query_output'] = output
 
             # Collocations
