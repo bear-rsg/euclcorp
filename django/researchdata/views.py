@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView
 from . import cwb_exec
+import re
 
 
 class MonolingualCorporaInputView(TemplateView):
@@ -26,6 +27,7 @@ class MonolingualCorporaOutputView(TemplateView):
 
         # Requires a query input (otherwise redirect to input page)
         if query_input != '':
+
             # Search
             if output_type == 'search':
                 # Options
@@ -38,15 +40,25 @@ class MonolingualCorporaOutputView(TemplateView):
                     A=query_input,
                     length=50
                 )
+
             # Frequency
             if output_type == 'frequency':
                 # Options
                 option_countby = self.request.GET.get('frequency-countby', '')
                 # Query
-                context['query_output'] = cwb_exec.frequency(
+                output = cwb_exec.frequency(
                     F=query_input,
                     countby=option_countby
                 )
+                # Process output and add to context
+                output = output.strip().split(']')[:-1]
+                output = [re.sub(" \[.*", "", i).strip().split('\t') for i in output]
+                # output = [i.split(" ", 1) for i in output]
+                # for i in output:
+                    # i = i.split("\t")
+                print(output)
+                context['query_output'] = output
+
             # Collocations
             if output_type == 'collocations':
                 # Options
@@ -67,6 +79,7 @@ class MonolingualCorporaOutputView(TemplateView):
                     RightContext=option_spanright,
                     query=query_input
                 )
+
             # N-grams
             if output_type == 'ngrams':
                 # Options
