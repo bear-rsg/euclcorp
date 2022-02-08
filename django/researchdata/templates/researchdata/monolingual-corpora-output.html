@@ -49,7 +49,25 @@
     <!-- N-grams -->
     {% if output_type == 'ngrams' %}
         <h3>N-grams</h3>
-        {{ query_output }}
+        <p>
+            Size: {{ query_output | length }}
+        </p>
+        <table id="ngrams">
+            <tr>
+                <th>N-gram</th>
+                <th>Frequency</th>
+            </tr>
+        {% for item in query_output %}
+            <tr>
+                <td>
+                    {{ item.0 }}
+                </td>
+                <td>
+                    {{ item.1 }}
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
     {% endif %}
     
 </section>

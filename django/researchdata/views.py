@@ -83,10 +83,44 @@ class MonolingualCorporaOutputView(TemplateView):
                 option_size = self.request.GET.get('ngrams-size', '')
                 # option_frequencythreshold = self.request.GET.get('ngrams-frequencythreshold', '')
                 # Query
-                context['query_output'] = cwb_exec.ngrams(
+                output = cwb_exec.ngrams(
                     Context=option_size,
                     query=query_input
                 )
+
+                ngrams = {}
+                node = u''
+                
+                # options (temp set, get from client)
+                countBy = 'word'
+                size = 5
+                cs = False
+                threshold = 3
+
+                for line in output.splitlines():
+                    # print 'line:', line
+                    words = [el.rsplit ('/', 1)[countBy == 'lemma' and 1 or 0] for el in line.strip ().split ()]
+                    if countBy == 'word':
+                        words[size - 1] = words[size - 1][1:]
+                    else:
+                        words[size - 1] = words[size - 1][:-1]
+                    if not cs:
+                        words = [w.lower () for w in words]
+                    words = tuple (words)
+                    for ng in [words[i:i+size] for i in range (len (words) - size + 1)]:
+                        if ng in ngrams:
+                            ngrams[ng] += 1
+                        else:
+                            ngrams[ng] = 1
+                ngrams = sorted ([[ngram, freq] for ngram, freq in ngrams.items () if freq > threshold], key = lambda x: x[1], reverse = True)
+
+                # print(query)
+                print(len(ngrams))
+                for ngram in ngrams:
+                    word = ngram[0]
+                    ngram[0] = ' '.join(word)
+
+                context['query_output'] = ngrams
 
         return context
 
