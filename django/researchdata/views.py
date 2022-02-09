@@ -43,14 +43,17 @@ class MonolingualCorporaOutputView(TemplateView):
 
             # Frequency
             if output_type == 'frequency':
-                # Options
+                
+                # 1. Options
                 option_countby = self.request.GET.get('frequency-countby', '')
-                # Query
+                
+                # 2. Query
                 output = cwb_exec.frequency(
                     F=query_input,
                     countby=option_countby
                 )
-                # Process output and add to context
+                
+                # 3. Process output
                 output = output.strip().split(']')[:-1]
                 output = [re.sub(" \[.*", "", i).strip().split('\t') for i in output]
                 context['query_output'] = output
@@ -78,48 +81,39 @@ class MonolingualCorporaOutputView(TemplateView):
 
             # N-grams
             if output_type == 'ngrams':
-                # Options
-                # option_countby = self.request.GET.get('ngrams-countby', '')
-                option_size = self.request.GET.get('ngrams-size', '')
-                # option_frequencythreshold = self.request.GET.get('ngrams-frequencythreshold', '')
-                # Query
+                
+                # 1. Options
+                option_countby = self.request.GET.get('ngrams-countby', '')
+                option_size = int(self.request.GET.get('ngrams-size', 3))
+                option_frequencythreshold = int(self.request.GET.get('ngrams-frequencythreshold', 3))
+                
+                # 2. Query
                 output = cwb_exec.ngrams(
                     Context=option_size,
                     query=query_input
                 )
-
+                
+                # 3. Process output
                 ngrams = {}
                 node = u''
-                
-                # options (temp set, get from client)
-                countBy = 'word'
-                size = 5
-                cs = False
-                threshold = 3
-
+                cs = True if '%c' in query_input.split(']')[0] else false  # Case sensitity, from first/primary query
+                # Build ngrams
                 for line in output.splitlines():
-                    # print 'line:', line
-                    words = [el.rsplit ('/', 1)[countBy == 'lemma' and 1 or 0] for el in line.strip ().split ()]
-                    if countBy == 'word':
-                        words[size - 1] = words[size - 1][1:]
-                    else:
-                        words[size - 1] = words[size - 1][:-1]
+                    words = [el.rsplit('/', 1)[option_countby == 'lemma' and 1 or 0] for el in line.strip().split()]
                     if not cs:
                         words = [w.lower () for w in words]
                     words = tuple (words)
-                    for ng in [words[i:i+size] for i in range (len (words) - size + 1)]:
+                    for ng in [words[i:i+option_size] for i in range (len(words) - option_size + 1)]:
                         if ng in ngrams:
                             ngrams[ng] += 1
                         else:
                             ngrams[ng] = 1
-                ngrams = sorted ([[ngram, freq] for ngram, freq in ngrams.items () if freq > threshold], key = lambda x: x[1], reverse = True)
-
-                # print(query)
-                print(len(ngrams))
+                # Sort ngrams
+                ngrams = sorted ([[ngram, freq] for ngram, freq in ngrams.items () if freq > option_frequencythreshold], key = lambda x: x[1], reverse = True)
+                # Process ngram words lists
                 for ngram in ngrams:
-                    word = ngram[0]
-                    ngram[0] = ' '.join(word)
-
+                    ngram[0] = ' '.join(ngram[0])  # Convert list of words to string
+                    ngram[0] = re.sub("<(\S*)|(\S*)>", r"<strong>\1</strong>", ngram[0])  # Wrap query word in strong tags
                 context['query_output'] = ngrams
 
         return context
