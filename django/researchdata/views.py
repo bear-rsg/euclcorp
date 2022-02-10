@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
-from . import cwb_exec
+from . import (cwb_exec, cwb_process_search, cwb_process_frequency, cwb_process_collocations, cwb_process_ngrams)
 import re
 
 
@@ -20,13 +20,13 @@ class MonolingualCorporaOutputView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         output_type = self.request.GET.get('outputtype', '')
-        query_input = self.request.GET.get('cqpsearchquery', '')
+        cwb_query = self.request.GET.get('cqpsearchquery', '')
 
         context['output_type'] = output_type
-        context['query_input'] = query_input
+        context['cwb_query'] = cwb_query
 
         # Requires a query input (otherwise redirect to input page)
-        if query_input != '':
+        if cwb_query != '':
 
             # Search
             if output_type == 'search':
@@ -37,26 +37,26 @@ class MonolingualCorporaOutputView(TemplateView):
                 # option_showmetadata = self.request.GET.get('search-showmetadata', '')
                 # Query
                 context['query_output'] = cwb_exec.query(
-                    A=query_input,
+                    A=cwb_query,
                     length=50
                 )
 
             # Frequency
             if output_type == 'frequency':
                 
-                # 1. Options
-                option_countby = self.request.GET.get('frequency-countby', '')
-                
-                # 2. Query
-                output = cwb_exec.frequency(
-                    F=query_input,
-                    countby=option_countby
+                # 1. Get options from request
+                options = {
+                    'countby': self.request.GET.get('frequency-countby', '')
+                }
+
+                # 2. Query CWB
+                cwb_output = cwb_exec.frequency(
+                    F=cwb_query,
+                    countby=options['countby']
                 )
-                
-                # 3. Process output
-                output = output.strip().split(']')[:-1]
-                output = [re.sub(" \[.*", "", i).strip().split('\t') for i in output]
-                context['query_output'] = output
+
+                # 3. Return processed output
+                context['query_output'] = cwb_process_frequency.process(cwb_output)
 
             # Collocations
             if output_type == 'collocations':
@@ -76,45 +76,27 @@ class MonolingualCorporaOutputView(TemplateView):
                 context['query_output'] = cwb_exec.collocations(
                     LeftContext=option_spanleft,
                     RightContext=option_spanright,
-                    query=query_input
+                    query=cwb_query
                 )
 
             # N-grams
             if output_type == 'ngrams':
                 
-                # 1. Options
-                option_countby = self.request.GET.get('ngrams-countby', '')
-                option_size = int(self.request.GET.get('ngrams-size', 3))
-                option_frequencythreshold = int(self.request.GET.get('ngrams-frequencythreshold', 3))
-                
-                # 2. Query
-                output = cwb_exec.ngrams(
-                    Context=option_size,
-                    query=query_input
+                # 1. Get options from request
+                options = {
+                    'countby': self.request.GET.get('ngrams-countby', ''),
+                    'size': int(self.request.GET.get('ngrams-size', 3)),
+                    'frequencythreshold': int(self.request.GET.get('ngrams-frequencythreshold', 3))
+                }
+
+                # 2. Query CWB
+                cwb_output = cwb_exec.ngrams(
+                    Context=options['size'],
+                    query=cwb_query
                 )
-                
-                # 3. Process output
-                ngrams = {}
-                node = u''
-                cs = True if '%c' in query_input.split(']')[0] else false  # Case sensitity, from first/primary query
-                # Build ngrams
-                for line in output.splitlines():
-                    words = [el.rsplit('/', 1)[option_countby == 'lemma' and 1 or 0] for el in line.strip().split()]
-                    if not cs:
-                        words = [w.lower () for w in words]
-                    words = tuple (words)
-                    for ng in [words[i:i+option_size] for i in range (len(words) - option_size + 1)]:
-                        if ng in ngrams:
-                            ngrams[ng] += 1
-                        else:
-                            ngrams[ng] = 1
-                # Sort ngrams
-                ngrams = sorted ([[ngram, freq] for ngram, freq in ngrams.items () if freq > option_frequencythreshold], key = lambda x: x[1], reverse = True)
-                # Process ngram words lists
-                for ngram in ngrams:
-                    ngram[0] = ' '.join(ngram[0])  # Convert list of words to string
-                    ngram[0] = re.sub("<(\S*)|(\S*)>", r"<strong>\1</strong>", ngram[0])  # Wrap query word in strong tags
-                context['query_output'] = ngrams
+
+                # 3. Return processed output
+                context['query_output'] = cwb_process_ngrams.process(cwb_query, cwb_output, options)
 
         return context
 

@@ -3,13 +3,13 @@
 
 {% block main %}
 
-<section>
+<section id="output">
     <h2>Monolingual Corpora</h2>
 
     <div id="output-backbutton" onclick="history.back()">Back</div>
 
     <h3>Query</h3>
-    {{ query_input }}
+    {{ cwb_query }}
 
     <!-- Search -->
     {% if output_type == 'search' %}
@@ -22,7 +22,7 @@
     <!-- Frequency -->
     {% if output_type == 'frequency' %}
         <h3>Frequency</h3>
-        <table id="frequency">
+        <table id="output-frequency">
             <tr>
                 <th>#</th>
                 <th>Match</th>
@@ -50,7 +50,7 @@
         <p>
             Size: {{ query_output | length }}
         </p>
-        <table id="ngrams">
+        <table id="output-ngrams">
             <tr>
                 <th>#</th>
                 <th>N-gram</th>
