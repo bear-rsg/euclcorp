@@ -5,16 +5,16 @@ CQPCL = "/rds/projects/m/mcaulifk-euclcorp-website/cwb/bin/cqpcl"
 REGISTRY = "/rds/projects/m/mcaulifk-euclcorp-website/data/Corpus/Registry"
 
 
-def query(context_left_or_right='',
-          context='',
+def search(context_left_or_right='',
+          context='1s',
           primary_lang='BIRM_ENG',
           show='+lemma +tag +birm_deu +birm_fra',
           print_structures='meta_case_name, meta_case_number, meta_date, meta_doc_cellar',
           A='[lemma="plea"%c]',
           start=1,
-          length=5):
+          length=500):
     """
-    Performs a query on CQP
+    Performs a search command on CQP
 
     context_left_or_right = 'Left' or 'Right' or '' (empty) for both
     context = e.g. 5 words (see: https://cwb.sourceforge.io/files/CQP_Manual/2_3.html)

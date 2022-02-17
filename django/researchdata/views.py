@@ -17,6 +17,7 @@ class MonolingualCorporaOutputView(TemplateView):
     template_name = 'researchdata/monolingual-corpora-output.html'
 
     def get_context_data(self, **kwargs):
+        
         context = super().get_context_data(**kwargs)
 
         output_type = self.request.GET.get('outputtype', '')
@@ -31,15 +32,24 @@ class MonolingualCorporaOutputView(TemplateView):
             # Search
             if output_type == 'search':
                 # Options
-                # option_entriesperpage = self.request.GET.get('search-entriesperpage', '')
-                # option_displaymode = self.request.GET.get('search-displaymode', '')
-                # option_bigsizelimit = self.request.GET.get('search-bigsizelimit', '')
-                # option_showmetadata = self.request.GET.get('search-showmetadata', '')
-                # Query
-                context['query_output'] = cwb_exec.query(
+
+                # 1. Get options from request
+                options = {                    
+                    'entriesperpage': self.request.GET.get('search-entriesperpage', ''),
+                    'displaymode': self.request.GET.get('search-displaymode', ''),
+                    'bigsizelimit': self.request.GET.get('search-bigsizelimit', ''),
+                    'showmetadata': self.request.GET.get('search-showmetadata', '')
+                }
+
+                # 2. Query CWB
+                cwb_output = cwb_exec.search(
                     A=cwb_query,
-                    length=50
+                    length=500
                 )
+
+                # 3. Return processed output
+                context['query_output'] = cwb_process_search.process(cwb_query, cwb_output, options)
+
 
             # Frequency
             if output_type == 'frequency':
