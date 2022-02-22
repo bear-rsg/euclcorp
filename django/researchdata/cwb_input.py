@@ -7,7 +7,8 @@ def execute(cmd):
 
     cmd = list of CWB command args (excludes the default args shown below)
 
-    This script is designed to be used by other cwb_input_XXX.py files in this dir, e.g. search, frequency, ngrams, collocations
+    This script is designed to be used by other cwb_input_XXX.py files in this dir
+    e.g. search, frequency, ngrams, collocations
     """
 
     # Default command args, plus cmd args passed to function
