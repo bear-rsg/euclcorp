@@ -68,18 +68,17 @@ def process(cwb_query, cwb_output, options):
     """
 
     all_results = []
+    result = {}
+    languages = []
 
-    for line in cwb_output:
+    for i, line in enumerate(cwb_output):
 
         if line.strip().split(':')[0].isnumeric():
             # Each result starts with its metadata
-            # So append previous result object to result list (if exists - i.e. is not the first result)
-            # and start a new blank result object
-            try:
+            # So append previous result object to result list and start a new blank result object
+            if i > 0:  # skip first result
                 result['languages'] = languages
                 all_results.append(result)
-            except UnboundLocalError:
-                pass  # this will happen for the first loop, when result hasn't yet been declared
             result = {}
             languages = []
 
