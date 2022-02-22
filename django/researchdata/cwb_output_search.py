@@ -68,6 +68,8 @@ def process(cwb_query, cwb_output, options):
     """
 
     all_results = []
+    result = {}
+    languages = []
 
     for i, line in enumerate(cwb_output):
 
