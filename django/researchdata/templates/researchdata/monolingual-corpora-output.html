@@ -13,110 +13,22 @@
 
     <!-- Search -->
     {% if output_type == 'search' %}
-        <h3>Search</h3>
-        {% for item in query_output %}
-            <br><br>
-            <div class="output-search-item">
-                
-                <!-- Primary -->
-                <div class="output-search-item-primarydata">
-                    {# primary language is the first language in the languages list #}
-                    {{ item.languages.0.kwic }}
-                    <br>
-                </div>
-                
-                <!-- Secondary -->
-                <div class="output-search-item-secondarydata">
-
-                    <!-- Languages -->
-                    <div class="output-search-item-secondarydata-languages">
-                        {% for language in item.languages %} 
-                            <div class="output-search-item-secondarydata-languages-language">
-                                <strong>{{ language.language_code }}</strong>
-                                <p>
-                                    {{ language.content }}
-                                </p>
-                            </div>
-                        {% endfor %} 
-                    </div>
-
-                    <!-- Meta -->
-                    <div class="output-search-item-secondarydata-meta">
-                        <!-- Case name -->
-                        <div class="output-search-item-secondarydata-meta-casename">
-                            <strong>Case Name:</strong> {{ item.meta.case_name }}
-                        </div>
-                        <!-- Case number -->
-                        {% if item.meta.case_number %}
-                            <div class="output-search-item-secondarydata-meta-casenumber">
-                                <strong>Case Number:</strong> {{ item.meta.case_number }}
-                            </div>
-                        {% endif %}
-                        <!-- Case Date -->
-                        {% if item.meta.case_date %}
-                            <div class="output-search-item-secondarydata-meta-casedate">
-                                <strong>Case Date:</strong> {{ item.meta.case_date }}
-                            </div>
-                        {% endif %}
-                        <!-- Doc Cellar -->
-                        {% if item.meta.doc_cellar %}
-                            <div class="output-search-item-secondarydata-meta-doccellar">
-                                <strong>Doc Cellar:</strong> {{ item.meta.doc_cellar }}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                </div>
-                
-            </div>
-        {% endfor %}
+        {% include "researchdata/snippets/output-search.html" %}
     {% endif %}
 
     <!-- Frequency -->
     {% if output_type == 'frequency' %}
-        <h3>Frequency</h3>
-        <table id="output-frequency">
-            <tr>
-                <th>#</th>
-                <th>Match</th>
-                <th>Frequency</th>
-            </tr>
-        {% for item in query_output %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ item.1 }}</td>
-                <td>{{ item.0 }}</td>
-            </tr>
-        {% endfor %}
-        </table>
+        {% include "researchdata/snippets/output-frequency.html" %}
     {% endif %}
 
     <!-- Collocations -->
     {% if output_type == 'collocations' %}
-        <h3>Collocations</h3>
-        {{ query_output }}
+        {% include "researchdata/snippets/output-collocations.html" %}
     {% endif %}
 
     <!-- N-grams -->
     {% if output_type == 'ngrams' %}
-        <h3>N-grams</h3>
-        <p>
-            Size: {{ query_output | length }}
-        </p>
-        <table id="output-ngrams">
-            <tr>
-                <th>#</th>
-                <th>N-gram</th>
-                <th>Frequency</th>
-            </tr>
-        {% for item in query_output %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ item.0 | safe }}</td>
-                <td>{{ item.1 }}</td>
-            </tr>
-        {% endfor %}
-        </table>
+        {% include "researchdata/snippets/output-ngrams.html" %}
     {% endif %}
     
 </section>

@@ -1,0 +1,57 @@
+<h3>Search</h3>
+{% for item in query_output %}
+    <br><br>
+    <div class="output-search-item">
+        
+        <!-- Primary -->
+        <div class="output-search-item-primarydata">
+            {# primary language is the first language in the languages list #}
+            {{ item.languages.0.kwic }}
+            <br>
+        </div>
+        
+        <!-- Secondary -->
+        <div class="output-search-item-secondarydata">
+
+            <!-- Languages -->
+            <div class="output-search-item-secondarydata-languages">
+                {% for language in item.languages %} 
+                    <div class="output-search-item-secondarydata-languages-language">
+                        <strong>{{ language.language_code }}</strong>
+                        <p>
+                            {{ language.content }}
+                        </p>
+                    </div>
+                {% endfor %} 
+            </div>
+
+            <!-- Meta -->
+            <div class="output-search-item-secondarydata-meta">
+                <!-- Case name -->
+                <div class="output-search-item-secondarydata-meta-casename">
+                    <strong>Case Name:</strong> {{ item.meta.case_name }}
+                </div>
+                <!-- Case number -->
+                {% if item.meta.case_number %}
+                    <div class="output-search-item-secondarydata-meta-casenumber">
+                        <strong>Case Number:</strong> {{ item.meta.case_number }}
+                    </div>
+                {% endif %}
+                <!-- Case Date -->
+                {% if item.meta.case_date %}
+                    <div class="output-search-item-secondarydata-meta-casedate">
+                        <strong>Case Date:</strong> {{ item.meta.case_date }}
+                    </div>
+                {% endif %}
+                <!-- Doc Cellar -->
+                {% if item.meta.doc_cellar %}
+                    <div class="output-search-item-secondarydata-meta-doccellar">
+                        <strong>Doc Cellar:</strong> {{ item.meta.doc_cellar }}
+                    </div>
+                {% endif %}
+            </div>
+
+        </div>
+        
+    </div>
+{% endfor %}
