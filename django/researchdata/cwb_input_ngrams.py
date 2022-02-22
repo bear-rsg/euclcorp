@@ -10,9 +10,6 @@ def query(primary_lang='BIRM_ENG', Context=4, query='[word="plea"%c]'):
     """
 
     cmd = [
-        CQPCL,
-        "-r",
-        REGISTRY,
         f'{primary_lang}; set Context {Context} words; show -cpos; show +lemma; {query};'
     ]
 

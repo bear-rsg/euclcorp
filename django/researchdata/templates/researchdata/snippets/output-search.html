@@ -1,57 +1,59 @@
 <h3>Search</h3>
-{% for item in query_output %}
-    <br><br>
-    <div class="output-search-item">
-        
-        <!-- Primary -->
-        <div class="output-search-item-primarydata">
-            {# primary language is the first language in the languages list #}
-            {{ item.languages.0.kwic }}
-            <br>
-        </div>
-        
-        <!-- Secondary -->
-        <div class="output-search-item-secondarydata">
 
-            <!-- Languages -->
-            <div class="output-search-item-secondarydata-languages">
-                {% for language in item.languages %} 
-                    <div class="output-search-item-secondarydata-languages-language">
+<table id="output-search">
+    <tr>
+        <th>#</th>
+        <th>Left Context</th>
+        <th>Match</th>
+        <th>Right Context</th>
+        <th></th>
+    </tr>
+    {% for item in query_output %}
+
+        <!-- Primary Data -->
+        <tr class="output-search-item-primarydata">
+            <td class="narrow">{{ forloop.counter }}</td>
+            <td class="primarydata-leftcontext">{{ item.languages.0.kwic.left_context | safe }}</td>
+            <td class="primarydata-match">{{ item.languages.0.kwic.match | safe }}</td>
+            <td class="primarydata-rightcontext">{{ item.languages.0.kwic.right_context | safe }}</td>
+            <td class="narrow">[]</td>
+        </tr>
+
+        <!-- Secondary Data -->
+        <tr class="output-search-item-secondarydata">
+            <td colspan="5">
+                <!-- Languages -->
+                {% for language in item.languages %}
+                    <div class="secondarydata-language">
                         <strong>{{ language.language_code }}</strong>
-                        <p>
-                            {{ language.content }}
-                        </p>
+                        <br>
+                        {{ language.content }}
                     </div>
-                {% endfor %} 
-            </div>
-
-            <!-- Meta -->
-            <div class="output-search-item-secondarydata-meta">
-                <!-- Case name -->
-                <div class="output-search-item-secondarydata-meta-casename">
-                    <strong>Case Name:</strong> {{ item.meta.case_name }}
+                {% endfor %}
+                <!-- Meta data -->
+                <div class="secondarydata-meta">
+                    <strong>Metadata</strong>
+                    <label>Case Name:</label> {{ item.meta.case_name }}
+                    <br>
+                    <label>Case Number:</label> {{ item.meta.case_number }}
+                    <br>
+                    <label>Case Date:</label> {{ item.meta.case_date }}
+                    <br>
+                    <label>Doc Cellar:</label> {{ item.meta.doc_cellar }}
                 </div>
-                <!-- Case number -->
-                {% if item.meta.case_number %}
-                    <div class="output-search-item-secondarydata-meta-casenumber">
-                        <strong>Case Number:</strong> {{ item.meta.case_number }}
-                    </div>
-                {% endif %}
-                <!-- Case Date -->
-                {% if item.meta.case_date %}
-                    <div class="output-search-item-secondarydata-meta-casedate">
-                        <strong>Case Date:</strong> {{ item.meta.case_date }}
-                    </div>
-                {% endif %}
-                <!-- Doc Cellar -->
-                {% if item.meta.doc_cellar %}
-                    <div class="output-search-item-secondarydata-meta-doccellar">
-                        <strong>Doc Cellar:</strong> {{ item.meta.doc_cellar }}
-                    </div>
-                {% endif %}
-            </div>
+            </td>
+        </tr>
 
-        </div>
-        
-    </div>
-{% endfor %}
+    {% endfor %}
+</table>
+
+
+<script>
+    $(document).ready(function(){
+        //$('.toggle-secondarydata').on('click', function(){
+        $('tr.output-search-item-primarydata').on('click', function(){
+            // $(this).closest('tr').next('tr.output-search-item-secondarydata').toggle();
+            $(this).next('tr.output-search-item-secondarydata').toggle();
+        });
+    });
+</script>

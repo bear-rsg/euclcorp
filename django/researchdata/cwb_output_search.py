@@ -38,7 +38,29 @@ def kwic_html(primary_language_content):
     Left & Right = up to 10 words either side of the matched word in the text
     """
 
-    return primary_language_content[0:10]
+    words = primary_language_content.strip().split(' ')
+    match_index = 0
+    # Find index of match (first instance of a word starting with < angled bracket)
+    for i, word in enumerate(words):
+        # print(word)
+        try:
+            if word[0] == '<':
+                match_index = i
+                break
+        except IndexError:
+            pass  # expected
+    
+    # Determine the left and right context indices, to prevent the index from being invalid
+    # e.g. left context index below 0 or right context index greater than length of the words list
+    max_context = 10
+    left_context_index = 0 if match_index < max_context else match_index - max_context
+    right_context_index = len(words) if match_index + max_context > len(words) else match_index + max_context
+
+    return {
+        'left_context': ' '.join(words[left_context_index:match_index]),
+        'match': words[match_index][1:],
+        'right_context':  ' '.join(words[match_index + 1:right_context_index])
+    }
 
 
 def process(cwb_query, cwb_output, options):
