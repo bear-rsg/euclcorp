@@ -50,9 +50,7 @@
 
 <script>
     $(document).ready(function(){
-        //$('.toggle-secondarydata').on('click', function(){
         $('tr.output-search-item-primarydata').on('click', function(){
-            // $(this).closest('tr').next('tr.output-search-item-secondarydata').toggle();
             $(this).next('tr.output-search-item-secondarydata').toggle();
         });
     });
