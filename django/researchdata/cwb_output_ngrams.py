@@ -31,6 +31,6 @@ def process(cwb_query, cwb_output, options):
     # Process ngram words lists
     for ngram in ngrams:
         ngram[0] = ' '.join(ngram[0])  # Convert list of words to string
-        ngram[0] = re.sub("<(\S*)|(\S*)>", r"<strong>\1\2</strong>", ngram[0])  # Wrap query word in strong tags
+        ngram[0] = re.sub(r"<(\S*)|(\S*)>", r"<strong>\1\2</strong>", ngram[0])  # Wrap query word in strong tags
 
     return ngrams

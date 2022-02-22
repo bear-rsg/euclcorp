@@ -7,4 +7,4 @@ def process(cwb_output):
     to turn into a proper data format suitable for consumption in a Django template
     """
 
-    return [re.sub(" \[.*", "", i).strip().split('\t') for i in cwb_output.strip().split(']')[:-1]]
+    return [re.sub(r" \[.*", "", i).strip().split('\t') for i in cwb_output.strip().split(']')[:-1]]
