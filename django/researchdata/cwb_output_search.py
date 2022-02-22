@@ -79,7 +79,7 @@ def process(cwb_query, cwb_output, options):
             if i > 0:  # skip first result
                 result['languages'] = languages
                 all_results.append(result)
-            
+
             # Reset the result and languages vars
             result = {}
             languages = []
