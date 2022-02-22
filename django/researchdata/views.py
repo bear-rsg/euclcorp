@@ -1,6 +1,14 @@
-from django.views.generic import TemplateView
-from . import (cwb_exec, cwb_process_search, cwb_process_frequency, cwb_process_collocations, cwb_process_ngrams)
 import re
+from django.views.generic import TemplateView
+from . import (cwb_input_search,
+               cwb_input_frequency,
+               cwb_input_collocations,
+               cwb_input_ngrams,
+
+               cwb_output_search,
+               cwb_output_frequency,
+               cwb_output_collocations,
+               cwb_output_ngrams)
 
 
 class MonolingualCorporaInputView(TemplateView):
@@ -42,13 +50,13 @@ class MonolingualCorporaOutputView(TemplateView):
                 }
 
                 # 2. Query CWB
-                cwb_output = cwb_exec.search(
+                cwb_output = cwb_input_search.query(
                     A=cwb_query,
                     length=500
                 )
 
                 # 3. Return processed output
-                context['query_output'] = cwb_process_search.process(cwb_query, cwb_output, options)
+                context['query_output'] = cwb_output_search.process(cwb_query, cwb_output, options)
 
 
             # Frequency
@@ -60,13 +68,13 @@ class MonolingualCorporaOutputView(TemplateView):
                 }
 
                 # 2. Query CWB
-                cwb_output = cwb_exec.frequency(
+                cwb_output = cwb_input_frequency.query(
                     F=cwb_query,
                     countby=options['countby']
                 )
 
                 # 3. Return processed output
-                context['query_output'] = cwb_process_frequency.process(cwb_output)
+                context['query_output'] = cwb_output_frequency.process(cwb_output)
 
             # Collocations
             if output_type == 'collocations':
@@ -83,7 +91,7 @@ class MonolingualCorporaOutputView(TemplateView):
                 # option_mi3 = self.request.GET.get('collocations-mi3', '')
                 # option_frequency = self.request.GET.get('collocations-frequency', '')
                 # Query
-                context['query_output'] = cwb_exec.collocations(
+                context['query_output'] = cwb_input_collocations.query(
                     LeftContext=option_spanleft,
                     RightContext=option_spanright,
                     query=cwb_query
@@ -100,13 +108,13 @@ class MonolingualCorporaOutputView(TemplateView):
                 }
 
                 # 2. Query CWB
-                cwb_output = cwb_exec.ngrams(
+                cwb_output = cwb_input_ngrams.query(
                     Context=options['size'],
                     query=cwb_query
                 )
 
                 # 3. Return processed output
-                context['query_output'] = cwb_process_ngrams.process(cwb_query, cwb_output, options)
+                context['query_output'] = cwb_output_ngrams.process(cwb_query, cwb_output, options)
 
         return context
 
