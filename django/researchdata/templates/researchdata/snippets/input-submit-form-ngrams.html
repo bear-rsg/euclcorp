@@ -12,16 +12,16 @@
     <div>
         <label>Count by</label>
         <select name="ngrams-countby" title="countby">
-            <option value="word">word</option>
             <option value="lemma">lemma</option>
+            <option value="word">word</option>
         </select>
     </div>
     <div>
         <label>Size</label>
-        <input type="number" name="ngrams-size" title="size">
+        <input type="number" name="ngrams-size" title="size" value="5">
     </div>
     <div>
         <label>Frequency threshold</label>
-        <input type="number" name="ngrams-frequencythreshold" title="frequencythreshold">
+        <input type="number" name="ngrams-frequencythreshold" title="frequencythreshold" value="3">
     </div>
 {% endblock %}

@@ -1,0 +1,57 @@
+<h3>Search</h3>
+
+<table id="output-search">
+    <tr>
+        <th>#</th>
+        <th>Left Context</th>
+        <th>Match</th>
+        <th>Right Context</th>
+        <th></th>
+    </tr>
+    {% for item in query_output %}
+
+        <!-- Primary Data -->
+        <tr class="output-search-item-primarydata">
+            <td class="narrow">{{ forloop.counter }}</td>
+            <td class="primarydata-leftcontext">{{ item.languages.0.kwic.left_context | safe }}</td>
+            <td class="primarydata-match">{{ item.languages.0.kwic.match | safe }}</td>
+            <td class="primarydata-rightcontext">{{ item.languages.0.kwic.right_context | safe }}</td>
+            <td class="narrow">[]</td>
+        </tr>
+
+        <!-- Secondary Data -->
+        <tr class="output-search-item-secondarydata">
+            <td colspan="5">
+                <!-- Languages -->
+                {% for language in item.languages %}
+                    <div class="secondarydata-language">
+                        <strong>{{ language.language_code }}</strong>
+                        <br>
+                        {{ language.content }}
+                    </div>
+                {% endfor %}
+                <!-- Meta data -->
+                <div class="secondarydata-meta">
+                    <strong>Metadata</strong>
+                    <label>Case Name:</label> {{ item.meta.case_name }}
+                    <br>
+                    <label>Case Number:</label> {{ item.meta.case_number }}
+                    <br>
+                    <label>Case Date:</label> {{ item.meta.case_date }}
+                    <br>
+                    <label>Doc Cellar:</label> {{ item.meta.doc_cellar }}
+                </div>
+            </td>
+        </tr>
+
+    {% endfor %}
+</table>
+
+
+<script>
+    $(document).ready(function(){
+        $('tr.output-search-item-primarydata').on('click', function(){
+            $(this).next('tr.output-search-item-secondarydata').toggle();
+        });
+    });
+</script>

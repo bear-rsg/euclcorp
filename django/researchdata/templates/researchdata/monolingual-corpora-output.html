@@ -3,38 +3,32 @@
 
 {% block main %}
 
-<section>
+<section id="output">
     <h2>Monolingual Corpora</h2>
 
     <div id="output-backbutton" onclick="history.back()">Back</div>
 
-    <h4>Query</h4>
-    {{ query_input }}
+    <h3>CWB Query</h3>
+    {{ cwb_query }}
 
     <!-- Search -->
     {% if output_type == 'search' %}
-        <h4>Search</h4>
-        {% for q in query_output %}
-            <p>{{ q }}</p>
-        {% endfor %}
+        {% include "researchdata/snippets/output-search.html" %}
     {% endif %}
 
     <!-- Frequency -->
     {% if output_type == 'frequency' %}
-        <h4>Frequency</h4>
-        {{ query_output | length }}
+        {% include "researchdata/snippets/output-frequency.html" %}
     {% endif %}
 
     <!-- Collocations -->
     {% if output_type == 'collocations' %}
-        <h4>Collocations</h4>
-        {{ query_output | length }}
+        {% include "researchdata/snippets/output-collocations.html" %}
     {% endif %}
 
     <!-- N-grams -->
     {% if output_type == 'ngrams' %}
-        <h4>N-grams</h4>
-        {{ query_output | length }}
+        {% include "researchdata/snippets/output-ngrams.html" %}
     {% endif %}
     
 </section>

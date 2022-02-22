@@ -33,7 +33,7 @@ h1 span {
 }
 
 h2 {
-    font-size: 2.7em;
+    font-size: 2.3em;
     font-weight: bold;
     
 }
@@ -43,9 +43,9 @@ h2:not(:first-of-type) {
 }
 
 h3 {
-    padding: 2em 0 0.5em 0;
+    padding: 1.3em 0 0.2em 0;
     text-align: left;
-    font-size: 1.7em;
+    font-size: 1.5em;
     font-weight: bold;
 }
 
@@ -367,6 +367,88 @@ h4 {
     padding: 0.5em;
     border-radius: 0.2em;
     margin-top: 1em;
+}
+
+/* ---------- Output ---------- */
+
+#output table {
+    margin: 1em 0;
+    max-width: 100%;
+    min-width: 30%;
+    text-align: center;
+}
+
+#output table th {
+    text-align: center;
+}
+
+#output table th,
+#output table td {
+    padding: 0.4em;
+}
+
+#output table th {
+    background: #202020;
+    color: #DDD;
+}
+
+#output table tr {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+}
+
+td.narrow {
+    width: 2em;
+}
+
+/* Output - Search */
+
+#output-search {
+    width: 100%;
+}
+
+#output-search tr.output-search-item-primarydata {
+    cursor: pointer;
+}
+
+#output-search tr.output-search-item-primarydata:hover {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+#output-search .primarydata-match {
+    color: #0F8138;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+#output-search .primarydata-leftcontext {
+    text-align: right;
+}
+
+#output-search .primarydata-rightcontext {
+    text-align: left;
+}
+
+#output-search .output-search-item-secondarydata {
+    display: none;
+    background: rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.output-search-item-secondarydata td div {
+    padding: 0.64em 1.3em;
+    font-size: 0.9em;
+}
+
+#output-search .output-search-item-secondarydata strong {
+    font-size: 1.2em;
+}
+
+#output-search .output-search-item-secondarydata label {
+    font-weight: bold;
+    display: block;
+    margin: 0.5em 0 0 0;
 }
 
 /* ---------- Error Pages ---------- */
