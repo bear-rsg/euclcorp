@@ -9,9 +9,11 @@ $(document).ready(function(){
     <label>Lexeme<input type="text" class="querylang-basicsearch-instances-instance-lexeme"></label>
     <label>Gram. Tag<input type="text" class="querylang-basicsearch-instances-instance-tag"></label>
     <!-- Checkboxes -->
-    <label><input type="checkbox" class="querylang-basicsearch-instances-instance-beginswith" name="beginswith">Begins with</label>
-    <label><input type="checkbox" class="querylang-basicsearch-instances-instance-endswith" name="endswith">Ends with</label>
-    <label><input type="checkbox" class="querylang-basicsearch-instances-instance-casesensitive" name="casesensitive">Case sensitive</label>
+    <div class="checkboxgroup">
+        <label><input type="checkbox" class="querylang-basicsearch-instances-instance-beginswith" name="beginswith">Begins with</label>
+        <label><input type="checkbox" class="querylang-basicsearch-instances-instance-endswith" name="endswith">Ends with</label>
+        <label><input type="checkbox" class="querylang-basicsearch-instances-instance-casesensitive" name="casesensitive">Case sensitive</label>
+    </div>
     <!-- Tokens In Between -->
     <label class="querylang-basicsearch-instances-instance-tokensinbetween">
         Tokens in between
@@ -125,6 +127,14 @@ $(document).ready(function(){
         form.find('[name="cqpsearchquery"]').val(cqpsearchqueries);
 
         form.submit();
+    });
+
+    // Toggle options
+    $('.input-submit-form-options-toggle').on('click', function(){
+        // Show/hide the options
+        $(this).next('.input-submit-form-options-content').slideToggle(300);
+        // Scroll to bottom of page
+        $("html, body").animate({ scrollTop: $(document).height() }, 300);
     });
 
 });
