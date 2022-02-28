@@ -1,25 +1,5 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block main %}
-
-<section>
-    <h2>Monolingual Corpora</h2>
-</section>
-
-
-<section id="corpora">
-    <h3>Corpora</h3>
-    <select id="corpora-select">
-        <option value="uk">UK National Court</option>
-        <option value="french">French National Court</option>
-        <option value="austrian">Austrian National Court</option>
-    </select>
-</section>
-
-
-<section>
-    <h3>Build Query</h3>
+<div class="buildquery" data-id="{{ id }}">
+    <h3>Build Query: {{ name }}</h3>
     <div class="querylang">
         <!-- Basic Search -->
         <div class="querylang-basicsearch">
@@ -49,20 +29,4 @@
             <textarea class="querylang-cqpsearch-query" name="cqpsearchquery" title="CQP Search" style="width: 100%;"></textarea>
         </div>
     </div>
-
-</section>
-
-
-<section id="input-submit-forms">
-    <h3>Submit Query</h3>
-    {% include "researchdata/snippets/input-submit-form-search.html" %}
-    {% include "researchdata/snippets/input-submit-form-frequency.html" %}
-    {% include "researchdata/snippets/input-submit-form-collocations.html" %}
-    {% include "researchdata/snippets/input-submit-form-ngrams.html" %}
-</section>
-
-
-<!-- JS -->
-{% include "researchdata/snippets/input-js.html" %}
-
-{% endblock %}
+</div>

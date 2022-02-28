@@ -10,11 +10,54 @@ from . import (cwb_input_search,
                cwb_output_ngrams)
 
 
-class MonolingualCorporaInputView(TemplateView):
+class InputMonolingualView(TemplateView):
     """
-    Class-based view to show the Monolingual Corpora input template
+    Class-based view to show the input (monolingual) template
     """
-    template_name = 'researchdata/monolingual-corpora-input.html'
+    template_name = 'researchdata/input-monolingual.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['corpora_list'] = [
+            {
+                'id': 'uk',
+                'name': 'UK National Court'
+            },
+            {
+                'id': 'french',
+                'name': 'French National Court'
+            },
+            {
+                'id': 'austrian',
+                'name': 'Austrian National Court'
+            }
+        ]
+        return context
+
+
+class InputParallelView(TemplateView):
+    """
+    Class-based view to show the input (parallel) template
+    """
+    template_name = 'researchdata/input-parallel.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['corpora_list'] = [
+            {
+                'id': 'birm_eng',
+                'name': 'English'
+            },
+            {
+                'id': 'birm_fra',
+                'name': 'French'
+            },
+            {
+                'id': 'birm_deu',
+                'name': 'German'
+            }
+        ]
+        return context
 
 
 class MonolingualCorporaOutputView(TemplateView):
@@ -123,9 +166,3 @@ class MonolingualCorporaOutputView(TemplateView):
 
         return context
 
-
-class ParallelCorpusView(TemplateView):
-    """
-    Class-based view to show the Parallel Corpus template
-    """
-    template_name = 'researchdata/parallel-corpus.html'

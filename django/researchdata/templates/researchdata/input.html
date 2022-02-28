@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+
+<section>
+    <h2>{% block title %}{% endblock %}</h2>
+</section>
+
+<section id="corpora">
+    <h3>{% block corpora_title %}{% endblock %}</h3>
+    {% block corpora_list %}{% endblock %}
+</section>
+
+<section id="buildquery">
+    {% for corpora in corpora_list %}
+        <!-- Build Query -->
+        {% include "researchdata/snippets/input-buildquery-instance.html" with id=corpora.id name=corpora.name%}
+    {% endfor %}
+</section>
+
+<!-- Submit forms -->
+<section id="input-submit-forms">
+    <h3>Submit Query</h3>
+    {% include "researchdata/snippets/input-submit-form-search.html" %}
+    {% include "researchdata/snippets/input-submit-form-frequency.html" %}
+    {% include "researchdata/snippets/input-submit-form-collocations.html" %}
+    {% include "researchdata/snippets/input-submit-form-ngrams.html" %}
+</section>
+
+<!-- JS -->
+{% include "researchdata/snippets/input-js.html" %}
+
+{% endblock %}

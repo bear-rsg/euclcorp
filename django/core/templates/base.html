@@ -53,10 +53,10 @@
             <ul class="nav-links">
                 <!-- Welcome -->
                 <li><a class="{% if request.path == "/" %}active{% endif %}" href="{% url 'general:welcome' %}"><i class="fas fa-home"></i> Welcome</a></li>
-                <!-- Corpus: Monolingual -->
-                <li><a class="{% if "/corpus/monolingual/" in request.path %}active{% endif %}" href="{% url 'researchdata:monolingual-input' %}"><i class="fas fa-cube"></i> Monolingual Corpora</a></li>
                 <!-- Corpus: Parallel -->
                 <li><a class="{% if "/corpus/parallel/" in request.path %}active{% endif %}" href="{% url 'researchdata:parallel' %}"><i class="fas fa-cubes"></i> Parallel Corpus</a></li>
+                <!-- Corpus: Monolingual -->
+                <li><a class="{% if "/corpus/monolingual/" in request.path %}active{% endif %}" href="{% url 'researchdata:monolingual-input' %}"><i class="fas fa-cube"></i> Monolingual Corpora</a></li>
                 <!-- About -->
                 <li><a class="{% if request.path == "/about/" %}active{% endif %}" href="{% url 'general:about' %}"><i class="fas fa-info"></i> About</a></li>
                 <!-- Contact -->

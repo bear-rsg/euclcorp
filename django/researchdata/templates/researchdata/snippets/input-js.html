@@ -1,9 +1,45 @@
 <script>
 $(document).ready(function(){
 
+    // Show/hide Build Query instances
+    $('#corpora-monolingual-options').on('click', function(){
+        corporaId = $(this).val();
+        $('.buildquery').each(function(){
+            if($(this).attr('data-id') === corporaId) $(this).show();
+            else $(this).hide();
+        });
+        console.log(corporaId);
+    }).trigger('click');
+
+    // Toggle active state of multiple choice languages in Parallel Corpus
+    let corporaParallelOptionsSelected = []
+    $('#corpora-parallel-options-list li').on('click', function(){
+        selectedClassName = 'selected';
+        thisValue = $(this).attr('data-val')
+        // Deselect an already selected option
+        if($(this).hasClass(selectedClassName)){
+            $(this).removeClass(selectedClassName);
+            // Remove from list of selected options
+            corporaParallelOptionsSelected = corporaParallelOptionsSelected.filter(function(e) { return e !== thisValue; })
+        }
+        // Select an option
+        else if(!$(this).hasClass(selectedClassName)){
+            $(this).addClass(selectedClassName);
+            corporaParallelOptionsSelected.push(thisValue);
+        }
+        // Update the hidden form item, ready to pass to server
+        $('#corpora-parallel-options').val(String(corporaParallelOptionsSelected));
+        // Show/hide visibility of buildquery divs
+        $('.buildquery').each(function(){
+            if(corporaParallelOptionsSelected.includes($(this).attr('data-id'))) $(this).show();
+            else $(this).hide();
+        });
+    }).first().trigger('click');  // Trigger first, so at least one will be shown on page load
+
     // Querylang Basic Search Instance Buttons: Add
     $('.querylang-basicsearch-instancebuttons-add').on('click', function(){
-        $('.querylang-basicsearch-instances').append(`
+        let basicsearchInstances = $(this).closest('.querylang').find('.querylang-basicsearch-instances');
+        basicsearchInstances.append(`
 <div class="querylang-basicsearch-instances-instance">
     <label>Token<input type="text" class="querylang-basicsearch-instances-instance-token"></label>
     <label>Lexeme<input type="text" class="querylang-basicsearch-instances-instance-lexeme"></label>
@@ -21,21 +57,23 @@ $(document).ready(function(){
         <input type="number" title="tokensinbetween-to" class="querylang-basicsearch-instances-instance-tokensinbetween-to">
     </label>
 </div>`);
-        hideLastTokenInBetween();
+        hideLastTokenInBetween(basicsearchInstances);
     }).trigger('click');
 
     // Querylang Basic Search Instance Buttons: Remove
     $('.querylang-basicsearch-instancebuttons-remove').on('click', function(){
-        if($('.querylang-basicsearch-instances').children().length > 1){
-            $('.querylang-basicsearch-instances').children().last().remove();
-            hideLastTokenInBetween();
+        let basicsearchInstances = $(this).closest('.querylang').find('.querylang-basicsearch-instances');
+        if(basicsearchInstances.children().length > 1){
+            basicsearchInstances.children().last().remove();
+            hideLastTokenInBetween(basicsearchInstances);
+            buildCqpSearch($(this).closest('.querylang'));  // Update query
         }
     });
 
     // Hide the last 'Tokens in between'
-    function hideLastTokenInBetween(){
-        $('.querylang-basicsearch-instances-instance-tokensinbetween').show();
-        $('.querylang-basicsearch-instances-instance-tokensinbetween').last().hide();
+    function hideLastTokenInBetween(basicsearchInstances){
+        basicsearchInstances.find('.querylang-basicsearch-instances-instance-tokensinbetween').show();
+        basicsearchInstances.find('.querylang-basicsearch-instances-instance-tokensinbetween').last().hide();
     }
 
     // Build CQP Search

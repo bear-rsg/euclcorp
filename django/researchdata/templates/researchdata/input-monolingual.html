@@ -1,0 +1,18 @@
+{% extends "researchdata/input.html" %}
+{% load static %}
+
+
+<!-- Title -->
+{% block title %}Monolingual Corpora{% endblock %}
+
+<!-- Corpora -->
+{% block corpora_title %}Choose a Corpus{% endblock %}
+{% block corpora_list %}
+    <select id="corpora-monolingual-options">
+        <option value="uk">UK National Court</option>
+        <option value="french">French National Court</option>
+        <option value="austrian">Austrian National Court</option>
+    </select>
+{% endblock %}
+
+<!-- Build Query -->

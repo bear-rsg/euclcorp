@@ -42,7 +42,7 @@ h2:not(:first-of-type) {
 }
 
 h3 {
-    padding: 0.7em 0 0.1em 0;
+    padding: 1.3em 0 0.1em 0;
     text-align: left;
     font-size: 1.5em;
     font-weight: bold;
@@ -319,6 +319,32 @@ main {
 }
 
 /* ---------- Input ---------- */
+
+#corpora-parallel-options-list {
+    padding-left: 0;
+    list-style: none;
+}
+
+#corpora-parallel-options-list li {
+    display: inline-block;
+    padding: 0.5em 1em;
+    margin: 0.8em 0.4em;
+    background: #CCC;
+    cursor: pointer;
+}
+
+#corpora-parallel-options-list li:hover {
+    opacity: 0.85;
+}
+
+#corpora-parallel-options-list li.selected {
+    background: #0F8138;
+    color: white;
+}
+
+.buildquery {
+    display: none;
+}
 
 .querylang,
 #input-submit-forms form {
