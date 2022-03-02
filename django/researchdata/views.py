@@ -245,4 +245,3 @@ class MonolingualCorporaOutputView(TemplateView):
                 context['query_output'] = cwb_output_ngrams.process(cwb_query, cwb_output, options)
 
         return context
-
