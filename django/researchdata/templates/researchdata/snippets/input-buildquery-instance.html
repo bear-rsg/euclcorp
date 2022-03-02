@@ -1,32 +1,35 @@
 <div class="buildquery" data-id="{{ id }}">
-    <h3>Build Query: {{ name }}</h3>
-    <div class="querylang">
+    <div class="buildquery-head">
+        <span class="buildquery-head-name">{{ name }} Query</span>
+        <span class="buildquery-head-visibilityicon"><i class="fas fa-minus"></i></span>
+    </div>
+    <div class="buildquery-body">
         <!-- Basic Search -->
-        <div class="querylang-basicsearch">
+        <div class="buildquery-body-basicsearch">
             <h4>Basic Search</h4>
-            <div class="querylang-basicsearch-instances">
+            <div class="buildquery-body-basicsearch-instances">
                 <!-- Content filled via JS -->
             </div>
-            <div class="querylang-basicsearch-instancebuttons">
-                <button class="querylang-basicsearch-instancebuttons-add">+</button>
-                <button class="querylang-basicsearch-instancebuttons-remove">-</button>
+            <div class="buildquery-body-basicsearch-instancebuttons">
+                <button class="buildquery-body-basicsearch-instancebuttons-add">+</button>
+                <button class="buildquery-body-basicsearch-instancebuttons-remove">-</button>
             </div>
         </div>
         <!-- Metadata -->
-        <div class="querylang-metadata">
+        <div class="buildquery-body-metadata">
             <h4>Metadata</h4>
-            <label>Year <input type="text" class="querylang-metadata-year"></label>
-            <label>Court Type <input type="text" class="querylang-metadata-court_type"></label>
-            <label>Date <input type="text" class="querylang-metadata-date"></label>
-            <label>Title <input type="text" class="querylang-metadata-title"></label>
-            <label>URL <input type="text" class="querylang-metadata-url"></label>
-            <label>Judges <input type="text" class="querylang-metadata-judges"></label>
-            <label>Citation / File ID <input type="text" class="querylang-metadata-citation"></label>
+            <label>Year <input type="text" class="buildquery-body-metadata-year"></label>
+            <label>Court Type <input type="text" class="buildquery-body-metadata-court_type"></label>
+            <label>Date <input type="text" class="buildquery-body-metadata-date"></label>
+            <label>Title <input type="text" class="buildquery-body-metadata-title"></label>
+            <label>URL <input type="text" class="buildquery-body-metadata-url"></label>
+            <label>Judges <input type="text" class="buildquery-body-metadata-judges"></label>
+            <label>Citation / File ID <input type="text" class="buildquery-body-metadata-citation"></label>
         </div>
         <!-- CQP Search -->
-        <div class="querylang-cqpsearch">
+        <div class="buildquery-body-cqpsearch">
             <h4>CQP Search</h4>
-            <textarea class="querylang-cqpsearch-query" name="cqpsearchquery" title="CQP Search" style="width: 100%;"></textarea>
+            <textarea class="buildquery-body-cqpsearch-query" name="cqpsearchquery" title="CQP Search" style="width: 100%;"></textarea>
         </div>
     </div>
 </div>

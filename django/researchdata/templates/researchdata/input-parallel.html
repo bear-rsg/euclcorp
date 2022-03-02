@@ -10,9 +10,9 @@
 {% block corpora_list %}
     <input type="hidden" id="corpora-parallel-options">
     <ul id="corpora-parallel-options-list">
-        <li data-val="birm_eng">English</li>
-        <li data-val="birm_fra">French</li>
-        <li data-val="birm_deu">German</li>
+        {% for corpora in corpora_list %}
+            <li data-val="{{ corpora.id }}">{{ corpora.name }}</li>
+        {% endfor %}
     </ul>
 {% endblock %}
 

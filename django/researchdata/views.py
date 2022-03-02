@@ -55,6 +55,86 @@ class InputParallelView(TemplateView):
             {
                 'id': 'birm_deu',
                 'name': 'German'
+            },
+            {
+                'id': 'birm_bul',
+                'name': 'Bulgarian'
+            },
+            {
+                'id': 'birm_ces',
+                'name': 'Czech'
+            },
+            {
+                'id': 'birm_dan',
+                'name': 'Danish'
+            },
+            {
+                'id': 'birm_ell',
+                'name': 'Greek'
+            },
+            {
+                'id': 'birm_est',
+                'name': 'Estonian'
+            },
+            {
+                'id': 'birm_fin',
+                'name': 'Finnish'
+            },
+            {
+                'id': 'birm_hrv',
+                'name': 'Croatian'
+            },
+            {
+                'id': 'birm_hun',
+                'name': 'Hungarian'
+            },
+            {
+                'id': 'birm_ita',
+                'name': 'Italian'
+            },
+            {
+                'id': 'birm_lav',
+                'name': 'Latvian'
+            },
+            {
+                'id': 'birm_lit',
+                'name': 'Lithuanian'
+            },
+            {
+                'id': 'birm_mlt',
+                'name': 'Maltese'
+            },
+            {
+                'id': 'birm_nld',
+                'name': 'Dutch'
+            },
+            {
+                'id': 'birm_pol',
+                'name': 'Polish'
+            },
+            {
+                'id': 'birm_por',
+                'name': 'Portugese'
+            },
+            {
+                'id': 'birm_ron',
+                'name': 'Romanian'
+            },
+            {
+                'id': 'birm_slk',
+                'name': 'Slovak'
+            },
+            {
+                'id': 'birm_slv',
+                'name': 'Slovenian'
+            },
+            {
+                'id': 'birm_spa',
+                'name': 'Spanish'
+            },
+            {
+                'id': 'birm_swe',
+                'name': 'Swedish'
             }
         ]
         return context

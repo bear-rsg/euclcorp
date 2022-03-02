@@ -9,9 +9,9 @@
 {% block corpora_title %}Choose a Corpus{% endblock %}
 {% block corpora_list %}
     <select id="corpora-monolingual-options">
-        <option value="uk">UK National Court</option>
-        <option value="french">French National Court</option>
-        <option value="austrian">Austrian National Court</option>
+        {% for corpora in corpora_list %}
+            <option value="{{ corpora.id }}">{{ corpora.name }}</option>
+        {% endfor %}
     </select>
 {% endblock %}
 

@@ -42,7 +42,7 @@ h2:not(:first-of-type) {
 }
 
 h3 {
-    padding: 1.3em 0 0.1em 0;
+    padding: 1.2em 0 0.1em 0;
     text-align: left;
     font-size: 1.5em;
     font-weight: bold;
@@ -323,12 +323,13 @@ main {
 #corpora-parallel-options-list {
     padding-left: 0;
     list-style: none;
+    margin-bottom: 0;
 }
 
 #corpora-parallel-options-list li {
     display: inline-block;
-    padding: 0.5em 1em;
-    margin: 0.8em 0.4em;
+    padding: 0.3em 0.9em;
+    margin: 0.3em 0.3em;
     background: #CCC;
     cursor: pointer;
 }
@@ -344,9 +345,24 @@ main {
 
 .buildquery {
     display: none;
+    margin: 0.5em 0;
 }
 
-.querylang,
+.buildquery-head {
+    background: #0F8138;
+    cursor: pointer;
+    color: #EEE;
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 0.5em 1em;
+    width: 100%;
+}
+
+.buildquery-head-visibilityicon {
+    float: right;
+}
+
+.buildquery-body,
 #input-submit-forms form {
     background: rgba(0, 0, 0, 0.05);
     padding: 1em;
@@ -354,11 +370,11 @@ main {
     margin: 0em;
 }
 
-.querylang h4 {
+.buildquery-body h4 {
     margin-top: 1em;
 }
 
-.querylang button {
+.buildquery-body button {
     background: #0F8138;
     color: white;
     font-size: 1.5em;
@@ -368,22 +384,22 @@ main {
     margin: 0.4em 0.2em;
 }
 
-.querylang label {
+.buildquery-body label {
     font-size: 0.9em;
     font-weight: bold;
     margin: 0.2em 1em 0.2em 0.2em;
     display: inline-block;
 }
 
-.querylang input {
+.buildquery-body input {
     margin: 0.2em 0 0 0.3em;
 }
 
-.querylang input[type='checkbox'] {
+.buildquery-body input[type='checkbox'] {
     margin-right: 0.3em;
 }
 
-.querylang-basicsearch-instances-instance-tokensinbetween {
+.buildquery-body-basicsearch-instances-instance-tokensinbetween {
     display: block;
     width: 100%;
     padding: 0.8em 0;

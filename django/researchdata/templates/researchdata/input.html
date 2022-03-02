@@ -13,6 +13,7 @@
 </section>
 
 <section id="buildquery">
+    <h3>Build Query</h3>
     {% for corpora in corpora_list %}
         <!-- Build Query -->
         {% include "researchdata/snippets/input-buildquery-instance.html" with id=corpora.id name=corpora.name%}
