@@ -10,6 +10,42 @@ from . import (cwb_input_search,
                cwb_output_ngrams)
 
 
+# These are all of the languages listed in the corpus registry dir:
+# /rds/projects/m/mcaulifk-euclcorp-website/data/Corpus/Registry
+PARALLEL_CORPORA_LIST = [
+    {'id': 'birm_eng', 'name': 'English'},
+    {'id': 'birm_fra', 'name': 'French'},
+    {'id': 'birm_deu', 'name': 'German'},
+    {'id': 'birm_bul', 'name': 'Bulgarian'},
+    {'id': 'birm_ces', 'name': 'Czech'},
+    {'id': 'birm_dan', 'name': 'Danish'},
+    {'id': 'birm_ell', 'name': 'Greek'},
+    {'id': 'birm_est', 'name': 'Estonian'},
+    {'id': 'birm_fin', 'name': 'Finnish'},
+    {'id': 'birm_hrv', 'name': 'Croatian'},
+    {'id': 'birm_hun', 'name': 'Hungarian'},
+    {'id': 'birm_ita', 'name': 'Italian'},
+    {'id': 'birm_lav', 'name': 'Latvian'},
+    {'id': 'birm_lit', 'name': 'Lithuanian'},
+    {'id': 'birm_mlt', 'name': 'Maltese'},
+    {'id': 'birm_nld', 'name': 'Dutch'},
+    {'id': 'birm_pol', 'name': 'Polish'},
+    {'id': 'birm_por', 'name': 'Portugese'},
+    {'id': 'birm_ron', 'name': 'Romanian'},
+    {'id': 'birm_slk', 'name': 'Slovak'},
+    {'id': 'birm_slv', 'name': 'Slovenian'},
+    {'id': 'birm_spa', 'name': 'Spanish'},
+    {'id': 'birm_swe', 'name': 'Swedish'}
+]
+
+# These are all of the monolingual corpora included in the previous version of the website
+MONOLINGUAL_CORPORA_LIST = [
+    {'id': 'uk', 'name': 'UK National Court'},
+    {'id': 'french', 'name': 'French National Court'},
+    {'id': 'austrian', 'name': 'Austrian National Court'}
+]
+
+
 class InputMonolingualView(TemplateView):
     """
     Class-based view to show the input (monolingual) template
@@ -18,20 +54,7 @@ class InputMonolingualView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['corpora_list'] = [
-            {
-                'id': 'uk',
-                'name': 'UK National Court'
-            },
-            {
-                'id': 'french',
-                'name': 'French National Court'
-            },
-            {
-                'id': 'austrian',
-                'name': 'Austrian National Court'
-            }
-        ]
+        context['corpora_list'] = MONOLINGUAL_CORPORA_LIST
         return context
 
 
@@ -43,100 +66,7 @@ class InputParallelView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['corpora_list'] = [
-            {
-                'id': 'birm_eng',
-                'name': 'English'
-            },
-            {
-                'id': 'birm_fra',
-                'name': 'French'
-            },
-            {
-                'id': 'birm_deu',
-                'name': 'German'
-            },
-            {
-                'id': 'birm_bul',
-                'name': 'Bulgarian'
-            },
-            {
-                'id': 'birm_ces',
-                'name': 'Czech'
-            },
-            {
-                'id': 'birm_dan',
-                'name': 'Danish'
-            },
-            {
-                'id': 'birm_ell',
-                'name': 'Greek'
-            },
-            {
-                'id': 'birm_est',
-                'name': 'Estonian'
-            },
-            {
-                'id': 'birm_fin',
-                'name': 'Finnish'
-            },
-            {
-                'id': 'birm_hrv',
-                'name': 'Croatian'
-            },
-            {
-                'id': 'birm_hun',
-                'name': 'Hungarian'
-            },
-            {
-                'id': 'birm_ita',
-                'name': 'Italian'
-            },
-            {
-                'id': 'birm_lav',
-                'name': 'Latvian'
-            },
-            {
-                'id': 'birm_lit',
-                'name': 'Lithuanian'
-            },
-            {
-                'id': 'birm_mlt',
-                'name': 'Maltese'
-            },
-            {
-                'id': 'birm_nld',
-                'name': 'Dutch'
-            },
-            {
-                'id': 'birm_pol',
-                'name': 'Polish'
-            },
-            {
-                'id': 'birm_por',
-                'name': 'Portugese'
-            },
-            {
-                'id': 'birm_ron',
-                'name': 'Romanian'
-            },
-            {
-                'id': 'birm_slk',
-                'name': 'Slovak'
-            },
-            {
-                'id': 'birm_slv',
-                'name': 'Slovenian'
-            },
-            {
-                'id': 'birm_spa',
-                'name': 'Spanish'
-            },
-            {
-                'id': 'birm_swe',
-                'name': 'Swedish'
-            }
-        ]
+        context['corpora_list'] = PARALLEL_CORPORA_LIST
         return context
 
 
@@ -161,8 +91,6 @@ class MonolingualCorporaOutputView(TemplateView):
 
             # Search
             if output_type == 'search':
-                # Options
-
                 # 1. Get options from request
                 options = {
                     'entriesperpage': self.request.GET.get('search-entriesperpage', ''),
@@ -170,36 +98,30 @@ class MonolingualCorporaOutputView(TemplateView):
                     'bigsizelimit': self.request.GET.get('search-bigsizelimit', ''),
                     'showmetadata': self.request.GET.get('search-showmetadata', '')
                 }
-
                 # 2. Query CWB
                 cwb_output = cwb_input_search.query(
                     A=cwb_query,
                     length=500
                 )
-
                 # 3. Return processed output
                 context['query_output'] = cwb_output_search.process(cwb_query, cwb_output, options)
 
             # Frequency
-            if output_type == 'frequency':
-
+            elif output_type == 'frequency':
                 # 1. Get options from request
                 options = {
                     'countby': self.request.GET.get('frequency-countby', '')
                 }
-
                 # 2. Query CWB
                 cwb_output = cwb_input_frequency.query(
                     F=cwb_query,
                     countby=options['countby']
                 )
-
                 # 3. Return processed output
                 context['query_output'] = cwb_output_frequency.process(cwb_output)
 
             # Collocations
-            if output_type == 'collocations':
-
+            elif output_type == 'collocations':
                 # 1. Get options from request
                 options = {
                     'countby': self.request.GET.get('collocations-countby', ''),
@@ -214,33 +136,28 @@ class MonolingualCorporaOutputView(TemplateView):
                     'mi3': self.request.GET.get('collocations-mi3', ''),
                     'frequency': self.request.GET.get('collocations-frequency', ''),
                 }
-
                 # 2. Query CWB
                 cwb_output = cwb_input_collocations.query(
                     LeftContext=options['spanleft'],
                     RightContext=options['spanright'],
                     query=cwb_query
                 )
-
                 # 3. Return processed output
                 context['query_output'] = True
 
             # N-grams
-            if output_type == 'ngrams':
-
+            elif output_type == 'ngrams':
                 # 1. Get options from request
                 options = {
                     'countby': self.request.GET.get('ngrams-countby', ''),
                     'size': int(self.request.GET.get('ngrams-size', 3)),
                     'frequencythreshold': int(self.request.GET.get('ngrams-frequencythreshold', 3))
                 }
-
                 # 2. Query CWB
                 cwb_output = cwb_input_ngrams.query(
                     Context=options['size'],
                     query=cwb_query
                 )
-
                 # 3. Return processed output
                 context['query_output'] = cwb_output_ngrams.process(cwb_query, cwb_output, options)
 
