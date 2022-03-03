@@ -1,0 +1,18 @@
+{% extends "researchdata/input.html" %}
+{% load static %}
+
+
+<!-- Title -->
+{% block title %}Monolingual Corpora{% endblock %}
+
+<!-- Corpora -->
+{% block corpora_title %}Choose a Corpus{% endblock %}
+{% block corpora_list %}
+    <select id="corpora-monolingual-options">
+        {% for corpora in corpora_list %}
+            <option value="{{ corpora.id }}">{{ corpora.name }}</option>
+        {% endfor %}
+    </select>
+{% endblock %}
+
+<!-- Build Query -->

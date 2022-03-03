@@ -10,6 +10,9 @@
     <input type="hidden" name="outputtype" value="{% block type %}{% endblock %}">
     <!-- Options -->
     <div class="input-submit-form-options">
-        {% block options %}{% endblock %}
+        <div class="input-submit-form-options-toggle"><i class="fas fa-sliders-h"></i> Show/hide options</div>
+        <div class="input-submit-form-options-content">
+            {% block options %}{% endblock %}
+        </div>
     </div>
 </form>

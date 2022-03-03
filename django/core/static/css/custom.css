@@ -35,7 +35,6 @@ h1 span {
 h2 {
     font-size: 2.3em;
     font-weight: bold;
-    
 }
 
 h2:not(:first-of-type) {
@@ -43,7 +42,7 @@ h2:not(:first-of-type) {
 }
 
 h3 {
-    padding: 1.3em 0 0.2em 0;
+    padding: 1.2em 0 0.1em 0;
     text-align: left;
     font-size: 1.5em;
     font-weight: bold;
@@ -224,6 +223,10 @@ form.full-form button[type=submit].button-danger {
     background: #c23616;
 }
 
+.checkboxgroup {
+    display: inline-block;
+}
+
 /* ---------- Navigation ---------- */
 
 nav {
@@ -317,27 +320,105 @@ main {
 
 /* ---------- Input ---------- */
 
-.querylang,
+#corpora-parallel-options-list {
+    padding-left: 0;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+#corpora-parallel-options-list li {
+    display: inline-block;
+    padding: 0.3em 0.9em;
+    margin: 0.3em 0.3em;
+    background: #CCC;
+    cursor: pointer;
+}
+
+#corpora-parallel-options-list li:hover {
+    opacity: 0.85;
+}
+
+#corpora-parallel-options-list li.selected {
+    background: #0F8138;
+    color: white;
+}
+
+.buildquery {
+    display: none;
+    margin: 0.5em 0;
+}
+
+.buildquery-head {
+    background: #0F8138;
+    cursor: pointer;
+    color: #EEE;
+    font-size: 1.3em;
+    font-weight: bold;
+    padding: 0.5em 1em;
+    width: 100%;
+}
+
+.buildquery-head-visibilityicon {
+    float: right;
+}
+
+.buildquery-body,
 #input-submit-forms form {
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
     padding: 1em;
     vertical-align: top;
-    margin: 1em;
+    margin: 0em;
 }
-.querylang h4 {
+
+.buildquery-body h4 {
     margin-top: 1em;
+}
+
+.buildquery-body button {
+    background: #0F8138;
+    color: white;
+    font-size: 1.5em;
+    padding: 0em 1em;
+    border: none;
+    border-radius: 0.2em;
+    margin: 0.4em 0.2em;
+}
+
+.buildquery-body label {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin: 0.2em 1em 0.2em 0.2em;
+    display: inline-block;
+}
+
+.buildquery-body input {
+    margin: 0.2em 0 0 0.3em;
+}
+
+.buildquery-body input[type='checkbox'] {
+    margin-right: 0.3em;
+}
+
+.buildquery-body-basicsearch-instances-instance-tokensinbetween {
+    display: block;
+    width: 100%;
+    padding: 0.8em 0;
+    margin: 0.8em 0;
+    border-top: 1px solid #BBB;
+    border-bottom: 1px solid #BBB;
 }
 
 #input-submit-forms form {
     display: inline-block;
-    width: calc(25% - 2.2em);
+    width: calc(25% - 1.3em);
     min-width: 15em;
-    min-height: 27em;
+    margin: 0 0.5em 2em 0.5em;
 }
 
 h4 {
     font-weight: bold;
-    margin-bottom: 1em;
+    font-size: 1rem;
+    margin-bottom: 0.5em;
 }
 
 #input-submit-forms form label {
@@ -352,7 +433,7 @@ h4 {
     display: block;
 }
 
-#input-submit-forms form input[type=checkbox] {
+#input-submit-forms form label input[type='checkbox'] {
     width: initial;
     display: inline-block;
     margin-right: 0.5em;
@@ -367,6 +448,27 @@ h4 {
     padding: 0.5em;
     border-radius: 0.2em;
     margin-top: 1em;
+}
+
+.input-submit-form-options-toggle {
+    font-size: 0.85em;
+    cursor: pointer;
+    padding: 0.5em;
+    color: #505050;
+    margin-top: 1em;
+}
+
+.input-submit-form-options-toggle:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.input-submit-form-options-toggle i {
+    font-size: 1rem;
+    margin-right: 0.5em;
+}
+
+.input-submit-form-options-content {
+    display: none;
 }
 
 /* ---------- Output ---------- */

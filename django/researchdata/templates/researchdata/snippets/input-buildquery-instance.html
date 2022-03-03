@@ -1,0 +1,35 @@
+<div class="buildquery" data-id="{{ id }}">
+    <div class="buildquery-head">
+        <span class="buildquery-head-name">{{ name }} Query</span>
+        <span class="buildquery-head-visibilityicon"><i class="fas fa-minus"></i></span>
+    </div>
+    <div class="buildquery-body">
+        <!-- Basic Search -->
+        <div class="buildquery-body-basicsearch">
+            <h4>Basic Search</h4>
+            <div class="buildquery-body-basicsearch-instances">
+                <!-- Content filled via JS -->
+            </div>
+            <div class="buildquery-body-basicsearch-instancebuttons">
+                <button class="buildquery-body-basicsearch-instancebuttons-add">+</button>
+                <button class="buildquery-body-basicsearch-instancebuttons-remove">-</button>
+            </div>
+        </div>
+        <!-- Metadata -->
+        <div class="buildquery-body-metadata">
+            <h4>Metadata</h4>
+            <label>Year <input type="text" class="buildquery-body-metadata-year"></label>
+            <label>Court Type <input type="text" class="buildquery-body-metadata-court_type"></label>
+            <label>Date <input type="text" class="buildquery-body-metadata-date"></label>
+            <label>Title <input type="text" class="buildquery-body-metadata-title"></label>
+            <label>URL <input type="text" class="buildquery-body-metadata-url"></label>
+            <label>Judges <input type="text" class="buildquery-body-metadata-judges"></label>
+            <label>Citation / File ID <input type="text" class="buildquery-body-metadata-citation"></label>
+        </div>
+        <!-- CQP Search -->
+        <div class="buildquery-body-cqpsearch">
+            <h4>CQP Search</h4>
+            <textarea class="buildquery-body-cqpsearch-query" name="cqpsearchquery" title="CQP Search" style="width: 100%;"></textarea>
+        </div>
+    </div>
+</div>
