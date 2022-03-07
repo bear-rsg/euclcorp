@@ -88,8 +88,8 @@ class OutputView(TemplateView):
         parallel_languages_show = ''
         # Create str of languages ready for 'show' arg in cwb, e.g. " +birm_deu +birm_fra"
         if parallel_languages != '':
-            for l in parallel_languages.split(','):
-                parallel_languages_show += f" +{l}"
+            for language in parallel_languages.split(','):
+                parallel_languages_show += f" +{language}"
 
         context['output_type'] = output_type
         context['cwb_query'] = cwb_query
