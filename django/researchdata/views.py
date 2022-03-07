@@ -85,12 +85,9 @@ class OutputView(TemplateView):
 
         # Determine if input type was monolingual or parallel (parallel if languages are supplied)
         parallel_languages = self.request.GET.get('corpora-parallel-languages', '')
-        if parallel_languages == '':
-            input_type = 'monolingual'
-        else:
-            input_type = 'parallel'
-            # Create str of languages ready for 'show' arg in cwb, e.g. " +birm_deu +birm_fra"
-            parallel_languages_show = ""
+        parallel_languages_show = ''
+        # Create str of languages ready for 'show' arg in cwb, e.g. " +birm_deu +birm_fra"
+        if parallel_languages != '':
             for l in parallel_languages.split(','):
                 parallel_languages_show += f" +{l}"
 
