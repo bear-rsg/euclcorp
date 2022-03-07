@@ -4,7 +4,7 @@ from . import cwb_input
 def query(context_left_or_right='',
           context='1s',
           primary_lang='BIRM_ENG',
-          show='+lemma +tag +birm_deu +birm_fra',
+          show='+lemma +tag',
           print_structures='meta_case_name, meta_case_number, meta_date, meta_doc_cellar',
           A='[lemma="plea"%c]',
           start=1,

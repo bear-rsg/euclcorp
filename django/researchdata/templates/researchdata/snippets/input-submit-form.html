@@ -1,5 +1,5 @@
 <!-- Submit form -->
-<form method="get" action="{% url 'researchdata:output' %}">
+<form method="get" class="input-submit-form" action="{% url 'researchdata:output' %}">
     <h4>{% block label %}{% endblock %}</h4>
     <!-- Submit -->
     <button class="input-submit-form-submit">
@@ -7,6 +7,7 @@
     </button>
     <!-- Hidden values -->
     <input type="hidden" name="cqpsearchquery">
+    <input type="hidden" name="corpora-parallel-languages">
     <input type="hidden" name="outputtype" value="{% block type %}{% endblock %}">
     <!-- Options -->
     <div class="input-submit-form-options">

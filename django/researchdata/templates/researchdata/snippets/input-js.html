@@ -12,7 +12,7 @@ $(document).ready(function(){
 
     // Toggle active state of multiple choice languages in Parallel Corpus
     let corporaParallelOptionsSelected = []
-    $('#corpora-parallel-options-list li').on('click', function(){
+    $('#corpora-parallel-languages-list li').on('click', function(){
         selectedClassName = 'selected';
         thisValue = $(this).attr('data-val')
         // Deselect an already selected option
@@ -27,7 +27,7 @@ $(document).ready(function(){
             corporaParallelOptionsSelected.push(thisValue);
         }
         // Update the hidden form item, ready to pass to server
-        $('#corpora-parallel-options').val(String(corporaParallelOptionsSelected));
+        $('[name="corpora-parallel-languages"]').val(String(corporaParallelOptionsSelected));
         // Show/hide visibility of buildquery divs
         $('.buildquery').each(function(){
             if(corporaParallelOptionsSelected.includes($(this).attr('data-id'))) $(this).show();

@@ -320,13 +320,13 @@ main {
 
 /* ---------- Input ---------- */
 
-#corpora-parallel-options-list {
+#corpora-parallel-languages-list {
     padding-left: 0;
     list-style: none;
     margin-bottom: 0;
 }
 
-#corpora-parallel-options-list li {
+#corpora-parallel-languages-list li {
     display: inline-block;
     padding: 0.3em 0.9em;
     margin: 0.3em 0.3em;
@@ -334,11 +334,11 @@ main {
     cursor: pointer;
 }
 
-#corpora-parallel-options-list li:hover {
+#corpora-parallel-languages-list li:hover {
     opacity: 0.85;
 }
 
-#corpora-parallel-options-list li.selected {
+#corpora-parallel-languages-list li.selected {
     background: #0F8138;
     color: white;
 }

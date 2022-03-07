@@ -83,6 +83,17 @@ class OutputView(TemplateView):
         output_type = self.request.GET.get('outputtype', '')
         cwb_query = self.request.GET.get('cqpsearchquery', '')
 
+        # Determine if input type was monolingual or parallel (parallel if languages are supplied)
+        parallel_languages = self.request.GET.get('corpora-parallel-languages', '')
+        if parallel_languages == '':
+            input_type = 'monolingual'
+        else:
+            input_type = 'parallel'
+            # Create str of languages ready for 'show' arg in cwb, e.g. " +birm_deu +birm_fra"
+            parallel_languages_show = ""
+            for l in parallel_languages.split(','):
+                parallel_languages_show += f" +{l}"
+
         context['output_type'] = output_type
         context['cwb_query'] = cwb_query
 
@@ -93,6 +104,7 @@ class OutputView(TemplateView):
             if output_type == 'search':
                 # 1. Get options from request
                 options = {
+                    'languages': parallel_languages_show,
                     'entriesperpage': self.request.GET.get('search-entriesperpage', ''),
                     'displaymode': self.request.GET.get('search-displaymode', ''),
                     'bigsizelimit': self.request.GET.get('search-bigsizelimit', ''),
@@ -101,7 +113,8 @@ class OutputView(TemplateView):
                 # 2. Query CWB
                 cwb_output = cwb_input_search.query(
                     A=cwb_query,
-                    length=500
+                    length=500,
+                    show=f"+lemma +tag{parallel_languages_show}"
                 )
                 # 3. Return processed output
                 context['query_output'] = cwb_output_search.process(cwb_query, cwb_output, options)
