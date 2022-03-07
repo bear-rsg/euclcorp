@@ -473,6 +473,11 @@ h4 {
 
 /* ---------- Output ---------- */
 
+#output-backbutton {
+    cursor: pointer;
+    width: fit-content;
+}
+
 #output table {
     margin: 1em 0;
     max-width: 100%;

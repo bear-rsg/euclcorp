@@ -70,11 +70,11 @@ class InputParallelView(TemplateView):
         return context
 
 
-class MonolingualCorporaOutputView(TemplateView):
+class OutputView(TemplateView):
     """
-    Class-based view to show the Monolingual Corpora output template
+    Class-based view to show the output template
     """
-    template_name = 'researchdata/monolingual-corpora-output.html'
+    template_name = 'researchdata/output.html'
 
     def get_context_data(self, **kwargs):
 

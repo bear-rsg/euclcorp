@@ -4,9 +4,9 @@ from . import views
 app_name = 'researchdata'
 
 urlpatterns = [
-    # Monolingual Corpora
+    # Inputs
     path('monolingual/', views.InputMonolingualView.as_view(), name='monolingual-input'),
-    path('monolingual/results/', views.MonolingualCorporaOutputView.as_view(), name='monolingual-output'),
-    # Parallel Corpus
     path('parallel/', views.InputParallelView.as_view(), name='parallel'),
+    # Output
+    path('results/', views.OutputView.as_view(), name='output'),
 ]
