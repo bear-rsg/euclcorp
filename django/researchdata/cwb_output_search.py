@@ -1,3 +1,6 @@
+from . import views
+
+
 def cwb_output_language_human_readable(raw_text):
     """
     This takes in the raw text from the CWB output of text and makes it human readable.
@@ -100,7 +103,7 @@ def process(cwb_query, cwb_output, options):
             # Primary Language
             primary_language_content = cwb_output_language_human_readable(line.split('>:')[-1])
             languages.append({
-                'language_code': 'english',
+                'language_name': options['primary_language'],
                 'content': primary_language_content,
                 'kwic': kwic_html(primary_language_content)
             })
@@ -109,9 +112,18 @@ def process(cwb_query, cwb_output, options):
         if line.strip().startswith('-->'):
             lang = line.strip().split(' ', 1)
 
+            # Language code - e.g. 'birm_deu' in '-->birm_deu:'
+            language_code = lang[0][3:-1]
+
+            # Language name - e.g. 'birm_deu' > 'German'
+            for language in views.PARALLEL_CORPORA_LIST:
+                if language['id'] == language_code:
+                    language_name = language['name']
+
             # Add the finished sentence
             languages.append({
-                'language_code': lang[0][3:-1],  # e.g. 'birm_deu' in '-->birm_deu:'
+                'language_code': language_code,
+                'language_name': language_name,
                 # 'content': "".join([word for word in [l.split('/')[0] for l in lang[1:]]])
                 'content': cwb_output_language_human_readable(lang[1])
             })

@@ -320,13 +320,13 @@ main {
 
 /* ---------- Input ---------- */
 
-#corpora-parallel-options-list {
+#corpora-parallel-languages-list {
     padding-left: 0;
     list-style: none;
     margin-bottom: 0;
 }
 
-#corpora-parallel-options-list li {
+#corpora-parallel-languages-list li {
     display: inline-block;
     padding: 0.3em 0.9em;
     margin: 0.3em 0.3em;
@@ -334,11 +334,11 @@ main {
     cursor: pointer;
 }
 
-#corpora-parallel-options-list li:hover {
+#corpora-parallel-languages-list li:hover {
     opacity: 0.85;
 }
 
-#corpora-parallel-options-list li.selected {
+#corpora-parallel-languages-list li.selected {
     background: #0F8138;
     color: white;
 }
@@ -356,6 +356,10 @@ main {
     font-weight: bold;
     padding: 0.5em 1em;
     width: 100%;
+}
+
+.buildquery-head-primarylanguage {
+    margin-left: 1em;
 }
 
 .buildquery-head-visibilityicon {
@@ -406,6 +410,12 @@ main {
     margin: 0.8em 0;
     border-top: 1px solid #BBB;
     border-bottom: 1px solid #BBB;
+}
+
+.buildquery-body-cqpsearch-query {
+    min-height: 1.5em;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.3em;
 }
 
 #input-submit-forms form {
@@ -473,6 +483,15 @@ h4 {
 
 /* ---------- Output ---------- */
 
+#output-options {
+    background: rgba(0, 0, 0, 0.08);
+}
+
+#output-options div {
+    display: inline-block;
+    margin: 0.5em 1em 0.2em 1em;
+}
+
 #output table {
     margin: 1em 0;
     max-width: 100%;
@@ -509,7 +528,8 @@ td.narrow {
     width: 100%;
 }
 
-#output-search tr.output-search-item-primarydata {
+#output-search tr.output-search-item-primarydata,
+#output-search tr.output-search-item-primarydata input {
     cursor: pointer;
 }
 

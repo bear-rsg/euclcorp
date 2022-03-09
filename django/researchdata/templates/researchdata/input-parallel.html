@@ -6,10 +6,9 @@
 {% block title %}Parallel Corpora{% endblock %}
 
 <!-- Corpora -->
-{% block corpora_title %}Choose a Corpus{% endblock %}
+{% block corpora_title %}Choose Corpora{% endblock %}
 {% block corpora_list %}
-    <input type="hidden" id="corpora-parallel-options">
-    <ul id="corpora-parallel-options-list">
+    <ul id="corpora-parallel-languages-list">
         {% for corpora in corpora_list %}
             <li data-val="{{ corpora.id }}">{{ corpora.name }}</li>
         {% endfor %}

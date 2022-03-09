@@ -12,7 +12,7 @@ $(document).ready(function(){
 
     // Toggle active state of multiple choice languages in Parallel Corpus
     let corporaParallelOptionsSelected = []
-    $('#corpora-parallel-options-list li').on('click', function(){
+    $('#corpora-parallel-languages-list li').on('click', function(){
         selectedClassName = 'selected';
         thisValue = $(this).attr('data-val')
         // Deselect an already selected option
@@ -27,7 +27,7 @@ $(document).ready(function(){
             corporaParallelOptionsSelected.push(thisValue);
         }
         // Update the hidden form item, ready to pass to server
-        $('#corpora-parallel-options').val(String(corporaParallelOptionsSelected));
+        $('[name="corpora-parallel-languages"]').val(String(corporaParallelOptionsSelected));
         // Show/hide visibility of buildquery divs
         $('.buildquery').each(function(){
             if(corporaParallelOptionsSelected.includes($(this).attr('data-id'))) $(this).show();
@@ -51,6 +51,15 @@ $(document).ready(function(){
             thisVisibilityIcon.html('<i class="fas fa-plus"></i>');
         }
     });
+
+    // Set a build query instance as the primary language
+    $('.buildquery-head-primarylanguage').on('click', function(e){
+        e.stopPropagation();
+        // Remove all others first, as only 1 can be primary
+        $('.buildquery-head-primarylanguage').html('<i class="far fa-star"></i>').removeClass('selected');
+        // Set this as primary
+        $(this).html('<i class="fas fa-star"></i>').addClass('selected');
+    }).first().trigger('click');  // Set the first build query instance as primary language on page load
 
     // Buildquery Basic Search Instance Buttons: Add
     $('.buildquery-body-basicsearch-instancebuttons-add').on('click', function(){
@@ -154,7 +163,7 @@ $(document).ready(function(){
         if (metaQueries.length > 0 && cqpSearchQuery.length > 0) cqpSearchQuery += "::" + metaQueries.join(" & ")
 
         // Set completed search in the CQP Search input
-        buildqueryBody.find('.buildquery-body-cqpsearch-query').val(cqpSearchQuery);
+        buildqueryBody.find('.buildquery-body-cqpsearch-query').text(cqpSearchQuery);
     }
 
     // Execute Build CQP Search on 'keyup' (i.e. typing into a textbox)
@@ -168,18 +177,38 @@ $(document).ready(function(){
     });
 
     // Empty CQP Search on load
-    $('.buildquery-body-cqpsearch-query').val('');
+    $('.buildquery-body-cqpsearch-query').text('');
 
     // Input submit forms (e.g. search, frequency, collocation, ngrams)
     $('.input-submit-form-submit').on('click', function(e){
         e.preventDefault(); // Stop form submitting
         const form = $(this).parent();
 
-        // Set hidden CQP Search Queries values (loop through all and concat values)
-        cqpsearchqueries = "";
-        $('.buildquery-body-cqpsearch-query').each(function(){ cqpsearchqueries += $(this).val(); });
-        form.find('[name="cqpsearchquery"]').val(cqpsearchqueries);
+        // Set hidden form field values:
+        
+        // CQP Search Queries values
+        // Primary query
+        let cqpSearchQueries = $('.buildquery-head-primarylanguage.selected').closest('.buildquery').find('.buildquery-body-cqpsearch-query').text();
+        console.log(cqpSearchQueries)
+        // Add all optional secondary language queries, if they exist
+        $('.buildquery').each(function(){
+            let queryId = $(this).attr('data-id');
+            // If this buildquery instance isn't the primary language
+            if ($(this).find('.buildquery-head-primarylanguage:not(.selected)').length){
+                let thisQuery = $(this).find('.buildquery-body-cqpsearch-query').text();
+                // If it has a non-empty query, append this secondary language query
+                // E.g. each looks like  ": BIRM_DEU [word="german"%c]"
+                if (thisQuery.length) cqpSearchQueries += ': ' + queryId.toUpperCase() + ' ' + thisQuery;
+            }
+        });
+        console.log(cqpSearchQueries)
+        form.find('[name="cqpsearchquery"]').val(cqpSearchQueries);
 
+        // Primary language
+        let primarylang = $('.buildquery-head-primarylanguage.selected').closest('.buildquery').attr('data-id');
+        form.find('[name="primarylanguage"]').val(primarylang);
+
+        // Submit form
         form.submit();
     });
 

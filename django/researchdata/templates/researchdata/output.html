@@ -4,12 +4,13 @@
 {% block main %}
 
 <section id="output">
-    <h2>Monolingual Corpora</h2>
 
-    <div id="output-backbutton" onclick="history.back()">Back</div>
-
-    <h3>CWB Query</h3>
-    {{ cwb_query }}
+    <div id="output-details">
+        <strong>CWB Query: </strong> {{ cwb_query }}
+        <br>
+        <strong>Primary Language: </strong> {{ primary_language }}
+        <br>
+    </div>
 
     <!-- Search -->
     {% if output_type == 'search' %}
