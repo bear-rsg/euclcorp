@@ -103,8 +103,7 @@ def process(cwb_query, cwb_output, options):
             # Primary Language
             primary_language_content = cwb_output_language_human_readable(line.split('>:')[-1])
             languages.append({
-                'language_code': 'english',
-                'language_name': 'English',
+                'language_name': options['primary_language'],
                 'content': primary_language_content,
                 'kwic': kwic_html(primary_language_content)
             })

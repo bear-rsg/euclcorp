@@ -82,7 +82,14 @@ class OutputView(TemplateView):
 
         output_type = self.request.GET.get('outputtype', '')
         cwb_query = self.request.GET.get('cqpsearchquery', '')
-        primary_language = self.request.GET.get('primarylanguage', '').upper()
+
+        # Primary language
+        # The language code to pass to CWB in upper, e.g. BIRM_ENG
+        primary_language_code = self.request.GET.get('primarylanguage', '').upper()
+        # The user-friendly name to display in client, e.g. English
+        for language in PARALLEL_CORPORA_LIST:
+            if language['id'] == primary_language_code.lower():
+                primary_language_name = language['name']
 
         # Determine if input type was monolingual or parallel (parallel if languages are supplied)
         parallel_languages = self.request.GET.get('corpora-parallel-languages', '')
@@ -94,6 +101,7 @@ class OutputView(TemplateView):
 
         context['output_type'] = output_type
         context['cwb_query'] = cwb_query
+        context['primary_language'] = primary_language_name
 
         # Requires a query input (otherwise redirect to input page)
         if cwb_query != '':
@@ -102,7 +110,7 @@ class OutputView(TemplateView):
             if output_type == 'search':
                 # 1. Get options from request
                 options = {
-                    'primarylanguage': primary_language,
+                    'primary_language': primary_language_name,
                     'languages': parallel_languages_show,
                     'entriesperpage': self.request.GET.get('search-entriesperpage', ''),
                     'bigsizelimit': self.request.GET.get('search-bigsizelimit', '')
@@ -110,7 +118,7 @@ class OutputView(TemplateView):
                 print(parallel_languages_show)
                 # 2. Query CWB
                 cwb_output = cwb_input_search.query(
-                    primary_lang=options['primarylanguage'],
+                    primary_lang=primary_language_code,
                     A=cwb_query,
                     length=500,
                     show=f"+lemma +tag{options['languages']}"
@@ -122,12 +130,11 @@ class OutputView(TemplateView):
             elif output_type == 'frequency':
                 # 1. Get options from request
                 options = {
-                    'primarylanguage': primary_language,
                     'countby': self.request.GET.get('frequency-countby', '')
                 }
                 # 2. Query CWB
                 cwb_output = cwb_input_frequency.query(
-                    primary_lang=options['primarylanguage'],
+                    primary_lang=primary_language_code,
                     F=cwb_query,
                     countby=options['countby']
                 )
@@ -138,7 +145,6 @@ class OutputView(TemplateView):
             elif output_type == 'collocations':
                 # 1. Get options from request
                 options = {
-                    'primarylanguage': primary_language,
                     'countby': self.request.GET.get('collocations-countby', ''),
                     'spanleft': self.request.GET.get('collocations-spanleft', ''),
                     'spanright': self.request.GET.get('collocations-spanright', ''),
@@ -153,7 +159,7 @@ class OutputView(TemplateView):
                 }
                 # 2. Query CWB
                 cwb_output = cwb_input_collocations.query(
-                    primary_lang=options['primarylanguage'],
+                    primary_lang=primary_language_code,
                     LeftContext=options['spanleft'],
                     RightContext=options['spanright'],
                     query=cwb_query
@@ -165,14 +171,13 @@ class OutputView(TemplateView):
             elif output_type == 'ngrams':
                 # 1. Get options from request
                 options = {
-                    'primarylanguage': primary_language,
                     'countby': self.request.GET.get('ngrams-countby', ''),
                     'size': int(self.request.GET.get('ngrams-size', 3)),
                     'frequencythreshold': int(self.request.GET.get('ngrams-frequencythreshold', 3))
                 }
                 # 2. Query CWB
                 cwb_output = cwb_input_ngrams.query(
-                    primary_lang=options['primarylanguage'],
+                    primary_lang=primary_language_code,
                     Context=options['size'],
                     query=cwb_query
                 )
