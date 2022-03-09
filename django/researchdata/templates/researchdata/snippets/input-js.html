@@ -163,7 +163,7 @@ $(document).ready(function(){
         if (metaQueries.length > 0 && cqpSearchQuery.length > 0) cqpSearchQuery += "::" + metaQueries.join(" & ")
 
         // Set completed search in the CQP Search input
-        buildqueryBody.find('.buildquery-body-cqpsearch-query').val(cqpSearchQuery);
+        buildqueryBody.find('.buildquery-body-cqpsearch-query').text(cqpSearchQuery);
     }
 
     // Execute Build CQP Search on 'keyup' (i.e. typing into a textbox)
@@ -177,7 +177,7 @@ $(document).ready(function(){
     });
 
     // Empty CQP Search on load
-    $('.buildquery-body-cqpsearch-query').val('');
+    $('.buildquery-body-cqpsearch-query').text('');
 
     // Input submit forms (e.g. search, frequency, collocation, ngrams)
     $('.input-submit-form-submit').on('click', function(e){
@@ -187,10 +187,22 @@ $(document).ready(function(){
         // Set hidden form field values:
         
         // CQP Search Queries values
-        let cqpsearchqueries = "";
-        // loop through all and concat values
-        $('.buildquery-body-cqpsearch-query').each(function(){ cqpsearchqueries += $(this).val(); });
-        form.find('[name="cqpsearchquery"]').val(cqpsearchqueries);
+        // Primary query
+        let cqpSearchQueries = $('.buildquery-head-primarylanguage.selected').closest('.buildquery').find('.buildquery-body-cqpsearch-query').text();
+        console.log(cqpSearchQueries)
+        // Add all optional secondary language queries, if they exist
+        $('.buildquery').each(function(){
+            let queryId = $(this).attr('data-id');
+            // If this buildquery instance isn't the primary language
+            if ($(this).find('.buildquery-head-primarylanguage:not(.selected)').length){
+                let thisQuery = $(this).find('.buildquery-body-cqpsearch-query').text();
+                // If it has a non-empty query, append this secondary language query
+                // E.g. each looks like  ": BIRM_DEU [word="german"%c]"
+                if (thisQuery.length) cqpSearchQueries += ': ' + queryId.toUpperCase() + ' ' + thisQuery;
+            }
+        });
+        console.log(cqpSearchQueries)
+        form.find('[name="cqpsearchquery"]').val(cqpSearchQueries);
 
         // Primary language
         let primarylang = $('.buildquery-head-primarylanguage.selected').closest('.buildquery').attr('data-id');

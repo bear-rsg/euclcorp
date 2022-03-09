@@ -412,6 +412,12 @@ main {
     border-bottom: 1px solid #BBB;
 }
 
+.buildquery-body-cqpsearch-query {
+    min-height: 1.5em;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.3em;
+}
+
 #input-submit-forms form {
     display: inline-block;
     width: calc(25% - 1.3em);
