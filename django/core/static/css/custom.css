@@ -358,6 +358,10 @@ main {
     width: 100%;
 }
 
+.buildquery-head-primarylanguage {
+    margin-left: 1em;
+}
+
 .buildquery-head-visibilityicon {
     float: right;
 }
@@ -473,13 +477,13 @@ h4 {
 
 /* ---------- Output ---------- */
 
-#output-backbutton {
-    cursor: pointer;
-    width: fit-content;
+#output-options {
+    background: rgba(0, 0, 0, 0.08);
 }
 
-#output-backbutton:hover {
-    text-decoration: underline;
+#output-options div {
+    display: inline-block;
+    margin: 0.5em 1em 0.2em 1em;
 }
 
 #output table {
@@ -518,7 +522,8 @@ td.narrow {
     width: 100%;
 }
 
-#output-search tr.output-search-item-primarydata {
+#output-search tr.output-search-item-primarydata,
+#output-search tr.output-search-item-primarydata input {
     cursor: pointer;
 }
 

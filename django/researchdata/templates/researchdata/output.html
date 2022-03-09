@@ -5,10 +5,12 @@
 
 <section id="output">
 
-    <div id="output-backbutton" onclick="history.back()">&lt; Back</div>
-
-    <h3>CWB Query</h3>
-    {{ cwb_query }}
+    <div id="output-details">
+        <strong>CWB Query: </strong> {{ cwb_query }}
+        <br>
+        <strong>Primary Language: </strong> English
+        <br>
+    </div>
 
     <!-- Search -->
     {% if output_type == 'search' %}
