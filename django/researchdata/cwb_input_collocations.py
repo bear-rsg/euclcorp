@@ -9,9 +9,9 @@ def query(primary_lang='BIRM_ENG', LeftContext=3, RightContext=3, query='[word="
     BIRM_ENG; set LeftContext 5 words; set RightContext 2 words; show -cpos; show +lemma; [word="the"%c];
     """
 
-    cmd = [
+    cwb_cmd_args = [
         f'{primary_lang}; set LeftContext {LeftContext} words;\
         set RightContext {RightContext} words; show -cpos; show +lemma; {query};'
     ]
 
-    return cwb_input.execute(cmd)
+    return cwb_input.execute(cwb_cmd_args)

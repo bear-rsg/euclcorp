@@ -2,138 +2,166 @@ import re, sys, subprocess, json, os
 from math import log, sqrt
 from collections import OrderedDict as ordd
 
-def count_oe (xy, x, y, N, ws):
+def count_oe(xy, x, y, N, ws):
     return [xy, x - xy, y - xy, N - x - y + xy], [x * y / N * ws, x * ((N - y) / N) ** ws, y * ((N - x) / N) ** ws, (1 - (x / N + y / N)) * N]
 
-def mi (xy, x, y, N, ws = 1):
-    return log (xy / (x * y / N * ws) , 2)
+def mi(xy, x, y, N, ws = 1):
+    return log(xy / (x * y / N * ws) , 2)
 
-def mi3 (xy, x, y, N, ws = 1):
-    return log (xy ** 3/ (x * y / N * ws) , 2)
+def mi3(xy, x, y, N, ws = 1):
+    return log(xy ** 3/ (x * y / N * ws) , 2)
 
-def frequency (xy, x, y, N, ws = 1):
+def frequency(xy, x, y, N, ws = 1):
     return xy
 
-def ll (xy, x, y, N, ws = 1):
-    o, e = count_oe (xy, x, y, N, ws)
+def ll(xy, x, y, N, ws = 1):
+    o, e = count_oe(xy, x, y, N, ws)
     l = 0
     for i in [1,2]:
         for j in [1,2]:
             ind = (j - 1) + (i - 1) * 2
-            x = o[ind] * log (o[ind] / float (e[ind]))
+            x = o[ind] * log(o[ind] / float(e[ind]))
             l += x
     return 2 * l
 
-def t_score (xy, x, y, N, ws = 1):
-    o, e = count_oe (xy, x, y, N, ws)
-    return (o[0] - e[0]) / sqrt (o[0])
+def t_score(xy, x, y, N, ws = 1):
+    o, e = count_oe(xy, x, y, N, ws)
+    return(o[0] - e[0]) / sqrt(o[0])
 
-def z_score (xy, x, y, N, ws = 1):
-    o, e = count_oe (xy, x, y, N, ws)
-    return (o[0] - e[0]) / sqrt (e[0])
+def z_score(xy, x, y, N, ws = 1):
+    o, e = count_oe(xy, x, y, N, ws)
+    return(o[0] - e[0]) / sqrt(e[0])
 
-def dice (xy, x, y, N, ws = 1):
-    o, e = count_oe (xy, x, y, N, ws)
-    return 2 * o[0] / float (x + y)
+def dice(xy, x, y, N, ws = 1):
+    o, e = count_oe(xy, x, y, N, ws)
+    return 2 * o[0] / float(x + y)
 
-def loadFreq (path, cs):
+def loadFreq(path, cs):
     freq = {}
     count = 0.
-    with open (path) as fin:
+    with open(path) as fin:
         for line in fin:
-            fq, word = line.strip ().split ()
+            fq, word = line.strip().split()
             if cs:
-                word = word.lower ()
+                word = word.lower()
             if word in freq:
-                freq[word] += int (fq)
+                freq[word] += int(fq)
             else:
-                freq[word] = int (fq)
-            count += int (fq)
+                freq[word] = int(fq)
+            count += int(fq)
 
     return freq, count
 
-if __name__ == '__main__':
+
+
+
+# if __name__ == '__main__':
+def old_code(params, settings):
 
     import sys
-    sys.stderr.write ('params:\n')
-    sys.stderr.write (sys.argv[1] + '\n')
-    sys.stderr.write ('\nsettings:\n')
-    sys.stderr.write (sys.argv[2] + '\n\n')
+    sys.stderr.write('params:\n')
+    sys.stderr.write(sys.argv[1] + '\n')
+    sys.stderr.write('\nsettings:\n')
+    sys.stderr.write(sys.argv[2] + '\n\n')
 
     AMs = (('llr', ll, '%.2f'), ('mi', mi, '%.2f'), ('t-score', t_score, '%.2f'), ('z-score', z_score, '%.2f'), ('dice', dice, '%.4f'), ('mi3', mi3, '%.2f'), ('frequency', frequency, '%d'))
 
     freqDir = 'resources'
-    params = json.loads (sys.argv[1], encoding = 'utf8')
+    # params = json.loads(sys.argv[1], encoding = 'utf8')
     if 'sort' in params:
-        sort = [el[0] for el in AMs].index (params['sort']) + 1
+        sort = [el[0] for el in AMs].index(params['sort']) + 1
     else:
         sort = 1
-    settings = json.loads (sys.argv[2])
+    # settings = json.loads(sys.argv[2])
+
     #cwbdir, registry, corpus_name, query, primQuery, primLang = sys.argv[1:-2]
-    #query = query.replace (r'\"', '"')
-    #primQuery = primQuery.replace (r'\"', '"')
-    #langs = sys.argv[-2].replace (r'\"', '"')
-    #settings = json.loads (sys.argv[-1], encoding = 'utf8')
-    query = params['primquery'] + params['secondquery']
+    #query = query.replace(r'\"', '"')
+    #primQuery = primQuery.replace(r'\"', '"')
+    #langs = sys.argv[-2].replace(r'\"', '"')
+    #settings = json.loads(sys.argv[-1], encoding = 'utf8')
+    query = params['query']
     countBy = settings['countBy']
     threshold = settings['threshold']
-    chosenAms = [am for am in AMs if am[0] in settings['ams'] and settings['ams'][am[0]]]
+    chosenAms = [am for am in AMs if am[0] in settings['ams']]
     leftContext = settings['leftContextSize']
     rightContext = settings['rightContextSize']
-    freqPath = '../%s/freq_%s_%s.txt' % (freqDir, params['primlang'].lower (), countBy == 'lemma' and 'lemma' or 'word')
-    if '%c' in params['primquery']:
+
+
+    freqPath = '../%s/freq_%s_%s.txt' % (freqDir, params['primlang'].lower(), countBy == 'lemma' and 'lemma' or 'word')
+    if '%c' in params['query']:
         cs = True
     else:
         cs = False
-    freq, N = loadFreq (freqPath, cs)
+    freq, N = loadFreq(freqPath, cs)
 
-    columns = u''
-    for i in range (len (chosenAms)):
-        columns += u'<th class="sortable">%s</th>\n' % (chosenAms[i][0])
+    columns = ''
+    for i in range(len(chosenAms)):
+        columns += '<th class="sortable">%s</th>\n' % (chosenAms[i][0])
 
-    command = [os.path.join (params['cwbdir'], 'cqpcl'), '-r', params['registry'], '%s; set LeftContext %d words; set RightContext %d words; show -cpos; show +lemma; %s;' % (params['corpusname'], leftContext, rightContext, query)]
+    command = [params['cwbdir'], '-r', params['registry'], '%s; set LeftContext %d words; set RightContext %d words; show -cpos; show +lemma; %s;' % (params['corpusname'], leftContext, rightContext, query)]
 
-    sys.stderr.write (subprocess.list2cmdline (command) + '\n\n')
-    print query
-    proc = subprocess.Popen (command, stdout = subprocess.PIPE)
-    results = proc.communicate ()[0]
-    with open ('/var/www/html/Birmingham/resources/out.txt', 'w') as fout:
-        fout.write (results)
-    #print results.splitlines ()[:2]
+    sys.stderr.write(subprocess.list2cmdline(command) + '\n\n')
+    # print query
+    proc = subprocess.Popen(command, stdout = subprocess.PIPE)
+    results = proc.communicate()[0]
+    # with open('/var/www/html/Birmingham/resources/out.txt', 'w') as fout:
+        # fout.write(results)
+    #print results.splitlines()[:2]
+
+
+
+
+
+# def process(cwb_output):
+#     """
+#     Takes cwb_output (the string output generated by CWB) and processes it
+#     to turn into a proper data format suitable for consumption in a Django template
+#     """
+
+#     results = cwb_output
+#     countBy = 'lemma'
+#     leftContext = 3
+#     rightContext = 3
+#     cs = True
+
 
     collocates = {}
-    node = u''
-    for line in results.splitlines ():
-        words = [el.rsplit ('/', 1)[countBy == 'lemma' and 1 or 0] for el in line.strip ().split ()]
+    node = ''
+    for line in results.splitlines():
+        words = [el.rsplit('/', 1)[countBy == 'lemma' and 1 or 0] for el in line.strip().split()]
+
         if not node:
-            node = unicode (words[int (leftContext)], 'utf8')
+            try:
+                node = str(words[int(leftContext)])
+            except IndexError:
+                continue
             if countBy == 'lemma':
                 node = node[:-1]
             else:
                 node = node[1:]
         try:
-            del words[int (leftContext)]
+            del words[int(leftContext)]
         except IndexError:
             continue
-        words = list (set (words))
+        words = list(set(words))
         for word in words:
             if not word:
                 continue
-            if word.lower () == 'that/in':
+            if word.lower() == 'that/in':
                 word = 'that'
             if cs:
-                word = word.lower ()
+                word = word.lower()
             if word in collocates:
                 collocates[word] += 1
             else:
                 collocates[word] = 1
     if cs:
-        node = node.lower ()
+        node = node.lower()
     fa = freq[node]
     collocations = []
-    for collocate, fab in [coll for coll in collocates.items () if coll[1] >= threshold]:
+    for collocate, fab in [coll for coll in collocates.items() if coll[1] >= threshold]:
         if cs:
-            collocate = collocate.lower ()
+            collocate = collocate.lower()
         try:
             fb = freq[collocate]
         except KeyError:
@@ -144,46 +172,55 @@ if __name__ == '__main__':
             continue
         for amName, amFoo, format in chosenAms:
             try:
-                tmp.append (amFoo (fab, fa, fb, N))
+                tmp.append(amFoo(fab, fa, fb, N))
             except:
-                sys.stderr.write ('err: %s %f, %f, %f, %d' % (amName, fab, fa, fb, N))
-                tmp.append (0)
-        collocations.append (tmp)
-    collocations.sort (key = lambda x: x[sort], reverse = True)
-    queryRes = u''
+                sys.stderr.write('err: %s %f, %f, %f, %d' % (amName, fab, fa, fb, N))
+                tmp.append(0)
+        collocations.append(tmp)
+    collocations.sort(key = lambda x: x[sort], reverse = True)
+
+
+    queryRes = ''
     if leftContext > 2:
-        queryRes = u'%s[]{0,%d}%s' % ('%s', leftContext - 1, params['primquery'].replace ('%', '%%'))
+        queryRes = '%s[]{0,%d}%s' % ('%s', leftContext - 1, params['query'].replace('%', '%%'))
     elif leftContext:
-        queryRes = u'%s[]?%s' % ('%s', params['primquery'].replace ('%', '%%'))
+        queryRes = '%s[]?%s' % ('%s', params['query'].replace('%', '%%'))
     else:
-        queryRes = u'%s'
+        queryRes = '%s'
     if rightContext and leftContext:
-        queryRes += u' | '
+        queryRes += ' | '
     if rightContext > 2:
-        queryRes += u'%s[]{0,%d}%s' % (params['primquery'].replace ('%', '%%'), rightContext - 1, '%s')
+        queryRes += '%s[]{0,%d}%s' % (params['query'].replace('%', '%%'), rightContext - 1, '%s')
     elif rightContext:
-        queryRes += u'%s[]?%s' % (params['primquery'].replace ('%', '%%'), '%s')
+        queryRes += '%s[]?%s' % (params['query'].replace('%', '%%'), '%s')
     else:
-        queryRes += u'%s'
+        queryRes += '%s'
 
-    GET_dict = {u'query':  queryRes, u'langs': '-'.join (params['langs']), u'primlang': params['primlang']}
-    sys.stderr.write ('qR:' + queryRes + '\n\n')
+    GET_dict = {'query':  queryRes, 'langs': '-'.join(params['langs']), 'primlang': params['primlang']}
+    sys.stderr.write('qR:' + queryRes + '\n\n')
 
 
-    html_output = []
-    print len (collocations)
-    for ind, coll in enumerate (collocations):
-        word = unicode (coll[0], 'utf8')
-        ams = [chosenAms[i][2] % coll[i + 1] for i in range (len (chosenAms))]
+
+
+
+    # print len(collocations)
+    results = []
+    for ind, coll in enumerate(collocations):
+        word = str(coll[0])
+        ams = [chosenAms[i][2] % coll[i + 1] for i in range(len(chosenAms))]
         get_query = []
-        for name, val in GET_dict.items ():
-            if name == u'query':
-                #sys.stderr.write (val)
+        for name, val in GET_dict.items():
+            if name == 'query':
+                #sys.stderr.write(val)
                 try:
-                    get_query.append (u'query=' + val % (leftContext and '[%s="%s"%%c]' % (countBy, word) or u'', rightContext and '[%s="%s"%%c]' % (countBy, word) or u''))
+                    get_query.append('query=' + val % (leftContext and '[%s="%s"%%c]' % (countBy, word) or '', rightContext and '[%s="%s"%%c]' % (countBy, word) or ''))
                 except:
-                    sys.stderr.write (val + u' ! ' + unicode (type (val)) + u'\n')
+                    sys.stderr.write(val + ' ! ' + str(type(val)) + '\n')
                     raise
             else:
-                get_query.append (name + '=' + val)
-        print '\t'.join ([word] + ams)
+                get_query.append(name + '=' + val)
+        # print '\t'.join([word] + ams)
+        results.append((word, ams))
+
+    # return query, len(collocations), results
+    return results

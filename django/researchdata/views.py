@@ -6,7 +6,7 @@ from . import (cwb_input_search,
 
                cwb_output_search,
                cwb_output_frequency,
-               # cwb_output_collocations,
+               cwb_output_collocations,
                cwb_output_ngrams)
 
 
@@ -115,7 +115,6 @@ class OutputView(TemplateView):
                     'entriesperpage': self.request.GET.get('search-entriesperpage', ''),
                     'bigsizelimit': self.request.GET.get('search-bigsizelimit', '')
                 }
-                print(parallel_languages_show)
                 # 2. Query CWB
                 cwb_output = cwb_input_search.query(
                     primary_lang=primary_language_code,
@@ -148,7 +147,7 @@ class OutputView(TemplateView):
                     'countby': self.request.GET.get('collocations-countby', ''),
                     'spanleft': self.request.GET.get('collocations-spanleft', ''),
                     'spanright': self.request.GET.get('collocations-spanright', ''),
-                    'frequencythreshold': self.request.GET.get('collocations-frequencythreshold', ''),
+                    'threshold': self.request.GET.get('collocations-frequencythreshold', ''),
                     'llr': self.request.GET.get('collocations-llr', ''),
                     'mi': self.request.GET.get('collocations-mi', ''),
                     'tscore': self.request.GET.get('collocations-tscore', ''),
@@ -158,14 +157,35 @@ class OutputView(TemplateView):
                     'frequency': self.request.GET.get('collocations-frequency', ''),
                 }
                 # 2. Query CWB
-                cwb_output = cwb_input_collocations.query(
-                    primary_lang=primary_language_code,
-                    LeftContext=options['spanleft'],
-                    RightContext=options['spanright'],
-                    query=cwb_query
-                )
+                # cwb_output = cwb_input_collocations.query(
+                #     primary_lang=primary_language_code,
+                #     LeftContext=options['spanleft'],
+                #     RightContext=options['spanright'],
+                #     query=cwb_query
+                # )
                 # 3. Return processed output
-                context['query_output'] = True
+                # context['query_output'] = cwb_output  
+                # context['query_output'] = cwb_output_collocations.process(cwb_output)
+
+
+                # Try running old code
+                params = {
+                    'primlang': primary_language_code,
+                    'langs': ['birm_fra', 'birm_deu'],
+                    'query': cwb_query,
+                    # 'sort': 1,
+                    'cwbdir': '/usr/local/bin/cqplcl',
+                    'registry': '/srv/data/Corpus/Registry',
+                    'corpusname': 'BIRM_ENG'
+                }
+                settings = {
+                    'countBy': 'word',
+                    'threshold': 5,
+                    'leftContextSize': 3,
+                    'rightContextSize': 3,
+                    'ams': ['llr', 'mi', 't-score', 'z-score', 'dice', 'mi3', 'frequency']
+                }
+                context['query_output'] = cwb_output_collocations.old_code(params, settings)
 
             # N-grams
             elif output_type == 'ngrams':

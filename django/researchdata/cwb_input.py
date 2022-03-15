@@ -1,21 +1,21 @@
 from subprocess import check_output
 
 
-def execute(cmd):
+def execute(cwb_cmd_args):
     """
     Executes a command on CQP
 
-    cmd = list of CWB command args (excludes the default args shown below)
+    cwb_cmd_args = list of CWB command args (excludes the default args shown below)
 
-    This script is designed to be used by other cwb_input_XXX.py files in this dir
+    This function is designed to be used by other cwb_input_XXX.py files in this dir
     e.g. search, frequency, ngrams, collocations
     """
 
     # Default command args, plus cmd args passed to function
-    cmd = [
+    cwb_cmd = [
         "/rds/projects/m/mcaulifk-euclcorp-website/cwb/bin/cqpcl",
         "-r",
         "/rds/projects/m/mcaulifk-euclcorp-website/data/Corpus/Registry"
-    ] + cmd
+    ] + cwb_cmd_args
 
-    return check_output(cmd, universal_newlines=True)
+    return check_output(cwb_cmd, universal_newlines=True)
