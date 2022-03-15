@@ -142,28 +142,28 @@ class OutputView(TemplateView):
 
             # Collocations
             elif output_type == 'collocations':
-                # 1. Get options from request
-                options = {
-                    'countby': self.request.GET.get('collocations-countby', ''),
-                    'spanleft': self.request.GET.get('collocations-spanleft', ''),
-                    'spanright': self.request.GET.get('collocations-spanright', ''),
-                    'threshold': self.request.GET.get('collocations-frequencythreshold', ''),
-                    'llr': self.request.GET.get('collocations-llr', ''),
-                    'mi': self.request.GET.get('collocations-mi', ''),
-                    'tscore': self.request.GET.get('collocations-tscore', ''),
-                    'zscore': self.request.GET.get('collocations-zscore', ''),
-                    'dice': self.request.GET.get('collocations-dice', ''),
-                    'mi3': self.request.GET.get('collocations-mi3', ''),
-                    'frequency': self.request.GET.get('collocations-frequency', ''),
-                }
-                # 2. Query CWB
+                # # 1. Get options from request
+                # options = {
+                #     'countby': self.request.GET.get('collocations-countby', ''),
+                #     'spanleft': self.request.GET.get('collocations-spanleft', ''),
+                #     'spanright': self.request.GET.get('collocations-spanright', ''),
+                #     'threshold': self.request.GET.get('collocations-frequencythreshold', ''),
+                #     'llr': self.request.GET.get('collocations-llr', ''),
+                #     'mi': self.request.GET.get('collocations-mi', ''),
+                #     'tscore': self.request.GET.get('collocations-tscore', ''),
+                #     'zscore': self.request.GET.get('collocations-zscore', ''),
+                #     'dice': self.request.GET.get('collocations-dice', ''),
+                #     'mi3': self.request.GET.get('collocations-mi3', ''),
+                #     'frequency': self.request.GET.get('collocations-frequency', ''),
+                # }
+                # # 2. Query CWB
                 # cwb_output = cwb_input_collocations.query(
                 #     primary_lang=primary_language_code,
                 #     LeftContext=options['spanleft'],
                 #     RightContext=options['spanright'],
                 #     query=cwb_query
                 # )
-                # 3. Return processed output
+                # # 3. Return processed output
                 # context['query_output'] = cwb_output  
                 # context['query_output'] = cwb_output_collocations.process(cwb_output)
 
@@ -174,8 +174,8 @@ class OutputView(TemplateView):
                     'langs': ['birm_fra', 'birm_deu'],
                     'query': cwb_query,
                     # 'sort': 1,
-                    'cwbdir': '/usr/local/bin/cqplcl',
-                    'registry': '/srv/data/Corpus/Registry',
+                    'cwbdir': '/rds/projects/m/mcaulifk-euclcorp-website/cwb/bin/cqpcl',
+                    'registry': '/rds/projects/m/mcaulifk-euclcorp-website/data/Corpus/Registry',
                     'corpusname': 'BIRM_ENG'
                 }
                 settings = {

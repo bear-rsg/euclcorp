@@ -87,7 +87,10 @@ def old_code(params, settings):
     rightContext = settings['rightContextSize']
 
 
-    freqPath = '../%s/freq_%s_%s.txt' % (freqDir, params['primlang'].lower(), countBy == 'lemma' and 'lemma' or 'word')
+    # freqPath = '../%s/freq_%s_%s.txt' % (freqDir, params['primlang'].lower(), countBy == 'lemma' and 'lemma' or 'word')
+    module_dir = os.path.dirname(__file__)
+    freqPath = os.path.join(module_dir, 'freq_birm_eng_word.txt')
+
     if '%c' in params['query']:
         cs = True
     else:
@@ -124,6 +127,7 @@ def old_code(params, settings):
 #     rightContext = 3
 #     cs = True
 
+    results = str(results)
 
     collocates = {}
     node = ''
@@ -131,10 +135,7 @@ def old_code(params, settings):
         words = [el.rsplit('/', 1)[countBy == 'lemma' and 1 or 0] for el in line.strip().split()]
 
         if not node:
-            try:
-                node = str(words[int(leftContext)])
-            except IndexError:
-                continue
+            node = str(words[int(leftContext)])
             if countBy == 'lemma':
                 node = node[:-1]
             else:
@@ -159,6 +160,9 @@ def old_code(params, settings):
         node = node.lower()
     fa = freq[node]
     collocations = []
+    
+    # return collocates.items()
+
     for collocate, fab in [coll for coll in collocates.items() if coll[1] >= threshold]:
         if cs:
             collocate = collocate.lower()
@@ -178,6 +182,8 @@ def old_code(params, settings):
                 tmp.append(0)
         collocations.append(tmp)
     collocations.sort(key = lambda x: x[sort], reverse = True)
+
+    return collocations
 
 
     queryRes = ''
@@ -204,7 +210,8 @@ def old_code(params, settings):
 
 
     # print len(collocations)
-    results = []
+    results = "x"
+
     for ind, coll in enumerate(collocations):
         word = str(coll[0])
         ams = [chosenAms[i][2] % coll[i + 1] for i in range(len(chosenAms))]
@@ -220,7 +227,7 @@ def old_code(params, settings):
             else:
                 get_query.append(name + '=' + val)
         # print '\t'.join([word] + ams)
-        results.append((word, ams))
+        results += '\t'.join([word] + ams)
 
     # return query, len(collocations), results
     return results
