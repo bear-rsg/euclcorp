@@ -1,2 +1,29 @@
 <h3>Collocations</h3>
-{{ query_output }}
+<strong>{{ collocations_length }}</strong>
+
+<table id="output-frequency">
+    <tr>
+        <th>#</th>
+        <th>word</th>
+        <th>llr</th>
+        <th>mi</th>
+        <th>t-score</th>
+        <th>z-score</th>
+        <th>dice</th>
+        <th>mi3</th>
+        <th>frequency</th>
+    </tr>
+    {% for item in query_output %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.word }}</td>
+            <td>{{ item.llr }}</td>
+            <td>{{ item.mi }}</td>
+            <td>{{ item.tscore }}</td>
+            <td>{{ item.zscore }}</td>
+            <td>{{ item.dice }}</td>
+            <td>{{ item.mi3 }}</td>
+            <td>{{ item.frequency }}</td>
+        </tr>
+    {% endfor %}
+</table>
