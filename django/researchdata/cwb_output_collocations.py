@@ -105,8 +105,16 @@ def old_code(params, settings):
 
     sys.stderr.write(subprocess.list2cmdline(command) + '\n\n')
     # print query
-    proc = subprocess.Popen(command, stdout = subprocess.PIPE)
-    results = proc.communicate()[0]
+
+    
+    
+    # proc = subprocess.Popen(command, stdout = subprocess.PIPE)
+    # results = proc.communicate()[0]
+
+    results = subprocess.check_output(command, universal_newlines=True)
+    
+
+    
     # with open('/var/www/html/Birmingham/resources/out.txt', 'w') as fout:
         # fout.write(results)
     #print results.splitlines()[:2]
@@ -161,7 +169,10 @@ def old_code(params, settings):
     fa = freq[node]
     collocations = []
     
+    # x = [coll[1] for coll in collocates.items()]
+
     # return collocates.items()
+    # return x
 
     for collocate, fab in [coll for coll in collocates.items() if coll[1] >= threshold]:
         if cs:
@@ -183,7 +194,7 @@ def old_code(params, settings):
         collocations.append(tmp)
     collocations.sort(key = lambda x: x[sort], reverse = True)
 
-    return collocations
+    # return collocations
 
 
     queryRes = ''
@@ -210,7 +221,7 @@ def old_code(params, settings):
 
 
     # print len(collocations)
-    results = "x"
+    results = f"{len(collocations)}\n\n\n"
 
     for ind, coll in enumerate(collocations):
         word = str(coll[0])

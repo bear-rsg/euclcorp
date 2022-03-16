@@ -180,7 +180,7 @@ class OutputView(TemplateView):
                 }
                 settings = {
                     'countBy': 'word',
-                    'threshold': 5,
+                    'threshold': 2,
                     'leftContextSize': 3,
                     'rightContextSize': 3,
                     'ams': ['llr', 'mi', 't-score', 'z-score', 'dice', 'mi3', 'frequency']
