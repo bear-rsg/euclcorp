@@ -172,7 +172,11 @@ class OutputView(TemplateView):
                     query=cwb_query
                 )
                 # 3. Return processed output
-                context['query_output'], context['collocations_length'] = cwb_output_collocations.process(cwb_query, cwb_output, options)
+                context['query_output'], context['data_length'] = cwb_output_collocations.process(
+                    cwb_query,
+                    cwb_output,
+                    options
+                )
 
             # N-grams
             elif output_type == 'ngrams':

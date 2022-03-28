@@ -6,7 +6,8 @@ def count_oe(xy, x, y, N, ws):
     """
     Counts OE, which is used in various calculate functions below
     """
-    return [xy, x - xy, y - xy, N - x - y + xy], [x * y / N * ws, x * ((N - y) / N) ** ws, y * ((N - x) / N) ** ws, (1 - (x / N + y / N)) * N]
+    return [xy, x - xy, y - xy, N - x - y + xy],\
+           [x * y / N * ws, x * ((N - y) / N) ** ws, y * ((N - x) / N) ** ws, (1 - (x / N + y / N)) * N]
 
 
 def mi(xy, x, y, N, ws=1):
@@ -31,13 +32,13 @@ def ll(xy, x, y, N, ws=1):
     """
 
     o, e = count_oe(xy, x, y, N, ws)
-    l = 0
-    for i in [1,2]:
-        for j in [1,2]:
+    ll = 0
+    for i in [1, 2]:
+        for j in [1, 2]:
             ind = (j - 1) + (i - 1) * 2
             x = o[ind] * log(o[ind] / float(e[ind]))
-            l += x
-    return 2 * l
+            ll += x
+    return 2 * ll
 
 
 def t_score(xy, x, y, N, ws=1):
@@ -105,7 +106,15 @@ def process(cwb_query, cwb_output, options):
     results = str(cwb_output)
 
     # AMs (the various statistical outputs to include, e.g. t-score, log-likelihood ratio, etc.)
-    AMs = (('llr', ll, '%.2f'), ('mi', mi, '%.2f'), ('t-score', t_score, '%.2f'), ('z-score', z_score, '%.2f'), ('dice', dice, '%.4f'), ('mi3', mi3, '%.2f'), ('frequency', frequency, '%d'))
+    AMs = (
+        ('llr', ll, '%.2f'),
+        ('mi', mi, '%.2f'),
+        ('t-score', t_score, '%.2f'),
+        ('z-score', z_score, '%.2f'),
+        ('dice', dice, '%.4f'),
+        ('mi3', mi3, '%.2f'),
+        ('frequency', frequency, '%d')
+    )
     if 'sort' in options:
         sort = [el[0] for el in AMs].index(options['sort']) + 1
     else:
@@ -151,7 +160,7 @@ def process(cwb_query, cwb_output, options):
     # Case sensitivity
     if case_sensitive:
         node = node.lower()
-    
+
     # Build collocations list
     fa = freq[node]
     collocations = []
@@ -168,10 +177,10 @@ def process(cwb_query, cwb_output, options):
         for amName, amFoo, format in chosenAms:
             try:
                 tmp.append(amFoo(fab, fa, fb, N))
-            except:
+            except Exception:
                 pass
         collocations.append(tmp)
-    collocations.sort(key = lambda x: x[sort], reverse=True)
+    collocations.sort(key=lambda x: x[sort], reverse=True)
 
     # Build collocations output data rows
     collocation_output_data = []
