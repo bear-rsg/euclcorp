@@ -144,10 +144,11 @@ class OutputView(TemplateView):
             elif output_type == 'collocations':
                 # 1. Get options from request
                 options = {
-                    'countby': self.request.GET.get('collocations-countby', ''),
-                    'spanleft': self.request.GET.get('collocations-spanleft', ''),
-                    'spanright': self.request.GET.get('collocations-spanright', ''),
-                    'threshold': self.request.GET.get('collocations-frequencythreshold', ''),
+                    'countby': self.request.GET.get('collocations-countby', 'word'),
+                    'spanleft': int(self.request.GET.get('collocations-spanleft', '3')),
+                    'spanright': int(self.request.GET.get('collocations-spanright', '3')),
+                    'threshold': int(self.request.GET.get('collocations-frequencythreshold', '2')),
+
                     'llr': self.request.GET.get('collocations-llr', ''),
                     'mi': self.request.GET.get('collocations-mi', ''),
                     'tscore': self.request.GET.get('collocations-tscore', ''),
@@ -155,6 +156,13 @@ class OutputView(TemplateView):
                     'dice': self.request.GET.get('collocations-dice', ''),
                     'mi3': self.request.GET.get('collocations-mi3', ''),
                     'frequency': self.request.GET.get('collocations-frequency', ''),
+
+                    'ams': ['llr', 'mi', 't-score', 'z-score', 'dice', 'mi3', 'frequency'],
+
+                    # 'sort': 1,
+
+                    'primlang': primary_language_code,
+                    'langs': ['birm_fra', 'birm_deu']
                 }
                 # 2. Query CWB
                 cwb_output = cwb_input_collocations.query(
@@ -164,26 +172,7 @@ class OutputView(TemplateView):
                     query=cwb_query
                 )
                 # 3. Return processed output
-                params = {
-                    'primlang': primary_language_code,
-                    'langs': ['birm_fra', 'birm_deu'],
-                    'query': cwb_query,
-                    # 'sort': 1,
-                    'cwbdir': '/rds/projects/m/mcaulifk-euclcorp-website/cwb/bin/cqpcl',
-                    'registry': '/rds/projects/m/mcaulifk-euclcorp-website/data/Corpus/Registry',
-                    'corpusname': 'BIRM_ENG'
-                }
-                settings = {
-                    'countBy': 'word',
-                    'threshold': 2,
-                    'leftContextSize': 3,
-                    'rightContextSize': 3,
-                    'ams': ['llr', 'mi', 't-score', 'z-score', 'dice', 'mi3', 'frequency']
-                }
-                context['query_output'], context['collocations_length'] = cwb_output_collocations.process(cwb_output, params, settings)
-
-                # Try running old code
-                # context['query_output'] = cwb_output_collocations.old_code(params, settings)
+                context['query_output'], context['collocations_length'] = cwb_output_collocations.process(cwb_query, cwb_output, options)
 
             # N-grams
             elif output_type == 'ngrams':
