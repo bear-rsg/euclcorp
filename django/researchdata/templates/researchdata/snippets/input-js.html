@@ -189,7 +189,7 @@ $(document).ready(function(){
         // CQP Search Queries values
         // Primary query
         let cqpSearchQueries = $('.buildquery-head-primarylanguage.selected').closest('.buildquery').find('.buildquery-body-cqpsearch-query').text();
-        console.log(cqpSearchQueries)
+
         // Add all optional secondary language queries, if they exist
         $('.buildquery').each(function(){
             let queryId = $(this).attr('data-id');
@@ -201,12 +201,17 @@ $(document).ready(function(){
                 if (thisQuery.length) cqpSearchQueries += ': ' + queryId.toUpperCase() + ' ' + thisQuery;
             }
         });
-        console.log(cqpSearchQueries)
+
         form.find('[name="cqpsearchquery"]').val(cqpSearchQueries);
 
         // Primary language
         let primarylang = $('.buildquery-head-primarylanguage.selected').closest('.buildquery').attr('data-id');
         form.find('[name="primarylanguage"]').val(primarylang);
+
+        // // Set chosen stats list
+        let chosenStatsList = [];
+        $('.collocations-chosen-stats-choice:checked').each(function(){ chosenStatsList.push($(this).val()); });
+        $('#collocations-chosen-stats').val(JSON.stringify(chosenStatsList));
 
         // Submit form
         form.submit();

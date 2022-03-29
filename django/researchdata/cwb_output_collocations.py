@@ -26,19 +26,19 @@ def mi3(xy, x, y, N, ws=1):
     return log(xy ** 3 / (x * y / N * ws), 2)
 
 
-def ll(xy, x, y, N, ws=1):
+def llr(xy, x, y, N, ws=1):
     """
     Calculate the log-likelihood ratio
     """
 
     o, e = count_oe(xy, x, y, N, ws)
-    ll = 0
+    llr = 0
     for i in [1, 2]:
         for j in [1, 2]:
             ind = (j - 1) + (i - 1) * 2
             x = o[ind] * log(o[ind] / float(e[ind]))
-            ll += x
-    return 2 * ll
+            llr += x
+    return 2 * llr
 
 
 def t_score(xy, x, y, N, ws=1):
@@ -105,9 +105,9 @@ def process(cwb_query, cwb_output, options):
     # Ensure the output from cwb is a string
     results = str(cwb_output)
 
-    # AMs (the various statistical outputs to include, e.g. t-score, log-likelihood ratio, etc.)
-    AMs = (
-        ('llr', ll, '%.2f'),
+    # Stats (the various statistical outputs to include, e.g. t-score, log-likelihood ratio, etc.)
+    stats = (
+        ('llr', llr, '%.2f'),
         ('mi', mi, '%.2f'),
         ('t-score', t_score, '%.2f'),
         ('z-score', z_score, '%.2f'),
@@ -116,10 +116,10 @@ def process(cwb_query, cwb_output, options):
         ('frequency', frequency, '%d')
     )
     if 'sort' in options:
-        sort = [el[0] for el in AMs].index(options['sort']) + 1
+        sort = [el[0] for el in stats].index(options['sort']) + 1
     else:
         sort = 1
-    chosenAms = [am for am in AMs if am[0] in options['ams']]
+    chosen_stats = [stat for stat in stats if stat[0] in options['chosen_stats']]
 
     # Case sensitivity
     case_sensitive = True if '%c' in cwb_query else False  # Case sensitivity
@@ -174,9 +174,9 @@ def process(cwb_query, cwb_output, options):
         tmp = [collocate]
         if fa < fab or fb < fab:
             continue
-        for amName, amFoo, format in chosenAms:
+        for stat_name, stat_foo, format in chosen_stats:
             try:
-                tmp.append(amFoo(fab, fa, fb, N))
+                tmp.append(stat_foo(fab, fa, fb, N))
             except Exception:
                 pass
         collocations.append(tmp)
@@ -188,9 +188,9 @@ def process(cwb_query, cwb_output, options):
         # Build a row to show in output table.
         row = {'word': str(coll[0])}
         # E.g. {'word': 'the', 'llr': '33850.44', 't-score': '85.22', 'dice': '0.0043', 'mi3': '29.48'}
-        # Append each chosen AM to the row dict
-        for i, am in enumerate(chosenAms):
-            row[am[0].replace('-', '')] = am[2] % coll[i+1]  # e.g. 'llr': 33850.44
+        # Append each chosen statistic to the row dict
+        for i, stat in enumerate(chosen_stats):
+            row[stat[0].replace('-', '')] = stat[2] % coll[i+1]  # e.g. 'llr': 33850.44
         collocation_output_data.append(row)
 
     return collocation_output_data, len(collocations)

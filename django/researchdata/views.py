@@ -1,9 +1,9 @@
 from django.views.generic import TemplateView
+import json
 from . import (cwb_input_search,
                cwb_input_frequency,
                cwb_input_collocations,
                cwb_input_ngrams,
-
                cwb_output_search,
                cwb_output_frequency,
                cwb_output_collocations,
@@ -148,22 +148,12 @@ class OutputView(TemplateView):
                     'spanleft': int(self.request.GET.get('collocations-spanleft', '3')),
                     'spanright': int(self.request.GET.get('collocations-spanright', '3')),
                     'threshold': int(self.request.GET.get('collocations-frequencythreshold', '2')),
-
-                    'llr': self.request.GET.get('collocations-llr', ''),
-                    'mi': self.request.GET.get('collocations-mi', ''),
-                    'tscore': self.request.GET.get('collocations-tscore', ''),
-                    'zscore': self.request.GET.get('collocations-zscore', ''),
-                    'dice': self.request.GET.get('collocations-dice', ''),
-                    'mi3': self.request.GET.get('collocations-mi3', ''),
-                    'frequency': self.request.GET.get('collocations-frequency', ''),
-
-                    'ams': ['llr', 'mi', 't-score', 'z-score', 'dice', 'mi3', 'frequency'],
-
+                    'chosen_stats': json.loads(self.request.GET.get('collocations-chosen-stats', '[]')),
                     # 'sort': 1,
-
                     'primlang': primary_language_code,
                     'langs': ['birm_fra', 'birm_deu']
                 }
+                print(options['chosen_stats'])
                 # 2. Query CWB
                 cwb_output = cwb_input_collocations.query(
                     primary_lang=primary_language_code,
@@ -177,6 +167,7 @@ class OutputView(TemplateView):
                     cwb_output,
                     options
                 )
+                context['chosen_stats'] = options['chosen_stats']
 
             # N-grams
             elif output_type == 'ngrams':
