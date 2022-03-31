@@ -100,7 +100,7 @@ class OutputView(TemplateView):
                 parallel_languages_show += f" +{language}"
 
         context['output_type'] = output_type
-        context['cwb_query'] = cwb_query
+        context['cwb_query'] = cwb_query  # e.g. [word="plea"%c]
         context['primary_language'] = primary_language_name
 
         # Requires a query input (otherwise redirect to input page)
@@ -150,8 +150,7 @@ class OutputView(TemplateView):
                     'threshold': int(self.request.GET.get('collocations-frequencythreshold', '2')),
                     'chosen_stats': json.loads(self.request.GET.get('collocations-chosen-stats', '[]')),
                     # 'sort': 1,
-                    'primlang': primary_language_code,
-                    'langs': ['birm_fra', 'birm_deu']
+                    'primlang': primary_language_code
                 }
                 print(options['chosen_stats'])
                 # 2. Query CWB
