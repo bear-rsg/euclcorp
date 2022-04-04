@@ -1,6 +1,5 @@
 from django.test import TestCase
-from django.urls import reverse
-import .cwb_input_collocations
+import cwb_input_collocations
 
 
 class TestCollocations(TestCase):

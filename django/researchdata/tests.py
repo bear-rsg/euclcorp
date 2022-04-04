@@ -1,5 +1,4 @@
 from django.test import TestCase
-from django.urls import reverse
 import os
 from . import cwb_output_collocations
 
@@ -13,8 +12,7 @@ class TestCollocations(TestCase):
 
     # Query CWB with sample test data as inputs, to be used in multiple methods below
     f = open(os.path.join(os.path.dirname(__file__), 'testdata', 'testdata_cwb_input_collocations.txt'))
-    cwb_collocations_query_results = f.read()
-
+    cwb_collocations_results = f.read()
 
     def test_cwb_output_collocations(self):
         """
@@ -32,7 +30,7 @@ class TestCollocations(TestCase):
 
         # Returned data from the function being tested
         cwb_collocations_results_processed = cwb_output_collocations.process(cwb_query='[word="plea"%c]',
-                                                                             cwb_output=self.cwb_collocations_query_results,
+                                                                             cwb_output=self.cwb_collocations_results,
                                                                              options=test_options)[0]
 
         expected_data_samples = [
