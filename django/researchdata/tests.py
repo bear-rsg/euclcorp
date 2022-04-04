@@ -1,11 +1,7 @@
 from django.test import TestCase
-<<<<<<< HEAD
 from django.urls import reverse
 import os
 from . import cwb_output_collocations
-=======
-from . import cwb_input_collocations, cwb_output_collocations
->>>>>>> 2276404cada7ade7727cbef27a7258f7df5468be
 
 
 class TestCollocations(TestCase):
@@ -16,36 +12,9 @@ class TestCollocations(TestCase):
     """
 
     # Query CWB with sample test data as inputs, to be used in multiple methods below
-<<<<<<< HEAD
     f = open(os.path.join(os.path.dirname(__file__), 'testdata', 'testdata_cwb_input_collocations.txt'))
     cwb_collocations_query_results = f.read()
 
-=======
-    cwb_collocations_results = cwb_input_collocations.query(primary_lang='BIRM_ENG',
-                                                            LeftContext=3,
-                                                            RightContext=3,
-                                                            query='[word="plea"%c]')
-
-    def test_cwb_input_collocations(self):
-        """
-        Tests that the CWB Collocations input function returns expected data
-        """
-
-        expected_data_samples = [
-            'first',
-            'law',
-            'Treaty',
-            'argument',
-            'in'
-        ]
-
-        self.assertIsNotNone(self.cwb_collocations_results)  # Shouldn't return None
-        self.assertIsInstance(self.cwb_collocations_results, str)  # Should be a string
-        self.assertGreater(len(self.cwb_collocations_results), 1000)  # Should be more than 1000 chars in string
-        # Should include all strings in expected_data_samples list
-        for expected_data_sample in expected_data_samples:
-            self.assertIn(expected_data_sample, self.cwb_collocations_results)
->>>>>>> 2276404cada7ade7727cbef27a7258f7df5468be
 
     def test_cwb_output_collocations(self):
         """
