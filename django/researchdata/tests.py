@@ -32,7 +32,7 @@ class TestCollocations(TestCase):
 
         # Returned data from the function being tested
         cwb_collocations_results_processed = cwb_output_collocations.process(cwb_query='[word="plea"%c]',
-                                                                             cwb_output=self.cwb_collocations_results,
+                                                                             cwb_output=self.cwb_collocations_query_results,
                                                                              options=test_options)[0]
 
         expected_data_samples = [
