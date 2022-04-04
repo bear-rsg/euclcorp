@@ -1,35 +1,19 @@
 from django.test import TestCase
 from django.urls import reverse
-from . import cwb_input_collocations, cwb_output_collocations
+import os
+from . import cwb_output_collocations
 
 
 class TestCollocations(TestCase):
+    """
+    CI-friendly unit tests for the Collocations section of the website
+    These tests don't require access to CWB on the RDS
+    Manual tests (not suitable for CI) are located in 'cwb_input_collocations_test.py'
+    """
 
     # Query CWB with sample test data as inputs, to be used in multiple methods below
-    cwb_collocations_query_results = cwb_input_collocations.query(primary_lang='BIRM_ENG',
-                                                                  LeftContext=3,
-                                                                  RightContext=3,
-                                                                  query='[word="plea"%c]')
-
-    def test_cwb_input_collocations(self):
-        """
-        Tests that the CWB Collocations input function returns expected data
-        """
-
-        expected_data_samples = [
-            'first',
-            'law',
-            'Treaty',
-            'argument',
-            'in'
-        ]
-
-        self.assertIsNotNone(self.cwb_collocations_query_results)  # Shouldn't return None
-        self.assertIsInstance(self.cwb_collocations_query_results, str)  # Should be a string
-        self.assertGreater(len(self.cwb_collocations_query_results), 1000)  # Should be more than 1000 chars in string
-        # Should include all strings in expected_data_samples list
-        for expected_data_sample in expected_data_samples:
-            self.assertIn(expected_data_sample, self.cwb_collocations_query_results)
+    f = open(os.path.join(os.path.dirname(__file__), 'testdata', 'testdata_cwb_input_collocations.txt'))
+    cwb_collocations_query_results = f.read()
 
 
     def test_cwb_output_collocations(self):
