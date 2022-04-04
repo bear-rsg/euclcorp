@@ -1,7 +1,11 @@
 from django.test import TestCase
+<<<<<<< HEAD
 from django.urls import reverse
 import os
 from . import cwb_output_collocations
+=======
+from . import cwb_input_collocations, cwb_output_collocations
+>>>>>>> 2276404cada7ade7727cbef27a7258f7df5468be
 
 
 class TestCollocations(TestCase):
@@ -12,9 +16,36 @@ class TestCollocations(TestCase):
     """
 
     # Query CWB with sample test data as inputs, to be used in multiple methods below
+<<<<<<< HEAD
     f = open(os.path.join(os.path.dirname(__file__), 'testdata', 'testdata_cwb_input_collocations.txt'))
     cwb_collocations_query_results = f.read()
 
+=======
+    cwb_collocations_results = cwb_input_collocations.query(primary_lang='BIRM_ENG',
+                                                            LeftContext=3,
+                                                            RightContext=3,
+                                                            query='[word="plea"%c]')
+
+    def test_cwb_input_collocations(self):
+        """
+        Tests that the CWB Collocations input function returns expected data
+        """
+
+        expected_data_samples = [
+            'first',
+            'law',
+            'Treaty',
+            'argument',
+            'in'
+        ]
+
+        self.assertIsNotNone(self.cwb_collocations_results)  # Shouldn't return None
+        self.assertIsInstance(self.cwb_collocations_results, str)  # Should be a string
+        self.assertGreater(len(self.cwb_collocations_results), 1000)  # Should be more than 1000 chars in string
+        # Should include all strings in expected_data_samples list
+        for expected_data_sample in expected_data_samples:
+            self.assertIn(expected_data_sample, self.cwb_collocations_results)
+>>>>>>> 2276404cada7ade7727cbef27a7258f7df5468be
 
     def test_cwb_output_collocations(self):
         """
@@ -31,9 +62,9 @@ class TestCollocations(TestCase):
         }
 
         # Returned data from the function being tested
-        cwb_collocations_processed_data = cwb_output_collocations.process(cwb_query='[word="plea"%c]',
-                                                                          cwb_output=self.cwb_collocations_query_results,
-                                                                          options=test_options)[0]
+        cwb_collocations_results_processed = cwb_output_collocations.process(cwb_query='[word="plea"%c]',
+                                                                             cwb_output=self.cwb_collocations_results,
+                                                                             options=test_options)[0]
 
         expected_data_samples = [
             {
@@ -68,10 +99,10 @@ class TestCollocations(TestCase):
             }
         ]
 
-        self.assertIsNotNone(cwb_collocations_processed_data)  # Shouldn't return None
-        self.assertIsInstance(cwb_collocations_processed_data, list)  # Should be a list
-        self.assertIsInstance(cwb_collocations_processed_data[0], dict)  # First item in list should be a dictionary
-        self.assertGreater(len(cwb_collocations_processed_data), 1000)  # Should be more than 1000 items in list
+        self.assertIsNotNone(cwb_collocations_results_processed)  # Shouldn't return None
+        self.assertIsInstance(cwb_collocations_results_processed, list)  # Should be a list
+        self.assertIsInstance(cwb_collocations_results_processed[0], dict)  # First item in list should be a dictionary
+        self.assertGreater(len(cwb_collocations_results_processed), 1000)  # Should be more than 1000 items in list
         # Should include all dicts in expected_data_samples list
         for expected_data_sample in expected_data_samples:
-            self.assertIn(expected_data_sample, cwb_collocations_processed_data)
+            self.assertIn(expected_data_sample, cwb_collocations_results_processed)
