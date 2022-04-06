@@ -131,7 +131,7 @@ def process(cwb_query, cwb_output, options):
     freq, N = loadFreq(freq_path, case_insensitive)
 
     # Build collocates dict
-    collocates = defaultdict(int)
+    collocates = defaultdict(int)  # sets default value to 0 for all objects added to dict
     node = ''
     for line in results.splitlines():
         words = [el.rsplit('/', 1)[options['countby'] == 'lemma' and 1 or 0] for el in line.strip().split()]
