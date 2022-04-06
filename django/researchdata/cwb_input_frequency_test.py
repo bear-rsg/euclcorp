@@ -17,7 +17,7 @@ class TestFrequency(TestCase):
 
         # Query CWB with sample test data as inputs, to be used in multiple methods below
         cwb_frequency_query_results = cwb_input_frequency.query(primary_lang='BIRM_ENG',
-                                                                F='[word="plea"%c]'
+                                                                F='[word="plea"%c]',
                                                                 countby='word')
 
         expected_data_samples = [
