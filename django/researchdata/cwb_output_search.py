@@ -43,7 +43,6 @@ def kwic_html(primary_language_content):
     match_index = 0
     # Find index of match (first instance of a word starting with < angled bracket)
     for i, word in enumerate(words):
-        # print(word)
         try:
             if word[0] == '<':
                 match_index = i

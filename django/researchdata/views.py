@@ -1,12 +1,12 @@
 from django.views.generic import TemplateView
+import json
 from . import (cwb_input_search,
                cwb_input_frequency,
                cwb_input_collocations,
                cwb_input_ngrams,
-
                cwb_output_search,
                cwb_output_frequency,
-               # cwb_output_collocations,
+               cwb_output_collocations,
                cwb_output_ngrams)
 
 
@@ -100,7 +100,7 @@ class OutputView(TemplateView):
                 parallel_languages_show += f" +{language}"
 
         context['output_type'] = output_type
-        context['cwb_query'] = cwb_query
+        context['cwb_query'] = cwb_query  # e.g. [word="plea"%c]
         context['primary_language'] = primary_language_name
 
         # Requires a query input (otherwise redirect to input page)
@@ -115,7 +115,6 @@ class OutputView(TemplateView):
                     'entriesperpage': self.request.GET.get('search-entriesperpage', ''),
                     'bigsizelimit': self.request.GET.get('search-bigsizelimit', '')
                 }
-                print(parallel_languages_show)
                 # 2. Query CWB
                 cwb_output = cwb_input_search.query(
                     primary_lang=primary_language_code,
@@ -145,17 +144,13 @@ class OutputView(TemplateView):
             elif output_type == 'collocations':
                 # 1. Get options from request
                 options = {
-                    'countby': self.request.GET.get('collocations-countby', ''),
-                    'spanleft': self.request.GET.get('collocations-spanleft', ''),
-                    'spanright': self.request.GET.get('collocations-spanright', ''),
-                    'frequencythreshold': self.request.GET.get('collocations-frequencythreshold', ''),
-                    'llr': self.request.GET.get('collocations-llr', ''),
-                    'mi': self.request.GET.get('collocations-mi', ''),
-                    'tscore': self.request.GET.get('collocations-tscore', ''),
-                    'zscore': self.request.GET.get('collocations-zscore', ''),
-                    'dice': self.request.GET.get('collocations-dice', ''),
-                    'mi3': self.request.GET.get('collocations-mi3', ''),
-                    'frequency': self.request.GET.get('collocations-frequency', ''),
+                    'countby': self.request.GET.get('collocations-countby', 'word'),
+                    'spanleft': int(self.request.GET.get('collocations-spanleft', '3')),
+                    'spanright': int(self.request.GET.get('collocations-spanright', '3')),
+                    'threshold': int(self.request.GET.get('collocations-frequencythreshold', '2')),
+                    'chosen_stats': json.loads(self.request.GET.get('collocations-chosen-stats', '[]')),
+                    # 'sort': 1,
+                    'primlang': primary_language_code
                 }
                 # 2. Query CWB
                 cwb_output = cwb_input_collocations.query(
@@ -165,7 +160,12 @@ class OutputView(TemplateView):
                     query=cwb_query
                 )
                 # 3. Return processed output
-                context['query_output'] = True
+                context['query_output'], context['data_length'] = cwb_output_collocations.process(
+                    cwb_query,
+                    cwb_output,
+                    options
+                )
+                context['chosen_stats'] = options['chosen_stats']
 
             # N-grams
             elif output_type == 'ngrams':

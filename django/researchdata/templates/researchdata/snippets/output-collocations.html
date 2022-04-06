@@ -1,2 +1,31 @@
 <h3>Collocations</h3>
-{{ query_output }}
+<strong>{{ data_length }}</strong>
+
+<table id="output-frequency">
+    <tr>
+        <th>#</th>
+        <th>word</th>
+        <!-- Statistics -->
+        {% if 'llr' in chosen_stats %}<th>llr</th>{% endif %}
+        {% if 'mi' in chosen_stats %}<th>mi</th>{% endif %}
+        {% if 'mi3' in chosen_stats %}<th>mi3</th>{% endif %}
+        {% if 't-score' in chosen_stats %}<th>t-score</th>{% endif %}
+        {% if 'z-score' in chosen_stats %}<th>z-score</th>{% endif %}
+        {% if 'dice' in chosen_stats %}<th>dice</th>{% endif %}
+        {% if 'frequency' in chosen_stats %}<th>frequency</th>{% endif %}
+    </tr>
+    {% for item in query_output %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ item.word }}</td>
+            <!-- Statistics -->
+            {% if item.llr %}<td>{{ item.llr }}</td>{% endif %}
+            {% if item.mi %}<td>{{ item.mi }}</td>{% endif %}
+            {% if item.mi3 %}<td>{{ item.mi3 }}</td>{% endif %}
+            {% if item.tscore %}<td>{{ item.tscore }}</td>{% endif %}
+            {% if item.zscore %}<td>{{ item.zscore }}</td>{% endif %}
+            {% if item.dice %}<td>{{ item.dice }}</td>{% endif %}
+            {% if item.frequency %}<td>{{ item.frequency }}</td>{% endif %}
+        </tr>
+    {% endfor %}
+</table>

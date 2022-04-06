@@ -18,37 +18,40 @@
     </div>
     <div>
         <label>Span (left)</label>
-        <input type="number" name="collocations-spanleft" title="spanleft">
+        <input type="number" name="collocations-spanleft" title="spanleft" value="3">
     </div>
     <div>
         <label>Span (right)</label>
-        <input type="number" name="collocations-spanright" title="spanright">
+        <input type="number" name="collocations-spanright" title="spanright" value="3">
     </div>
     <div>
         <label>Frequency threshold</label>
-        <input type="number" name="collocations-frequencythreshold" title="frequencythreshold">
+        <input type="number" name="collocations-frequencythreshold" title="frequencythreshold" value="2">
     </div>
 
-    <!-- Checkboxes -->
+    <!-- Chosen Stats -->
+    <!-- Hidden field (filled via JS on form submit) -->
+    <input type="hidden" id="collocations-chosen-stats" name="collocations-chosen-stats">
+    <!-- Checkbox options -->
     <div>
-        <label><input type="checkbox" name="collocations-llr" value="llr">Log-likehood ratio</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="llr" checked>Log-likelihood ratio</label>
     </div>
     <div>
-        <label><input type="checkbox" name="collocations-mi" value="mi">MI</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="mi" checked>MI</label>
     </div>
     <div>
-        <label><input type="checkbox" name="collocations-tscore" value="tscore">T-score</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="mi3" checked>MI3</label>
     </div>
     <div>
-        <label><input type="checkbox" name="collocations-zscore" value="zscore">Z-score</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="t-score" checked>T-score</label>
     </div>
     <div>
-        <label><input type="checkbox" name="collocations-dice" value="dice">Dice</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="z-score" checked>Z-score</label>
     </div>
     <div>
-        <label><input type="checkbox" name="collocations-mi3" value="mi3">MI3</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="dice" checked>Dice</label>
     </div>
     <div>
-        <label><input type="checkbox" name="collocations-frequency" value="frequency">Frequency</label>
+        <label><input type="checkbox" class="collocations-chosen-stats-choice" value="frequency" checked>Frequency</label>
     </div>
 {% endblock %}

@@ -20,9 +20,9 @@ def query(context_left_or_right='',
     [word="plea"%c & lemma="ok" & ta="tag"]
     """
 
-    cmd = [
+    cwb_cmd_args = [
         f'set {context_left_or_right}Context {context}; {primary_lang};\
         show {show}; set PrintStructures "{print_structures}"; A={A}; cat A {start} {length};'
     ]
 
-    return cwb_input.execute(cmd).split('\n')
+    return cwb_input.execute(cwb_cmd_args).split('\n')
