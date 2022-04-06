@@ -152,7 +152,6 @@ class OutputView(TemplateView):
                     # 'sort': 1,
                     'primlang': primary_language_code
                 }
-                print(options['chosen_stats'])
                 # 2. Query CWB
                 cwb_output = cwb_input_collocations.query(
                     primary_lang=primary_language_code,
