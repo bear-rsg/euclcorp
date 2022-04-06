@@ -76,7 +76,7 @@ def frequency(xy, x, y, N, ws=1):
     return xy
 
 
-def loadFreq(path, case_sensitive):
+def loadFreq(path, case_insensitive):
     """
     Load the frequencies and counts from text file
     """
@@ -86,7 +86,7 @@ def loadFreq(path, case_sensitive):
     with open(path) as fin:
         for line in fin:
             fq, word = line.strip().split()
-            if case_sensitive:
+            if case_insensitive:
                 word = word.lower()
             if word in freq:
                 freq[word] += int(fq)
@@ -121,13 +121,13 @@ def process(cwb_query, cwb_output, options):
         sort = 1
     chosen_stats = [stat for stat in stats if stat[0] in options['chosen_stats']]
 
-    # Case sensitivity
-    case_sensitive = True if '%c' in cwb_query else False  # Case sensitivity
+    # Case-sensitivity
+    case_insensitive = True if '%c' in cwb_query else False
 
     # Frequency
     module_dir = os.path.dirname(__file__)
     freq_path = os.path.join(module_dir, 'freq_birm_eng_word.txt')
-    freq, N = loadFreq(freq_path, case_sensitive)
+    freq, N = loadFreq(freq_path, case_insensitive)
 
     # Build collocates dict
     collocates = {}
@@ -150,7 +150,7 @@ def process(cwb_query, cwb_output, options):
                 continue
             if word.lower() == 'that/in':
                 word = 'that'
-            if case_sensitive:
+            if case_insensitive:
                 word = word.lower()
             if word in collocates:
                 collocates[word] += 1
@@ -158,14 +158,14 @@ def process(cwb_query, cwb_output, options):
                 collocates[word] = 1
 
     # Case sensitivity
-    if case_sensitive:
+    if case_insensitive:
         node = node.lower()
 
     # Build collocations list
     fa = freq[node]
     collocations = []
     for collocate, fab in [coll for coll in collocates.items() if coll[1] >= options['threshold']]:
-        if case_sensitive:
+        if case_insensitive:
             collocate = collocate.lower()
         try:
             fb = freq[collocate]
