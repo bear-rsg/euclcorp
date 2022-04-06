@@ -1,5 +1,6 @@
 import os
 from math import log, sqrt
+from collections import defaultdict
 
 
 def count_oe(xy, x, y, N, ws):
@@ -130,7 +131,7 @@ def process(cwb_query, cwb_output, options):
     freq, N = loadFreq(freq_path, case_insensitive)
 
     # Build collocates dict
-    collocates = {}
+    collocates = defaultdict(int)
     node = ''
     for line in results.splitlines():
         words = [el.rsplit('/', 1)[options['countby'] == 'lemma' and 1 or 0] for el in line.strip().split()]
@@ -152,10 +153,7 @@ def process(cwb_query, cwb_output, options):
                 word = 'that'
             if case_insensitive:
                 word = word.lower()
-            if word in collocates:
-                collocates[word] += 1
-            else:
-                collocates[word] = 1
+            collocates[word] += 1
 
     # Case sensitivity
     if case_insensitive:
