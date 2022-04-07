@@ -12,7 +12,7 @@ class TestSearch(TestCase):
 
     # Query CWB with sample test data as inputs, to be used in multiple methods below
     with open(os.path.join(os.path.dirname(__file__), 'testdata', 'testdata_cwb_input_search.txt')) as f:
-       cwb_search_results = f.read().splitlines()
+        cwb_search_results = f.read().splitlines()
 
     def test_cwb_output_search(self):
         """
@@ -31,56 +31,40 @@ class TestSearch(TestCase):
                                                                  cwb_output=self.cwb_search_results,
                                                                  options=test_options)
 
-        expected_data_samples = [
-            {
-                "meta":{
-                    "case_name": "Judgment of the Court (Full Court) of 23 March 2004. # French Republic v Commission of the European Communities. # Guidelines on regulatory cooperation and transparency concluded with the United States of America - Non-binding character. # Case C-233/02.",
-                    "case_number": "62002CJ0233",
-                    "case_date": "2004/03/23",
-                    "doc_cellar": "68158cdb-85ef-40b7-817d-1d1e79d1ee64"
-                },
-                "languages":[
-                    {
-                        "language_name": "English",
-                        "content": "  By its first <plea, the French Government claims that the Commission is not competent to adopt the contested measure, inasmuch as the Guidelines amount to a binding international agreement the conclusion of which, under the division of powers pursuant to Article 300 EC, lies within the competence of the Council (Case C-327  91 France v Commission [ 1994 ] ECR I-3641).",
-                        "kwic":{
+        expected_data_sample = {
+            "meta": {
+                "case_name": "Judgment of the Court (Full Court) of 23 March 2004. # French Republic v Commission of the European Communities. # Guidelines on regulatory cooperation and transparency concluded with the United States of America - Non-binding character. # Case C-233/02.",  # NOQA
+                "case_number": "62002CJ0233",
+                "case_date": "2004/03/23",
+                "doc_cellar": "68158cdb-85ef-40b7-817d-1d1e79d1ee64"
+            },
+            "languages": [
+                {
+                    "language_name": "English",
+                    "content": "  By its first <plea, the French Government claims that the Commission is not competent to adopt the contested measure, inasmuch as the Guidelines amount to a binding international agreement the conclusion of which, under the division of powers pursuant to Article 300 EC, lies within the competence of the Council (Case C-327  91 France v Commission [ 1994 ] ECR I-3641).",  # NOQA
+                    "kwic": {
                         "left_context": "By its first",
                         "match": "plea,",
                         "right_context": "the French Government claims that the Commission is not"
-                        }
                     }
-                ]
-            },
-            {
-                "meta":{
-                    "case_name": "Judgment of the Court (Full Court) of 23 March 2004. # French Republic v Commission of the European Communities. # Guidelines on regulatory cooperation and transparency concluded with the United States of America - Non-binding character. # Case C-233/02.",
-                    "case_number": "62002CJ0233",
-                    "case_date": "2004/03/23",
-                    "doc_cellar": "68158cdb-85ef-40b7-817d-1d1e79d1ee64"
-                },
-                "languages":[
-                    {
-                        "language_name": "English",
-                        "content": "  By its first <plea, the French Government merely submits that the Guidelines should have been concluded by the Council rather than by the Commission, in accordance with Article 300 EC, since they constitute a legally binding agreement.",
-                        "kwic":{
-                        "left_context": "By its first",
-                        "match": "plea,",
-                        "right_context": "the French Government merely submits that the Guidelines should"
-                        }
-                    }
-                ]
-            }
-        ]
+                }
+            ]
+        }
 
-        self.assertIsNotNone(cwb_search_results_processed)  # Shouldn't return None
-        self.assertIsInstance(cwb_search_results_processed, list)  # Should be a list
-        self.assertIsInstance(cwb_search_results_processed[0], dict)  # First item in list should be a dictionary
-        self.assertIsInstance(cwb_search_results_processed[0]['meta'], dict)  # First item should have a dict value assigned to key 'meta'
-        self.assertIsInstance(cwb_search_results_processed[0]['languages'], list)  # First item should have a list value assigned to key 'languages'
-        self.assertGreater(len(cwb_search_results_processed), 100)  # Should be more than 100 items in list
-        # Should include all dicts in expected_data_samples list
-        for expected_data_sample in expected_data_samples:
-            self.assertIn(expected_data_sample, cwb_search_results_processed)
+        # Shouldn't return None
+        self.assertIsNotNone(cwb_search_results_processed)
+        # Should be a list
+        self.assertIsInstance(cwb_search_results_processed, list)
+        # 1st item in list should be a dictionary
+        self.assertIsInstance(cwb_search_results_processed[0], dict)
+        # 1st item should have a dict value assigned to key 'meta'
+        self.assertIsInstance(cwb_search_results_processed[0]['meta'], dict)
+        # 1st item should have a list value assigned to key 'languages'
+        self.assertIsInstance(cwb_search_results_processed[0]['languages'], list)
+        # Should be more than 100 items in list
+        self.assertGreater(len(cwb_search_results_processed), 100)
+        # Should include expected sample data
+        self.assertIn(expected_data_sample, cwb_search_results_processed)
 
 
 class TestFrequency(TestCase):
@@ -108,12 +92,18 @@ class TestFrequency(TestCase):
             ['109', 'PLEA']
         ]
 
-        self.assertIsNotNone(cwb_frequency_results_processed)  # Shouldn't return None
-        self.assertIsInstance(cwb_frequency_results_processed, list)  # Should be a list
-        self.assertIsInstance(cwb_frequency_results_processed[0], list)  # First item in list should be a list
-        self.assertIsInstance(cwb_frequency_results_processed[0][0], str)  # First item in the first list item should be a string
-        self.assertIsInstance(int(cwb_frequency_results_processed[0][0]), int)  # First item in the first list item should be a valid int when converted from string to integer
-        self.assertEquals(len(cwb_frequency_results_processed), 3)  # Should be 3 items in list
+        # Shouldn't return None
+        self.assertIsNotNone(cwb_frequency_results_processed)
+        # Should be a list
+        self.assertIsInstance(cwb_frequency_results_processed, list)
+        # 1st item in list should be a list
+        self.assertIsInstance(cwb_frequency_results_processed[0], list)
+        # 1st item in 1st item should be a string
+        self.assertIsInstance(cwb_frequency_results_processed[0][0], str)
+        # 1st item in 1st item should be an int
+        self.assertIsInstance(int(cwb_frequency_results_processed[0][0]), int)
+        # Should be 3 items in list
+        self.assertEquals(len(cwb_frequency_results_processed), 3)
         # Should include all lists in expected_data_samples list
         for expected_data_sample in expected_data_samples:
             self.assertIn(expected_data_sample, cwb_frequency_results_processed)
@@ -182,10 +172,14 @@ class TestCollocations(TestCase):
             }
         ]
 
-        self.assertIsNotNone(cwb_collocations_results_processed)  # Shouldn't return None
-        self.assertIsInstance(cwb_collocations_results_processed, list)  # Should be a list
-        self.assertIsInstance(cwb_collocations_results_processed[0], dict)  # First item in list should be a dictionary
-        self.assertGreater(len(cwb_collocations_results_processed), 1000)  # Should be more than 1000 items in list
+        # Shouldn't return None
+        self.assertIsNotNone(cwb_collocations_results_processed)
+        # Should be a list
+        self.assertIsInstance(cwb_collocations_results_processed, list)
+        # 1st item in list should be a dictionary
+        self.assertIsInstance(cwb_collocations_results_processed[0], dict)
+        # Should be more than 1000 items in list
+        self.assertGreater(len(cwb_collocations_results_processed), 1000)
         # Should include all dicts in expected_data_samples list
         for expected_data_sample in expected_data_samples:
             self.assertIn(expected_data_sample, cwb_collocations_results_processed)
@@ -227,12 +221,18 @@ class TestNgrams(TestCase):
             ['<strong>plea</strong> in law , the', 245]
         ]
 
-        self.assertIsNotNone(cwb_ngrams_results_processed)  # Shouldn't return None
-        self.assertIsInstance(cwb_ngrams_results_processed, list)  # Should be a list
-        self.assertIsInstance(cwb_ngrams_results_processed[0], list)  # First item in list should be a list
-        self.assertIsInstance(cwb_ngrams_results_processed[0][0], str)  # First item in first in list should be a string
-        self.assertIsInstance(cwb_ngrams_results_processed[0][1], int)  # Second item in first in list should be an int
-        self.assertGreater(len(cwb_ngrams_results_processed), 3000)  # Should be more than 3000 items in list
+        # Shouldn't return None
+        self.assertIsNotNone(cwb_ngrams_results_processed)
+        # Should be a list
+        self.assertIsInstance(cwb_ngrams_results_processed, list)
+        # 1st item in list should be a list
+        self.assertIsInstance(cwb_ngrams_results_processed[0], list)
+        # 1st item in 1st item should be a string
+        self.assertIsInstance(cwb_ngrams_results_processed[0][0], str)
+        # Second item in 1st item should be an int
+        self.assertIsInstance(cwb_ngrams_results_processed[0][1], int)
+        # Should be more than 3000 items in list
+        self.assertGreater(len(cwb_ngrams_results_processed), 3000)
         # Should include all dicts in expected_data_samples list
         for expected_data_sample in expected_data_samples:
             self.assertIn(expected_data_sample, cwb_ngrams_results_processed)
