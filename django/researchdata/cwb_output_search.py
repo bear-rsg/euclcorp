@@ -74,7 +74,6 @@ def process(cwb_query, cwb_output, options):
     languages = []
 
     for i, line in enumerate(cwb_output):
-
         if line.strip().split(':')[0].isnumeric():
             # Each result starts with its metadata
             # So append previous result object to result list and start a new blank result object
