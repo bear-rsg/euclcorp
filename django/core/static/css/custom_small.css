@@ -22,6 +22,10 @@
         left: -15rem;
     }
 
+    #nav-head-compact {
+        display: none;
+    }
+
     nav.mobilevisible {
         left: 0rem;
     }
