@@ -30,7 +30,7 @@ function getCookie(name) {
 
 // Set nav-collapsed class on pageload if found in cookies
 // THIS MUST BE VANILLA JS, NOT JQUERY, AS JQUERY WAITS FOR PAGE TO FINISH LOADING, CAUSING A DELAY ON PAGE LOAD
-if (getCookie('navCollapsed') == 1){
+if (getCookie('nav_collapsed') == 1){
     document.getElementsByTagName('nav')[0].classList.add('nav-collapsed');
     document.getElementsByTagName('main')[0].classList.add('nav-collapsed');
     document.getElementById('nav-collapse').innerHTML = '<i class="fas fa-angle-double-right"></i>';
@@ -46,14 +46,14 @@ $(document).ready(function(){
             $('nav, main').removeClass('nav-collapsed');
             $(this).html('<i class="fas fa-angle-double-left"></i> Collapse');
             // Deletes cookie by setting date in the past
-            document.cookie = "navCollapsed=; Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure;";
+            document.cookie = "nav_collapsed=; Thu, 01 Jan 1970 00:00:00 UTC; path=/; Secure;";
         }
         // If nav not collapsed, collapse it
         else {
             $('nav, main').addClass('nav-collapsed');
             $(this).html('<i class="fas fa-angle-double-right"></i>');
             // Set cookie
-            document.cookie = "navCollapsed=1; expires=Mon, 31 Dec 2050 23:59:59 GMT; path=/; Secure;";
+            document.cookie = "nav_collapsed=1; expires=Mon, 31 Dec 2050 23:59:59 GMT; path=/; Secure;";
         }
     });
 
