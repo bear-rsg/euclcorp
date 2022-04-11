@@ -42,41 +42,44 @@
         <!-- jQuery (has to load at start of page, as some templates that extend from this base template include jQuery in them) -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+        <!-- Navigation -->
+        <div id="nav-mobiletoggle">
+            <i class="fas fa-bars"></i>
+        </div>
         <nav>
-
             <div id="nav-head">
-                <a class="navbar-brand" href="{% url 'general:welcome' %}">
-                    <h1>EUCL<span>CORP</span></h1>
+                <a href="{% url 'general:welcome' %}">
+                    <div id="nav-head-full">
+                        <h1>EUCL<span>CORP</span></h1>
+                    </div>
+                    <div id="nav-head-compact">
+                        <h1>E<span>C</span></h1>
+                    </div>
                 </a>
             </div>
 
             <ul class="nav-links">
                 <!-- Welcome -->
-                <li><a class="{% if request.path == "/" %}active{% endif %}" href="{% url 'general:welcome' %}"><i class="fas fa-home"></i> Welcome</a></li>
+                <li><a title="Welcome" class="{% if request.path == "/" %}active{% endif %}" href="{% url 'general:welcome' %}"><i class="fas fa-home"></i> <span>Welcome</span></a></li>
                 <!-- Corpus: Parallel -->
-                <li><a class="{% if "/corpus/parallel/" in request.path %}active{% endif %}" href="{% url 'researchdata:parallel' %}"><i class="fas fa-cubes"></i> Parallel Corpus</a></li>
+                <li><a title="Parallel Corpus" class="{% if "/corpus/parallel/" in request.path %}active{% endif %}" href="{% url 'researchdata:parallel' %}"><i class="fas fa-cubes"></i> <span>Parallel Corpus</span></a></li>
                 <!-- Corpus: Monolingual -->
-                <li><a class="{% if "/corpus/monolingual/" in request.path %}active{% endif %}" href="{% url 'researchdata:monolingual-input' %}"><i class="fas fa-cube"></i> Monolingual Corpora</a></li>
+                <li><a title="Monolingual Corpora" class="{% if "/corpus/monolingual/" in request.path %}active{% endif %}" href="{% url 'researchdata:monolingual-input' %}"><i class="fas fa-cube"></i> <span>Monolingual Corpora</span></a></li>
                 <!-- About -->
-                <li><a class="{% if request.path == "/about/" %}active{% endif %}" href="{% url 'general:about' %}"><i class="fas fa-info"></i> About</a></li>
+                <li><a title="About" class="{% if request.path == "/about/" %}active{% endif %}" href="{% url 'general:about' %}"><i class="fas fa-font"></i> <span>About</span></a></li>
                 <!-- Contact -->
-                <li><a class="{% if request.path == "/contact/" %}active{% endif %}" href="{% url 'general:contact' %}"><i class="fas fa-at"></i> Contact</a></li>
+                <li><a title="Contact" class="{% if request.path == "/contact/" %}active{% endif %}" href="{% url 'general:contact' %}"><i class="fas fa-comment"></i> <span>Contact</span></a></li>
             </ul>
 
-            <div id="nav-base">
-                <a href="https://www.birmingham.ac.uk/" target="_blank">© University of Birmingham {% now "Y" %}</a>
-                <a href="https://www.birmingham.ac.uk/privacy/index.aspx" target="_blank">Privacy</a>
-                <a href="https://www.birmingham.ac.uk/legal/index.aspx" target="_blank">Legal</a>
-                <a href="https://www.birmingham.ac.uk/university/governance/policies-regs/information/index.aspx" target="_blank">Freedom of Information</a>
-                <br>
-                <a href="{% url 'general:cookies' %}">Cookies</a>
-                <a href="https://accessibility.bear.bham.ac.uk/statements-cal.html" target="_blank">Accessibility</a>
+            <div id="nav-collapse">
+                <i class="fas fa-angle-double-left"></i> Collapse
             </div>
-
         </nav>
 
         <!-- Main -->
         <main id="main">
+            <!-- nav.js must exist here, as must be run as soon as <main> element is created. Otherwise there's a delay in assigning 'nav-collapsed' css class from cookie, causing content to flash on page load as css classes change -->
+            <script src="{% static 'js/nav.js' %}"></script>
             <div id="main-content">
                 {% block main %}
                 {% endblock %}

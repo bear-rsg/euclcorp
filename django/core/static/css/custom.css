@@ -29,7 +29,7 @@ h1 {
 
 h1 span {
     font-weight: normal;
-    color: #19BE54;
+    color: #019309;
 }
 
 h2 {
@@ -80,67 +80,6 @@ select {
 
 .hidden {
     display: none;
-}
-
-/* ---------- Popup ---------- */
-
-.popup {
-    display: none;
-    background: rgba(0, 0, 0, 0.8);
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 100000000;
-}
-
-.popup-content {
-    background: #F7F7F7;
-    position: fixed;
-    top: 15vh;
-    overflow-y: auto;
-    padding: 3em;
-    text-align: center;
-}
-
-.popup-content-title {
-    font-size: 1.3em;
-    text-align: center;
-    margin-bottom: 1.5em;
-    color: #0F8138;
-}
-
-.popup-submit {
-    background-color: #0F8138;
-    color: white;
-    appearance: none;
-    border: none;
-    display: block;
-    width: fit-content;
-    margin: 3em auto 0.5em auto;
-    padding: 0.8em 1.6em;
-    padding-bottom: 0.7em;
-    border-radius: 0.2em;
-}
-
-.popup-submit:hover {
-    color: white;
-    opacity: 0.89;
-}
-
-.popup-hide {
-    cursor: pointer;
-    position: absolute;
-    right: 0.8em;
-    top: 0.4em;
-    font-size: 1.8em;
-    padding: 0.2em;
-    color: #909090;
-}
-
-.popup-hide:hover {
-    color: #0F8138;
 }
 
 /* ---------- Forms ---------- */
@@ -227,21 +166,27 @@ form.full-form button[type=submit].button-danger {
     display: inline-block;
 }
 
+
 /* ---------- Navigation ---------- */
 
 nav {
     display: block;
     position: fixed;
-    left: 0;
     top: 0;
-    width: 17rem;
+    width: 15rem;
+    max-width: 100%;
     height: 100vh;
+    overflow-y: auto;
     color: white;
-    background: #272727;
+    background: #131313;
+    z-index: 100000;
+}
+
+nav:not(.nav-collapsed) #nav-head-compact {
+    display: none;
 }
 
 #nav-head a {
-    padding: 1.5rem;
     display: block;
     text-align: center;
 }
@@ -251,28 +196,30 @@ nav a {
 }
 
 nav ul {
-    padding: 2em 0 0 0;
+    padding: 0.5em 0 0 0;
     margin-left: 0;
     list-style: none;
 }
 
 nav ul li a {
     display: block;
-    padding: 1rem;
-    opacity: 0.6;
+    opacity: 0.64;
     border-left: 0.4rem solid transparent;
 }
 
 nav ul li a:hover {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.09);
     color: white;
-    opacity: 0.8;
+    opacity: 0.89;
 }
 
 nav ul li a.active {
     opacity: 1;
-    border-left: 0.4rem solid #19BE54;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.09);
+}
+
+nav:not(.nav-collapsed) ul li a.active {
+    border-left: 0.4rem solid #019309;
 }
 
 nav ul li a i {
@@ -282,40 +229,16 @@ nav ul li a i {
     text-align: center;
 }
 
-#nav-base {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    font-size: 0.8rem;
-    text-align: center;
-    width: 100%;
-    padding-bottom: 2em;
+nav ul li a span {
+    font-size: 0.97em;
 }
-
-#nav-base * {
-    opacity: 0.6;
-}
-
-#nav-base a {
-    padding: 0.4em;
-    display: inline-block;
-}
-
-#nav-base a:hover {
-    color: inherit;
-    opacity: 1;
-}
-
 
 /* ---------- Main ---------- */
 
 main {
-    margin: 0 0 0 17rem;
-    width: calc(100% - 17rem);
     overflow-x: hidden;
     min-height: 100vh;
-    padding: 2.7rem 3.3rem;
-    background: #F5F5F5;
+    background: white;
 }
 
 /* ---------- Input ---------- */
